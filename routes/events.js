@@ -634,7 +634,6 @@ sql.connect(config, function (err) {
             res.sendStatus(500);
           }
           else{
-            console.log('pppppppppppppppppppppppp');
             res.sendStatus(200);
           }
         });
