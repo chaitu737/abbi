@@ -1,0 +1,16 @@
+
+
+
+.signuppage{
+    background-color: rgb(0 123 255 / 0%);
+    border: 1px solid;
+    margin-top: 68px;
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .countycode{
+        font-size: 13px;
+    }
+  }
+

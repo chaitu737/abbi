@@ -1,0 +1,55 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">My Payments</h2>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-hide="showpays">
+  <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%" ng-init="Payments()">
+    <thead>
+      <tr>
+        <th>Payment Id</th>
+        <th>Payment Amount</th>
+        <th>Date</th>
+        <th>Customer</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="pay in pays">
+        <td><a ng-click="ShowPayNext(pay)">{{pay.paymentid}}</a> ({{pay.trans_type}})</td>
+        <td ng-bind="pay.payamt | currency"></td>
+        <td ng-bind="pay.paydate | date:'MM/dd/yyyy'"></td>
+        <td ng-bind="pay.cust_string"></td>
+        <td ng-bind="pay.cust_email"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-show="showpays">
+  <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+    <thead>
+      <tr>
+        <th>Line Id</th>
+        <th>SKU</th>
+        <th>Quantity</th>
+        <th>Total Shipping</th>
+        <th>Entry Id</th>
+        <th>SKU Parent</th>
+        <th>SKU Name</th>
+        <th>SKU Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="pay1 in pays1">
+        <td>{{pay1.lineid}}</td>
+        <td>{{pay1.sku}}</td>
+        <td>{{pay1.qty}}</td>
+        <td>{{pay1.ttl_shipping}}</td>
+        <td>{{pay1.entid}}</td>
+        <td>{{pay1.sku_parent}}</td>
+        <td>{{pay1.sku_name}}</td>
+        <td>{{pay1.sku_descrip}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <button class="btn btn-color" ng-click="ExitPay()">Exit</button>
+</div>

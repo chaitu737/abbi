@@ -1,0 +1,319 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">EVent EID manager</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="row"> <br />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <label>Member:</label>
+        <select class="form-control" ng-model="eventeidmanager.membernumber" ng-click="EventEidMember()">
+          <option value="">--Select One--</option>
+          <option value="Any">Any Member</option>
+          <option value="None">No Member Listed</option>
+          <option ng-repeat="eventeid in eveids" value="{{eventeid.membernumber}}">{{eventeid.membername}}</option>
+        </select>
+        <label>EID Number</label>
+        <input class="form-control" type="text" ng-model="eventeidmanager.eid">
+        <label>RegNo</label>
+        <input class="form-control" type="text" ng-model="eventeidmanager.reg">
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <label>Owner</label>
+        <input class="form-control" type="text" ng-model="eventeidmanager.owner">
+        <label>Veterinarian</label>
+        <input class="form-control" type="text" ng-model="eventeidmanager.vet">
+        <label>Status</label>
+        <select ng-model="eventeidmanager.status" class="form-control">
+          <option value="Any">Any</option>
+          <option value="Complete">Complete</option>
+          <option value="Ordered">Ordered</option>
+          <option value="Received">Received</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+        <br>
+        <button class="btn btn-color" type="button" ng-click="SearchEventEidManager(eventeidmanager)">Search</button>
+        <button class="btn btn-color" type="button" ng-click="ResetEventEidManager(eventeidmanager)">Reset</button>
+        <button class="btn btn-color" type="button" data-toggle="modal" data-target="#myModal4">Add New</button>
+      </div>
+      <div class="modal fade" id="myModal4" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" type="button" data-dismiss="modal">×</button>
+              <h4 class="modal-title text-center">Add New</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <div class="row">
+                  <form class="form-group">
+                    <h2 style="text-align: center;color: #2c3e50;font-variant: all-petite-caps;">EID Infomation</h2>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>EID</label>
+                        <input type="text" class="form-control" ng-model="addeid.eid">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Private Herd </label>
+                        <input type="text" class="form-control" ng-model="addeid.herd">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Color </label>
+                        <input type="text" class="form-control" ng-model="addeid.color">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Dentition </label>
+                        <input type="text" class="form-control" ng-model="addeid.dentition">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Member Number </label>
+                        <input type="text" class="form-control" ng-model="addeid.member">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Vet Member No </label>
+                        <input type="text" class="form-control" ng-model="addeid.vetmember">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Clinic</label>
+                        <input type="text" class="form-control" ng-model="addeid.clinic">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 form-group">
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Regno</label>
+                        <input type="text" class="form-control" ng-model="addeid.regno">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Birth Date</label>
+                        <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="addeid.bdate">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" ng-model="addeid.description">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Date Applied </label>
+                        <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="addeid.date">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Owner</label>
+                        <input type="text" class="form-control" ng-model="addeid.owner">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Veterinarian </label>
+                        <input type="text" name="" class="form-control" ng-model="addeid.vet">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Status</label>
+                        <select class="form-control" ng-model="addeid.status" ng-click="eventStatusDropdown()">
+                          <option ng-repeat="evestat in evestats" value="{{evestat.status}}">{{evestat.status}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Note</label>
+                        <textarea class="form-control" name="" ng-model="addeid.note"></textarea>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group" style="white-space: nowrap;">
+                        <button class="btn btn-color" type="button" ng-click="AddNewEIDManager(addeid)">Submit</button>
+                        <input class="btn btn-color" type="reset">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="editEid" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" type="button" data-dismiss="modal">×</button>
+              <h4 class="modal-title text-center">Edit Information</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <div class="row">
+                  <form>
+                    <h2 style="text-align: center;color: #2c3e50;font-variant: all-petite-caps;">Animal Information</h2>
+                    <div class="col-md-12">
+                      <div class="col-md-6">
+                        <label>Animal:</label>
+                        <b ng-bind="eeidms.Animal"></b>
+                        <br>
+                        <br>
+                        <label>Owner:</label>
+                        <b ng-bind="eeidms.AniOwner"></b>
+                        <br>
+                        <br>
+                        <label>Birthdate:</label>
+                        <b ng-bind="eeidms.birthdate |date: 'MM/dd/yyyy'"></b>
+                        <br>
+                        <br>
+                        <label>Ear Tag: </label>
+                        <b ng-bind="eeidms.EarTag"></b>
+                      </div>
+                      <div class="col-md-6">
+                        <label>Private Herd :</label>
+                        <b ng-bind="eeidms.PrivateHerd"></b>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <label>Registered:</label>
+                        <b ng-bind="eeidms.Dateregestered |date: 'MM/dd/yyyy'"></b>
+                        <br>
+                        <br>
+                        <label>Description:</label>
+                        <b ng-bind="eeidms.description"></b>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <br>
+                <div class="row">
+                  <form class="form-group">
+                    <h2 style="text-align: center;color: #2c3e50;font-variant: all-petite-caps;">EID Information</h2>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>EID</label>
+                        <input type="text" class="form-control" ng-model="eeidms.EID">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Private Herd </label>
+                        <input type="text" class="form-control" ng-model="eeidms.PrivateHerd">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Color </label>
+                        <input type="text" class="form-control" ng-model="eeidms.color">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Dentition </label>
+                        <input type="text" class="form-control" ng-model="eeidms.Dentition">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Member Number </label>
+                        <input type="text" class="form-control" ng-model="eeidms.MemberNumber">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Vet Member No </label>
+                        <input type="text" class="form-control" ng-model="eeidms.VetMemberNo">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Clinic</label>
+                        <input type="text" class="form-control" ng-model="eeidms.Clinic">
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 form-group">
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Regno</label>
+                        <input type="text" class="form-control" ng-model="eeidms.RegNo">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Birth Date</label>
+                        <span ng-bind="eeidms.birthdate | date:'MM/dd/yyyy'"></span>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" ng-model="eeidms.description">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Date Applied </label>
+                        <span ng-bind="eeidms.Dateregestered | date:'MM/dd/yyyy'"></span>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Owner</label>
+                        <input type="text" class="form-control" ng-model="eeidms.Owner">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Veterinarian </label>
+                        <input type="text" name="" class="form-control" ng-model="eeidms.Veterinarian">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Status</label>
+                        <select class="form-control" ng-model="eeidms.Status" ng-click="eventStatusDropdown()">
+                          <option ng-repeat="evestat in evestats" value="{{evestat.status}}">{{evestat.status}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Note</label>
+                        <textarea class="form-control" name="" ng-model="eeidms.Notes"></textarea>
+                      </div>
+                    </div>
+                    <div ng-if="reorders[0].reorderstatus=='Ordered'" class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                      <h2 style="text-align: center;color: #2c3e50;font-variant: all-petite-caps;">Reorders</h2>
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                          <div class="table-responsive">
+                            <table class="table table-striped table-bordered nowrap" width="100%">
+                              <thead>
+                                <tr>
+                                  <th>Date</th>
+                                  <th>Status</th>
+                                  <th>Payment Id</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr ng-repeat="reorder in reorders">
+                                  <td><span ng-bind="reorder.reorderdate |date: 'MM/dd/yyyy'"></span></td>
+                                  <td><span ng-bind="reorder.reorderstatus"></span></td>
+                                  <td><span ng-bind="reorder.paymentid"></span></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group" style="white-space: nowrap;">
+                      <button class="btn btn-color" type="button" ng-click="UpdateEIDManager(eeidms)">Update</button>
+                      <input class="btn btn-color" type="reset">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>EID#</th>
+              <th>RegNo </th>
+              <th>Animal </th>
+              <th>PrivateHerd </th>
+              <th>Owner When Tagged</th>
+              <th>Vet </th>
+              <th>Date Applied</th>
+              <th> Status </th>
+              <th>Edit/Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="eem in eems">
+              <td><span ng-bind="eem.EID"></span></td>
+              <td><span ng-bind="eem.RegNo"></span></td>
+              <td><span ng-bind="eem.Animal"></span></td>
+              <td><span ng-bind="eem.PrivateHerd"></span></td>
+              <td><span ng-bind="eem.Owner"></span></td>
+              <td><span ng-bind="eem.Veterinarian"></span></td>
+              <td><span ng-bind="eem.DateApplied |date: 'MM/dd/yyyy'"></span></td>
+              <td><span ng-bind="eem.status"></span></td>
+              <td style="white-space: nowrap;">
+                <i title="Edit" class="btn btn-warning fa fa-edit" data-toggle="modal" data-target="#editEid" ng-click="EditEIDManager(eem,eventeidmanager)"></i>
+                <i title="Delete" ng-click="DeleteEIDManager(eem)" class="btn btn-danger fa fa-trash"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

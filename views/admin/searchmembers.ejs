@@ -1,0 +1,1701 @@
+<div ng-controller="SearchEditMember">
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%" ng-if="salength != 1">Search Members</h2>
+</div>
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%" ng-if="salength == 1">Edit Members</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-hide="hidepanel">
+  <form>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center" style="color:#2f2fdc;">Personal Details</h3>
+      </div>
+      <!-- <div class="col-sm-6 form-group">
+        <label>Payment Id</label>
+        <input ng-hide="showanimal" type="text" class="form-control" ng-model="searchedit.PaymentId">
+      </div> -->
+      <div class="col-sm-6 form-group">
+        <label>First Name</label>
+        <input ng-hide="showanimal" type="text" class="form-control" ng-model="searchedit.fname">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Last Name</label>
+        <input type="text" ng-hide="showanimal" class="form-control" ng-model="searchedit.lname">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Member Number</label>
+        <input type="text" ng-hide="showanimal" class="form-control" ng-model="searchedit.memberno">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Ranch</label>
+        <input type="text" ng-hide="showanimal" class="form-control" ng-model="searchedit.ranch">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Email</label>
+        <input type="email" ng-hide="showanimal" class="form-control" ng-model="searchedit.email">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Inactive</label>
+        <select class="form-control" ng-hide="showanimal" ng-model="searchedit.active">
+          <option value="">All</option>
+          <option value="0">Active</option>
+          <option value="1">Inactive</option>
+        </select>
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Type</label>
+        <select class="form-control" ng-model="searchedit.type" ng-hide="showanimal">
+          <option value=""> - Select one - </option>
+          <option selected="selected" value="Lifetime">Lifetime</option>
+          <option value="Standard">Standard</option>
+          <option value="Junior">Junior</option>
+          <option value="ABHR">ABHR</option>
+          <option value="Media">Media</option>
+          <option value="Premium">Premium</option>
+          <option value="USBBA Member">USBBA Member</option>
+          <option value="Inactive">Inactive</option>
+          <option value="Non Member">Non Member</option>
+          <option value="Veterinarian">Veterinarian</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center" style="color:#2f2fdc;">Contact Information</h3>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Address</label>
+          <input type="text" ng-hide="showanimal" placeholder="Address" class="form-control" ng-model="searchedit.address">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>City</label>
+          <input type="text" ng-hide="showanimal" placeholder="City" class="form-control" ng-model="searchedit.city">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>State</label>
+          <input type="text" ng-hide="showanimal" placeholder="State" class="form-control" ng-model="searchedit.state">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Zip Code</label>
+          <input type="text" ng-hide="showanimal" placeholder="Zip Code" class="form-control" ng-model="searchedit.zip">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Country</label>
+          <select class="form-control" ng-model="searchedit.country" ng-hide="showanimal">
+            <option value="">- Select a Country -</option>
+            <option selected="selected" value="US">UNITED STATES</option>
+            <option value="AU">AUSTRALIA</option>
+            <option value="BR">BRAZIL</option>
+            <option value="CA">CANADA</option>
+            <option value="MX">MEXICO</option>
+            <option value="NZ">NEW ZEALAND</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Phone</label>
+          <input type="tel" ng-hide="showanimal" placeholder="Phone" class="form-control" ng-model="searchedit.phone">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Alt Phone</label>
+          <input type="tel" ng-hide="showanimal" placeholder="Alt phone" class="form-control" ng-model="searchedit.altphone">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Office</label>
+          <input type="tel" ng-hide="showanimal" placeholder="Office Phone" class="form-control" ng-model="searchedit.office">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Fax</label>
+          <input type="tel" ng-hide="showanimal" placeholder="FAX" class="form-control" ng-model="searchedit.fax">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Last Updated by</label>
+          <input type="text" ng-hide="showanimal" class="form-control" ng-model="searchedit.lastupdated">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Join Date</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" ng-hide="showanimal" class="form-control" ng-model="searchedit.jdate">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Due Date</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" ng-hide="showanimal" class="form-control" ng-model="searchedit.ddate">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Paid Date</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" ng-hide="showanimal" class="form-control" ng-model="searchedit.pdate">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Updated Date</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" ng-hide="showanimal" class="form-control" ng-model="searchedit.udate">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Notes</label>
+          <textarea class="form-control" ng-hide="showanimal" ng-model="searchedit.notes"></textarea>
+        </div>
+      </div>
+    </div style="white-space: nowrap;">
+    <input class="btn btn-color" type="submit" ng-hide="showanimal" ng-click="SearchEditMemberData(searchedit); HidePanel()" value="Search">
+    <input class="btn btn-color" type="reset" ng-hide="showanimal" ng-click="ResetSearchAnimal(searchedit)" value="Reset">
+  </form>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-if="salength == 0" ng-hide="hidepanel3">
+  <div class="well">
+    <h3 class="text-warning">No Records Found</h3>
+  </div>
+  <div>
+    <button class="btn btn-color" ng-click="HidePanel3()">Exit</button>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-if="salength == 1" ng-show="hidepanel5">
+  <form ng-repeat="searchedit in searchedits">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center" style="color:#2f2fdc;">Personal Details</h3>
+      </div>
+      <!-- <div class="col-sm-6 form-group">
+        <label>Payment Id</label>
+        <input ng-hide="showanimal" type="text" class="form-control" ng-model="searchedit.PaymentId">
+      </div> -->
+      <div class="col-sm-6 form-group">
+        <label>First Name</label>
+        <input ng-hide="showanimal" type="text" class="form-control" ng-model="searchedit.FirstName">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Last Name</label>
+        <input type="text" ng-hide="showanimal" class="form-control" ng-model="searchedit.LastName">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Member Number</label>
+        <input type="text" ng-hide="showanimal" class="form-control" ng-model="searchedit.MemberNumber">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Ranch</label>
+        <input type="text" ng-hide="showanimal" class="form-control" ng-model="searchedit.RanchName">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Email</label>
+        <input type="email" ng-hide="showanimal" class="form-control" ng-model="searchedit.Email">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Type</label>
+        <select class="form-control" ng-model="searchedit.Type" ng-hide="showanimal">
+          <option value=""> - Select one - </option>
+          <option selected="selected" value="Lifetime">Lifetime</option>
+          <option value="Standard">Standard</option>
+          <option value="Junior">Junior</option>
+          <option value="Media">Media</option>
+          <option value="ABHR">American Bucking Horse(ABHR)</option>
+          <option value="Premium">Premium</option>
+          <option value="USBBA Member">USBBA Member</option>
+          <option value="Inactive">Inactive</option>
+          <option value="Non Member">Non Member</option>
+          <option value="Veterinarian">Veterinarian</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center" style="color:#2f2fdc;">Contact Information</h3>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Address</label>
+          <input type="text" ng-hide="showanimal" placeholder="Address" class="form-control" ng-model="searchedit.Address">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>City</label>
+          <input type="text" ng-hide="showanimal" placeholder="City" class="form-control" ng-model="searchedit.City">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>State</label>
+          <input type="text" ng-hide="showanimal" placeholder="State" class="form-control" ng-model="searchedit.State">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Zip Code</label>
+          <input type="text" ng-hide="showanimal" placeholder="Zip Code" class="form-control" ng-model="searchedit.Zip">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Country</label>
+          <select class="form-control" ng-model="searchedit.Country" ng-hide="showanimal">
+            <option value="">- Select a Country -</option>
+            <option selected="selected" value="US">UNITED STATES</option>
+            <option value="AU">AUSTRALIA</option>
+            <option value="BR">BRAZIL</option>
+            <option value="CA">CANADA</option>
+            <option value="MX">MEXICO</option>
+            <option value="NZ">NEW ZEALAND</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Phone</label>
+          <input type="tel" ng-hide="showanimal" placeholder="Phone" class="form-control" ng-model="searchedit.Phone">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Alt Phone</label>
+          <input type="tel" ng-hide="showanimal" placeholder="Alt phone" class="form-control" ng-model="searchedit.AltPhone">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Office</label>
+          <input type="tel" ng-hide="showanimal" placeholder="Office Phone" class="form-control" ng-model="searchedit.Office">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Fax</label>
+          <input type="tel" ng-hide="showanimal" placeholder="FAX" class="form-control" ng-model="searchedit.Fax">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Notes</label>
+          <textarea class="form-control" ng-hide="showanimal" ng-model="searchedit.Notes"></textarea>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Join Date</label>
+          <span class="form-control" ng-bind="searchedit.JoinDate"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Due Date</label>
+          <span class="form-control" ng-bind="searchedit.DueDate"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Paid Date</label>
+          <span class="form-control" ng-bind="searchedit.PaidDate"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Updated Date</label>
+          <span class="form-control" ng-bind="searchedit.updated"></span>
+        </div>
+      </div>
+    </div style="white-space: nowrap;">
+    <input class="btn btn-color" type="submit" ng-click="SearchUpdateMemberData(searchedit);SendUpdateMemberData(searchedit)" value="Update">
+    <a ng-click="HidePanel1();ResetSearchAnimal(searchedit)" class="btn btn-color">Exit</a>
+
+    <div ng-if="salength == 1" class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" data-target="#inventory1">Inventory</a></li>
+        <li><a data-toggle="tab" data-target=".previous1">Previous</a></li>
+        <li><a data-toggle="tab" data-target=".deceased1">Deceased</a></li>
+        <li><a data-toggle="tab" data-target=".security">Security</a></li>
+        <li><a data-toggle="tab" data-target=".partner">Partners</a></li>
+        <li><a data-toggle="tab" data-target=".emails">Emails</a></li>
+        <li><a data-toggle="tab" data-target=".notifications">Email Notification</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="inventory1">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" data-target="#IABBI">ABBI</a></li>
+            <li><a data-toggle="tab" data-target="#IABHR">ABHR</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade align" id="IABHR">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <h1>No Data Found</h1>
+              </div>
+            </div>
+            <div class="tab-pane fade in active" id="IABBI">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <br>
+                      <div>
+                        <button class="btn btn-color" ng-click="ShowAll(searchedit)">Show All Animals</button>
+                      </div>
+                      <br>
+                      <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>Reg No#</th>
+                            <th>Name</th>
+                            <th>Stats(outs, avg mark)</th>
+                            <th>Herd#</th>
+                            <th>Birth Date</th>
+                            <th>Sex</th>
+                            <th>Sire Name</th>
+                            <th>Dam Name</th>
+                            <th>DNA Status</th>
+                            <th>Last Updated</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="inventory in inventorydata">
+                            <td><a href="#!editanimals/{{inventory.RegNo}}" target="_blank"><span ng-bind="inventory.RegNo"></span></a></td>
+                            <td><span ng-bind="inventory.Animal"></span></td>
+                            <td><span ng-bind="inventory.avgmark"></span></td>
+                            <td><span ng-bind="inventory.PrivateHerd"></span></td>
+                            <td><span ng-bind="inventory.Birthdate | date:'MM/dd/yyyy'"></span></td>
+                            <td><span ng-bind="inventory.TypeService"></span></td>
+                            <td><span ng-bind="inventory.Sire"></span></td>
+                            <td><span ng-bind="inventory.Dam"></span></td>
+                            <td><span ng-bind="inventory.Status"></span></td>
+                            <td><span ng-bind="inventory.Lastupdate | date:'MM/dd/yyyy'"></span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade previous1">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" data-target="#IABBI1">ABBI</a></li>
+            <li><a data-toggle="tab" data-target="#IABHR1">ABHR</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade align" id="IABHR1">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <h1>No Data Found</h1>
+              </div>
+            </div>
+            <div class="tab-pane fade active in" id="IABBI1">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th>Reg No#</th>
+                          <th>Name</th>
+                          <th>Herd#</th>
+                          <th>Birth Date</th>
+                          <th>Sex</th>
+                          <th>Sire Name</th>
+                          <th>Dam Name</th>
+                          <th>Owner</th>
+                          <th>DNA Status</th>
+                          <th>Last Updated</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="pre in previousdata">
+                          <td><a href="#!editanimals/{{pre.RegNo}}" target="_blank"><span ng-bind="pre.RegNo"></span></a></span></td>
+                          <td><span ng-bind="pre.Animal"></span></td>
+                          <td><span ng-bind="pre.PrivateHerd"></span></td>
+                          <td><span ng-bind="pre.Birthdate | date:'MM/dd/yyyy'"></span></td>
+                          <td><span ng-bind="pre.TypeService"></span></td>
+                          <td><span ng-bind="pre.Sire"></span></td>
+                          <td><span ng-bind="pre.Dam"></span></td>
+                          <td><span ng-bind="pre.MemberName"></span></td>
+                          <td><span ng-bind="pre.Status"></span></td>
+                          <td><span ng-bind="pre.Lastupdate | date:'MM/dd/yyyy'"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade deceased1">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" data-target="#IABBI2">ABBI</a></li>
+            <li><a data-toggle="tab" data-target="#IABHR2">ABHR</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade align" id="IABHR2">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <h1>No Data Found</h1>
+              </div>
+            </div>
+            
+            <div class="tab-pane fade active in" id="IABBI2">
+              <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>Reg No#</th>
+                            <th>Name</th>
+                            <th>Herd#</th>
+                            <th>Birth Date</th>
+                            <th>Sex</th>
+                            <th>Sire Name</th>
+                            <th>Dam Name</th>
+                            <th>DNA Status</th>
+                            <th>Last Updated</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="dec in deceaseddata">
+                            <td><a href="#!editanimals/{{dec.RegNo}}" target="_blank"><span ng-bind="dec.RegNo"></span></a></td>
+                            <td><span ng-bind="dec.Animal"></span></td>
+                            <td><span ng-bind="dec.PrivateHerd"></span></td>
+                            <td><span ng-bind="dec.Birthdate | date:'MM/dd/yyyy'"></span></td>
+                            <td><span ng-bind="dec.TypeService"></span></td>
+                            <td><span ng-bind="dec.Sire"></span></td>
+                            <td><span ng-bind="dec.Dam"></span></td>
+                            <td><span ng-bind="dec.Status"></span></td>
+                            <td><span ng-bind="dec.Lastupdate | date:'MM/dd/yyyy'"></span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade align" id="IABHR2">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <h1>No Data Found</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade security">
+          <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+            <div class="col-sm-6 form-group">
+              <label>Username</label>
+              <input type="text" ng-model="searchedit.UserName" class="form-control">
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Password</label>
+              <input type="text" ng-model="searchedit.Password" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade partner">
+          <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+            <input type="button" class="btn btn-color" data-target="#AddPartner1" data-toggle="modal" value="Add Partner">
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-init="ViewPartners(searchedit)">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Phones</th>
+                          <th>Address</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="part in partners">
+                          <td><span ng-bind="part.LastName"></span>,<span ng-bind="part.FirstName"></span></td>
+                          <td><span ng-bind="part.Phone"></span><br><span ng-bind="part.CellPhone"></span></td>
+                          <td><span ng-bind="part.Address"></span>,<br><span ng-bind="part.City"></span>,<span ng-bind="part.State"></span>,<span ng-bind="part.Zip"></span>,<br><span ng-bind="part.Country"></span></td>
+                          <td>
+                            <i title="Edit" class="btn btn-warning fa fa-edit" data-target="#AddPartner2" ng-click="getpartnerdata(part)" data-toggle="modal"></i>
+                            <i title="Delete" class="btn btn-danger fa fa-trash" ng-click="RemovePartners(part)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="AddPartner2" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">×</button>
+                    <h4 class="modal-title text-center">Edit Partner</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container edge" style="height:100%;width:100%;padding: 10px;">
+                      <form class="form-group">
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>First Name </label>
+                            <input type="text" class="form-control" ng-model="editprt.FirstName">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Last Name  </label>
+                            <input type="text" class="form-control" ng-model="editprt.LastName">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Email   </label>
+                            <input type="email" class="form-control" ng-model="editprt.Email">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Address </label>
+                            <input type="text" class="form-control" ng-model="editprt.Address">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>City    </label>
+                            <input type="text" class="form-control" ng-model="editprt.City">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>State  </label>
+                            <input type="text" class="form-control" ng-model="editprt.State">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Zip     </label>
+                            <input type="text" class="form-control" ng-model="editprt.Zip">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Country  </label>
+                            <select class="form-control" ng-model="editprt.Country">
+                              <option value="-1">- Select a Country -</option>
+                              <option value="US">UNITED STATES</option>
+                              <option value="AU">AUSTRALIA</option>
+                              <option value="BR">BRAZIL</option>
+                              <option value="CA">CANADA</option>
+                              <option value="MX">MEXICO</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Phone (H)     </label>
+                            <input type="tel" class="form-control" ng-model="editprt.Phone">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Phone (C)  </label>
+                            <input type="tel" class="form-control" ng-model="editprt.CellPhone">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <button class="btn btn-color" ng-click="editPartners(editprt)">Update</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="AddPartner1" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button class="close" type="button" data-dismiss="modal">×</button>
+                  <h4 class="modal-title text-center">Add Partner</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="container edge" style="height:100%;width:100%;padding: 10px;">
+                    <form class="form-group">
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>First Name </label>
+                          <input type="text" class="form-control" ng-model="addpartner.fname">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Last Name  </label>
+                          <input type="text" class="form-control" ng-model="addpartner.lname">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Email   </label>
+                          <input type="email" class="form-control" ng-model="addpartner.email">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Address </label>
+                          <input type="text" class="form-control" ng-model="addpartner.address">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>City    </label>
+                          <input type="text" class="form-control" ng-model="addpartner.city">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>State  </label>
+                          <input type="text" class="form-control" ng-model="addpartner.state">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Zip     </label>
+                          <input type="text" class="form-control" ng-model="addpartner.zip">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Country  </label>
+                          <select class="form-control" ng-model="addpartner.country">
+                            <option value="-1">- Select a Country -</option>
+                            <option value="US">UNITED STATES</option>
+                            <option value="AU">AUSTRALIA</option>
+                            <option value="BR">BRAZIL</option>
+                            <option value="CA">CANADA</option>
+                            <option value="MX">MEXICO</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Phone (H)     </label>
+                          <input type="tel" class="form-control" ng-model="addpartner.phoneh">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Phone (C)  </label>
+                          <input type="tel" class="form-control" ng-model="addpartner.phonec">
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                          <button class="btn btn-color" ng-click="addPartners(addpartner)">Save</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade notifications">
+          <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered nowrap">
+                    <thead>
+                      <tr>
+                        <th>Reg No</th>
+                        <th>Created Date</th>
+                        <th>Sent Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="emailnotification in emailnotifications">
+                        <td><span ng-bind="emailnotification.AnimalID"></span></td>
+                        <td><span ng-bind="emailnotification.DateCreated | date:'MM/dd/yyyy'"></span></td>
+                        <td><span ng-bind="emailnotification.DateSent | date:'MM/dd/yyyy'"></span></td>  
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade emails">
+          <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered nowrap">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Sent By</th>
+                        <th>Sent To</th>
+                        <th>Message</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="email in emails">
+                        <td><span ng-bind="email.SentDate | date:'MM/dd/yyyy'"></span></td>
+                        <td><span ng-bind="email.SentByMember"></span></td>
+                        <td><span ng-bind="email.SentToMember"></span></td>  
+                        <td><span ng-bind="email.Message"></span></td> 
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container" style="width:90%;">
+  <ul class="nav nav-tabs" ng-if="salength >= 2" ng-hide="hidepanel2">
+    <li class="active"><a data-toggle="tab" data-target="#mem">Members</a></li>
+    <li><a data-toggle="tab" data-target="#par">Partners</a></li>
+  </ul>
+  <div class="tab-content" ng-if="salength >= 2" ng-hide="hidepanel2">
+    <div id="mem" class="tab-pane fade in active">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Ranch</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="msearch in searchedits">
+                  <td><a href="#!memberprofile/{{msearch.MemberNumber}}" target="_blank"><span ng-bind="msearch.MemberNumber"></span></a></td>
+                  <td><span ng-bind="msearch.MemberName"></span></td>
+                  <td><span ng-bind="msearch.RanchName"></span></td>
+                  <td><span ng-bind="msearch.Email"></span></td>
+                  <td><span ng-bind="msearch.Phone"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <a ng-click="HidePanel2();ResetSearchAnimal(searchedit)" class="btn btn-color">Exit</a>
+    </div>
+    <div id="par" class="tab-pane fade align">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+              <thead>
+                <tr>
+                  <th>Member Number</th>
+                  <th>Member Name</th>
+                  <th>Partner Id</th>
+                  <th>Partner Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="prt in partner">
+                  <td><span ng-bind="prt.MemberNumber"></span></td>
+                  <td><span ng-bind="prt.MemberName"></span></td>
+                  <td><span ng-bind="prt.ContactID"></span></td>
+                  <td><span ng-bind="prt.PartnerName"></span></td>
+                  <td><span ng-bind="prt.Email"></span></td>
+                  <td><span ng-bind="prt.Phone"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <a ng-click="HidePanel2();" class="btn btn-color">Exit</a>
+      <br>
+    </div>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="transfer">
+  <div class="row" print-remove>
+    <form class="form-group">
+      <div class="col-sm-6">
+        <div class="col-sm-12 form-group">
+          <label>Payment Id: </label>
+          <input type="text" class="form-control" ng-model="editanimal.PaymentID">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Get Payment Id from Work Order:  </label>
+          <input type="text" class="form-control" ng-model="editanimal.paymentwo">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Reg No.</label>
+          <span ng-bind="editanimal.RegNo"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Member</label>
+          <input type="text" class="form-control" ng-model="editanimal.OriginalBreeder">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Name</label>
+          <input type="text" placeholder="Name" class="form-control" ng-model="editanimal.Animal" required="">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Sex</label>
+          <select class="form-control" ng-model="editanimal.TypeService">
+            <option value="">--Select One--</option>
+            <option value="NB">NB</option>
+            <option value="NC">NC</option>
+            <option value="AB">AB</option>
+            <option value="AC">AC</option>
+            <option value="EB">EB</option>
+            <option value="EC">EC</option>
+            <option value="NM">NM</option>
+            <option value="NS">NS</option>
+            <option value="NG">NG</option>
+            <option value="AM">AM</option>
+            <option value="AS">AS</option>
+            <option value="AG">AG</option>
+            <option value="EM">EM</option>
+            <option value="ES">ES</option>
+            <option value="EG">EG</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Private Herd #</label>
+          <input type="text" class="form-control" ng-model="editanimal.PrivateHerd">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Birth Date</label>
+          <span ng-hide="showbd" ng-click="showbd=true" ng-bind="editanimal.BirthDate | date : 'MM/dd/yyyy'"></span>
+          <input ng-show="showbd" type="date" class="form-control" ng-model="editanimal.BirthDate">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>DNA Number</label>
+          <input type="text" class="form-control" ng-model="editanimal.DNA">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Description</label>
+          <input type="text" class="form-control" ng-model="editanimal.Description">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Horns</label>
+          <select class="form-control" ng-model="editanimal.Horns">
+            <option value="">--Select One--</option>
+            <option value="H">H</option>
+            <option value="D">D</option>
+            <option value="P">P</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6 form-group">
+        <div class="col-sm-12 form-group">
+          <label>Notes</label>
+          <textarea class="form-control" ng-model="editanimal.RNotes"></textarea>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>EID Tag</label>
+          <input type="text" class="form-control" ng-model="editanimal.EarTag">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Print Certificate  </label>
+          <input type="checkbox" ng-model="editanimal.PendingPrinting" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+          <a class="abc" print-btn print-remove>Last Printed</a>
+          <span ng-bind="editanimal.Lastprinted | date : 'MM/dd/yyyy'"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Original Breeder</label>
+          <input type="text" class="form-control" ng-model="editanimal.HiddenOriginalBreeder">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label class="inline-checkbox">DNA'd
+            <input type="checkbox" ng-model="editanimal.DNAD" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+          </label>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>DNA Status</label>
+          <select class="form-control" ng-model="editanimal.Status">
+            <option value="">--Select One--</option>
+            <option value="Complete">Complete</option>
+            <option value="Waiting For Samples">Waiting For Samples</option>
+            <option value="Waiting For Samples - Overdue">Waiting For Samples - Overdue</option>
+            <option value="Waiting For Samples and Dam Auth.">Waiting For Samples and Dam Auth.</option>
+            <option value="Waiting For Dam Auth.">Waiting For Dam Auth.</option>
+            <option value="Cataloged">Cataloged</option>
+            <option selected="selected" value="Pending">Pending</option>
+            <option value="Complete-DNA Sire">Complete-DNA Sire</option>
+            <option value="Complete-DNA Dam">Complete-DNA Dam</option>
+            <option value="Complete-No Match">Complete-No Match</option>
+            <option value="Multiple">Multiple</option>
+            <option value="Failed Testing">Failed Testing</option>
+            <option value="Failed Testing-Waiting For Dam Auth.">Failed Testing-Waiting For Dam Auth.</option>
+            <option value="Resubmit">Resubmit</option>
+            <option value="Deceased">Deceased</option>
+            <option value="Research">Research</option>
+            <option value="Pending-BR">Pending-BR</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label class="inline-checkbox">Send to DNA
+            <input type="checkbox" ng-model="editanimal.Sendtodna" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+          </label>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>SType</label>
+          <select class="form-control" ng-model="editanimal.stype">
+            <option value="FTA">FTA</option>
+            <option value="DAT">DAT</option>
+            <option value="BL">BL</option>
+            <option value="HR">HR</option>
+            <option value="SE">SE</option>
+            <option value="TI">TI</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Date Registered</label>
+          <span ng-bind="editanimal.Dateregestered | date : 'MM/dd/yyyy'" ng-bind-options="{timezone: 'UTC'}"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Date Entered</label>
+          <span ng-bind="editanimal.Submitted | date : 'MM/dd/yyyy'" ng-bind-options="{timezone: 'UTC'}"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Updated By</label>
+          <span ng-bind="editanimal.Updatedby"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Last Updated</label>
+          <span ng-bind="editanimal.Lastupdate | date : 'MM/dd/yyyy'" ng-bind-options="{timezone: 'UTC'}"></span>
+        </div>
+        <div class="col-sm-12 form-group" style="white-space: nowrap;">
+          <button class="btn btn-color" ng-click="UpdateFullAnimalData(editanimal)" type="button">Update</button>
+          <button type="submit" class="btn btn-color" ng-click="SoldAnimal(editanimal)">Sold</button>
+          <button type="submit" class="btn btn-color" ng-click="DeceasedAnimal(editanimal)">Deceased</button>
+          <button type="submit" class="btn btn-color" ng-click="TrasferOwner(editanimal)">Transfer Owner</button>
+          <button class="btn btn-color" ng-click="ExitHidePanel()">Back</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class='root' print-section print-avoid-break style="visibility: hidden;position:absolute">
+      <div class="title1">
+        <h4 class="text-center"><b style="color:red">OffSpring</b></h4>
+        <label>Number :</label>
+        <b ng-bind="pedigree10.RegNo"></b>
+        <br>
+        <label>Name :</label>
+        <b style="color:black" ng-bind="pedigree10.Animal"></b>
+        <br>
+        <label>Herd No. :</label>
+        <b style="color:black" ng-bind="pedigree10.Herd"></b>
+      </div>
+      <div class='lv1 level'>
+        <div class='item'>
+          <div class="title">
+            <h4 class="text-center"><b style="color:red">Sire</b></h4>
+            <label>Number :</label>
+            <b><a data-toggle="tab" href="#animalprofile" ng-click="SirePedigree(pedigree10)" ng-bind="pedigree10.Sire"></a></b>
+            <br>
+            <label>Name :</label>
+            <b style="color:black" ng-bind="pedigree10.Sirename"></b>
+            <br>
+            <label>Herd No. :</label>
+            <b style="color:black" ng-bind="pedigree10.SireHerd"></b>
+          </div>
+          <div class='lv2 level'>
+            <div class='item'>
+              <div class="title">
+                <h4 class="text-center"><b style="color:red">Grand Sire</b></h4>
+                <label>Number :</label>
+                <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GrandSire" ng-click="GrandSire1Pedigree(pedigree10)"></a></b>
+                <br>
+                <label>Name :</label>
+                <b style="color:black" ng-bind="pedigree10.GrandSirename"></b>
+                <br>
+                <label>Herd No. :</label>
+                <b style="color:black" ng-bind="pedigree10.GrandSireHerd"></b>
+              </div>
+              <div class='lv3 level'>
+                <div class='item'>
+                  <div class="title">
+                    <h4 class="text-center"><b style="color:red">Great Grand Sire</b></h4>
+                    <label>Number :</label>
+                    <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GreatGrandSires" ng-click="GreateGrandSire1Pedigree(pedigree10)"></a></b>
+                    <br>
+                    <label>Name :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandSirenames"></b>
+                    <br>
+                    <label>Herd No. :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandSireHerds"></b>
+                  </div>
+                </div>
+                <div class='item'>
+                  <div class="title">
+                    <h4 class="text-center"><b style="color:red">Great Grand Dam</b></h4>
+                    <label>Number :</label>
+                    <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GreatGrandDams" ng-click="GreatGrandDam1Pedigree(pedigree10)"></a></b>
+                    <br>
+                    <label>Name :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandDamnames"></b>
+                    <br>
+                    <label>Herd No. :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandDamHerds"></b>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class='item'>
+              <div class="title">
+                <h4 class="text-center"><b style="color:red">Grand Dam</b></h4>
+                <label>Number :</label>
+                <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GrandDam" ng-click="GrandDam1Pedigree(pedigree10)"></a></b>
+                <br>
+                <label>Name :</label>
+                <b style="color:black" ng-bind="pedigree10.GrandDamname"></b>
+                <br>
+                <label>Herd No. :</label>
+                <b style="color:black" ng-bind="pedigree10.GrandDamHerd"></b>
+              </div>
+              <div class='lv3 level'>
+                <div class='item'>
+                  <div class="title">
+                    <h4 class="text-center"><b style="color:red">Great Grand Sire</b></h4>
+                    <label>Number :</label>
+                    <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GreatGrandSired" ng-click="GreateGrandSire2Pedigree(pedigree10)"></a></b>
+                    <br>
+                    <label>Name :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandSirenamed"></b>
+                    <br>
+                    <label>Herd No. :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandSireHerdd"></b>
+                  </div>
+                </div>
+                <div class='item'>
+                  <div class="title">
+                    <h4 class="text-center"><b style="color:red">Great Grand Dam</b></h4>
+                    <label>Number :</label>
+                    <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GreatGrandDamd" ng-click="GreatGrandDam2Pedigree(pedigree10)"></a></b>
+                    <br>
+                    <label>Name :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandDamnamed"></b>
+                    <br>
+                    <label>Herd No. :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandDamHerdd"></b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='item'>
+          <div class="title">
+            <h4 class="text-center"><b style="color:red">Dam</b></h4>
+            <label>Number :</label>
+            <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.Dam" ng-click="DamPedigree(pedigree10)"></a></b>
+            <br>
+            <label>Name :</label>
+            <b style="color:black" ng-bind="pedigree10.Damname"></b>
+            <br>
+            <label>Herd No. :</label>
+            <b style="color:black" ng-bind="pedigree10.DamHerd"></b>
+          </div>
+          <div class='lv2 level'>
+            <div class='item'>
+              <div class="title">
+                <h4 class="text-center"><b style="color:red">Grand Sire</b></h4>
+                <label>Number :</label>
+                <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GrandSire2" ng-click="GrandSire2Pedigree(pedigree10)"></a></b>
+                <br>
+                <label>Name :</label>
+                <b style="color:black" ng-bind="pedigree10.GrandSirename2"></b>
+                <br>
+                <label>Herd No. :</label>
+                <b style="color:black" ng-bind="pedigree10.GrandSireHerd2"></b>
+              </div>
+              <div class='lv3 level'>
+                <div class='item'>
+                  <div class="title">
+                    <h4 class="text-center"><b style="color:red">Great Grand Sire</b></h4>
+                    <label>Number :</label>
+                    <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GreatGrandSires2" ng-click="GreateGrandSire3Pedigree(pedigree10)"></a></b>
+                    <br>
+                    <label>Name :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandSirenames2"></b>
+                    <br>
+                    <label>Herd No. :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandSireHerds2"></b>
+                  </div>
+                </div>
+                <div class='item'>
+                  <div class="title">
+                    <h4 class="text-center"><b style="color:red">Great Grand Dam</b></h4>
+                    <label>Number :</label>
+                    <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GreatGrandDams2" ng-click="GreatGrandDam3Pedigree(pedigree10)"></a></b>
+                    <br>
+                    <label>Name :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandDamnames2"></b>
+                    <br>
+                    <label>Herd No. :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandDamHerds2"></b>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class='item'>
+              <div class="title">
+                <h4 class="text-center"><b style="color:red">Grand Dam</b></h4>
+                <label>Number :</label>
+                <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GrandDam2" ng-click="GrandDam2Pedigree(pedigree10)"></a></b>
+                <br>
+                <label>Name :</label>
+                <b style="color:black" ng-bind="pedigree10.GrandDamname2"></b>
+                <br>
+                <label>Herd No. :</label>
+                <b style="color:black" ng-bind="pedigree10.GrandDamHerd2"></b>
+              </div>
+              <div class='lv3 level'>
+                <div class='item'>
+                  <div class="title">
+                    <h4 class="text-center"><b style="color:red">Great Grand Sire</b></h4>
+                    <label>Number :</label>
+                    <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GreatGrandSired2" ng-click="GreateGrandSire4Pedigree(pedigree10)"></a></b>
+                    <br>
+                    <label>Name :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandSirenamed2"></b>
+                    <br>
+                    <label>Herd No. :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandSireHerdd2"></b>
+                  </div>
+                </div>
+                <div class='item'>
+                  <div class="title">
+                    <h4 class="text-center"><b style="color:red">Great Grand Dam</b></h4>
+                    <label>Number :</label>
+                    <b><a data-toggle="tab" href="#animalprofile" ng-bind="pedigree10.GreatGrandDamd2" ng-click="GreatGrandDam4Pedigree(pedigree10)"></a></b>
+                    <br>
+                    <label>Name :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandDamnamed2"></b>
+                    <br>
+                    <label>Herd No. :</label>
+                    <b style="color:black" ng-bind="pedigree10.GreatGrandDamHerdd2"></b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" data-target="#memberanimal1">Member</a></li>
+    <li><a data-toggle="tab" data-target="#pedigree4">Pedigree </a></li>
+    <li><a data-toggle="tab" data-target="#dna24" ng-click="GetMemQuickList()">DNA  </a></li>
+    <li><a data-toggle="tab" data-target="#previousOwners4">Previous Owners  </a></li>
+    <li><a data-toggle="tab" data-target="#offspringinanimal4">Offspring  </a></li>
+    <li><a data-toggle="tab" data-target="#eidinfoanimal4">EID Info   </a></li>
+    <li><a data-toggle="tab" data-target="#earninganiamal4">Earnings  </a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="memberanimal4" class="tab-pane fade in active">
+      <div class="container edge col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+        <form>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Name:</label>
+              <b ng-bind="memberpanel.MemberName"></b>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Ranch:</label>
+              <b ng-bind="memberpanel.RanchName"></b>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Type:</label>
+              <b ng-bind="memberpanel.Type"></b>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Email Address:</label>
+              <b ng-bind="memberpanel.email"></b>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Address:</label>
+              <b ng-bind="memberpanel.Address"></b>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>City:</label>
+              <b ng-bind="memberpanel.City"></b>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>State:</label>
+              <b ng-bind="memberpanel.State"></b>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Zip Code:</label>
+              <b ng-bind="memberpanel.Zip"></b>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Phone:</label>
+              <b ng-bind="memberpanel.Phone"></b>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Phone 2:</label>
+              <b ng-bind="memberpanel.AltPhone"></b>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Office:</label>
+              <b ng-bind="memberpanel.Office"></b>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Fax:</label>
+              <b ng-bind="memberpanel.Fax"></b>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Join Date:</label>
+              <b ng-bind="memberpanel.JoinDate | date : 'MM/dd/yyyy'"></b>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Renewal:</label>
+              <b ng-bind="memberpanel.DueDate | date : 'MM/dd/yyyy'"></b>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Paid Date:</label>
+              <b ng-bind="memberpanel.PaidDate | date : 'MM/dd/yyyy'"></b>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label>Last Updated:</label>
+              <b ng-bind="memberpanel.UpdatedBy2"></b>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <label> Notes:</label>
+              <b ng-bind="memberpanel.MNotes"></b>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="pedigree4" class="tab-pane fade align">
+      <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+        <form class="form-group"> 
+          <div class="col-md-12">
+            <div class="col-md-6">
+              <h4><b style="color:red">Sire</b></h4>
+              <label>Number :</label>
+              <input type="text" ng-model="pedigreepanel.Sire">
+              <br>
+              <label>Name :</label>
+              <b ng-bind="pedigreepanel.sirname"></b>
+              <br>
+              <label>Herd No. :</label>
+              <b ng-bind="pedigreepanel.sireherd"></b>
+              <br>
+              <br>
+              <h4><b style="color:red">Dam</b></h4>
+              <label>Number :</label>
+              <input type="text" ng-model="pedigreepanel.Dam">
+              <br>
+              <label>Name :</label>
+              <b ng-bind="pedigreepanel.damname"></b>
+              <br>
+              <label>Herd No. :</label>
+              <b ng-bind="pedigreepanel.damherd"></b>
+            </div>
+            <div class="col-md-6">
+              <h4><b style="color:red">Grand Sire</b></h4>
+              <label>Number :</label>
+              <b ng-bind="pedigreepanel.grandsire"></b>
+              <br>
+              <label>Name :</label>
+              <b ng-bind="pedigreepanel.grandsirname"></b>
+              <br>
+              <label>Herd No. :</label>
+              <b ng-bind="pedigreepanel.grandsireherd"></b>
+              <br>
+              <br>
+              <h4><b style="color:red">Grand Dam</b></h4>
+              <label>Number :</label>
+              <b ng-bind="pedigreepanel.granddam"></b>
+              <br>
+              <label>Name :</label>
+              <b ng-bind="pedigreepanel.granddamname"></b>
+              <br>
+              <label>Herd No. :</label>
+              <b ng-bind="pedigreepanel.granddamherd"></b>
+              <br>
+              <br>
+              <h4><b style="color:red">Grand Sire</b></h4>
+              <label>Number :</label>
+              <b ng-bind="pedigreepanel.grandsire2"></b>
+              <br>
+              <label>Name :</label>
+              <b ng-bind="pedigreepanel.grandsirname2"></b>
+              <br>
+              <label>Herd No. :</label>
+              <b ng-bind="pedigreepanel.grandsireherd2"></b>
+              <br>
+              <br>
+              <h4><b style="color:red">Grand Dam</b></h4>
+              <label>Number :</label>
+              <b ng-bind="pedigreepanel.granddam2"></b>
+              <br>
+              <label>Name :</label>
+              <b ng-bind="pedigreepanel.granddamname2"></b>
+              <br>
+              <label>Herd No. :</label>
+              <b ng-bind="pedigreepanel.granddamherd2"></b>
+            </div>
+            <div class="row">
+              <button class="btn btn-color" ng-click="SavePedigree(pedigreepanel,editanimal)">Save Pedigree</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="dna24" class="tab-pane fade align">
+      <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+        <button type="button" class="btn btn-color" ng-click="ShowAddreg(1)">Add Regno</button>
+        <button type="button" class="btn btn-color" ng-click="DeleteDNAList(editanimal)">Delete All</button>
+      </div>
+      <br>
+      <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;" ng-hide="addregno">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+                <thead>
+                  <tr>
+                    <th>Ran Against</th>
+                    <th>Owner</th>
+                    <th>Sample ID</th>
+                    <th>Animal</th>
+                    <th>Private Herd</th>
+                    <th>Type Service</th>
+                    <th>Test</th>
+                    <th>Markers</th>
+                    <th>Exclusions</th>
+                    <th>Genotype</th>
+                    <th>Qualified</th>
+                    <th>Relationship</th>
+                    <th>New ?</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="dnapan in dnapanel">
+                    <td><span ng-bind="dnapan.Ranagainst"></span></td>
+                    <td><span ng-bind="dnapan.memberno"></span></td>
+                    <td><span ng-bind="dnapan.SampleID"></span></td>
+                    <td><span ng-bind="dnapan.Animal"></span></td>
+                    <td><span ng-bind="dnapan.PrivateHerd"></span></td>
+                    <td><span ng-bind="dnapan.TypeService"></span></td>
+                    <td><span ng-bind="dnapan.Test"></span></td>
+                    <td><span ng-bind="dnapan.Markers"></span></td>
+                    <td><span ng-bind="dnapan.Exclusions"></span></td>
+                    <td><span ng-bind="dnapan.Genotype"></span></td>
+                    <td>
+                      <input type="checkbox" ng-model="dnapan.Qualified">
+                    </td>
+                    <td><span ng-bind="dnapan.Relationship"></span></td>
+                    <td>
+                      <input type="checkbox" ng-model="dnapan.New">
+                    </td>
+                    <td style="white-space: nowrap;">
+                      <i class="btn btn-warning fa fa-edit" ng-click="ShowAddreg(0)"></i>
+                      <i class="btn btn-danger fa fa-trash" ng-click="DeleteDNAPan(dnapan)"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="container" style="background-color: #d8ceb9;height:100%;padding: 10px;" ng-show="addregno1">
+        <div>
+          <span>Single Animal or All of one Member</span>
+          <br>
+          <label><input type="radio" name="single" ng-click="option='single'" ng-init="option='single'">Single Animal</label><br>
+          <label><input type="radio" name="single" checked="true" ng-click="option='multiple'">Select Animal from List</label><br>
+        </div>
+        <div ng-show="option ==='single'">
+          <label>Reg No to Verify : </label>
+          <input type="text" ng-model="single.txtRegNo">
+          <input ng-hide="true" type="text" ng-model="showregeditadd">
+          <button type="button" ng-click="CheckSingle(single,editanimal,showregeditadd)">Check</button>
+          <button type="button" ng-click="AddToList()">Add to List</button>
+          <button type="button" ng-click="addregno=false;addtolist=true;addregno1=false">Exit</button>
+        </div>
+        <div ng-show="option ==='multiple'" ng-init="updatemember()">
+          <label>Members</label>
+          <input class="form-control" type="text" ng-model="multiplelist.member" list="names">
+            <datalist id="names" ng-model="MemberNumber">
+              <option ng-repeat="member in members | filter:multiplelist.member | limitTo:8" value="{{member.MemberNumber}} - {{member.MemberName}}"></option>
+            </datalist>
+          <br>
+          <label><input ng-model="multiplelist.gender" value="Cow" type="radio" name="gender">Cow</label>
+          <label><input ng-model="multiplelist.gender" value="Bull" type="radio" name="gender">Bull</label>
+          <label><input ng-model="multiplelist.gender" value="Both" type="radio" name="gender">Both</label>
+          <label>Quick List :</label>
+          <select ng-model="multiplelist.quick" ng-click="GetMemQuickList()">
+            <option value="">--Select One</option>
+            <option ng-repeat="list in lists" value="{{list.ListId}}">{{list.ListName}}</option>
+          </select>
+          <br>
+          <button type="button" ng-click="MultipleList(multiplelist,editanimal)">View List</button>
+          <br>
+          <div ng-if="mls">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered nowrap" width="100%">
+                    <thead>
+                      <tr>
+                        <th></th>
+                      </th>
+                      <th>Reg No</th>
+                      <th>Animal</th>
+                      <th>Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="ml in mls">
+                      <td>
+                        <input type="checkbox" ng-model="ml.check" ng-change="Checkml(ml,editanimal)" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+                      </td>
+                      <td><span ng-bind="ml.RegNo"></span></td>
+                      <td><span ng-bind="ml.Animal"></span></td>
+                      <td><span ng-bind="ml.TypeService"></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <br>
+          <button type="button" ng-click="Submitml()">Submit</button>
+          <button type="button" ng-click="Exitml()">Exit</button>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="background-color: #d8ceb9;height:100%;padding: 10px;" ng-hide="addtolist">
+      <div>
+        <h3>Add to List</h3>
+        <hr>
+        <label><input type="radio" name="add">New List</label>
+        <input type="input" ng-model="addlist.quick">
+        <br>
+        <button type="button" ng-click="AddtoNewList(addlist,single)">Submit</button>
+        <hr>
+        <label><input type="radio" name="add" checked="true" ng-click="option='add'" ng-init="option='add'">Add to List</label><br>
+        <label><input type="radio" name="add" ng-click="option='replace'" ng-init="option='multiple'">Replace list</label><br>
+      </div>
+      <div ng-show="option ==='add'">
+        <label>Add to List: </label>
+        <select ng-model="addnewfromlist.quick">
+          <option value="">--Select One</option>
+          <option ng-repeat="quicklist in quicklists" value="{{quicklist.ListId}}">{{quicklist.ListName}}</option>
+        </select>
+        <br>
+        <button type="button" ng-click="AddtoNewList1(addnewfromlist,single)">Submit</button>
+        <button type="button" ng-click="addregno=true;addtolist=true;addregno1=true">Exit</button>
+      </div>
+      <div ng-show="option ==='replace'">
+        <label>Replace</label>
+        <select ng-model="addnewfromlist.quick">
+          <option value="">--Select One</option>
+          <option ng-repeat="quicklist in quicklists" value="{{quicklist.ListId}}">{{quicklist.ListName}}</option>
+        </select>
+        <br>
+        <button type="button" ng-click="AddtoNewList2(addnewfromlist,single)">Submit</button>
+        <button type="button" ng-click="addregno=true;addtolist=true;addregno1=true">Exit</button> 
+      </div>
+    </div>
+  </div>
+  <div id="previousOwners4" class="tab-pane fade align">
+    <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+              <thead>
+                <tr>
+                  <th>Member Number</th>
+                  <th>Previous Owner</th>
+                  <th>Sales Date</th>
+                  <th>Ranch Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="preowner in previousowner">
+                  <td><span ng-bind="preowner.PrevMember"></span></td>
+                  <td><span ng-bind="preowner.MemberName"></span></td>
+                  <td><span ng-bind="preowner.RanchName"></span></td>
+                  <td><span ng-bind="preowner.SaleDate | date:'MM/dd/yyyy'"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="offspringinanimal4" class="tab-pane fade align">
+    <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+              <thead>
+                <tr>
+                  <th>Offspring</th>
+                  <th>Animal</th>
+                  <th>Description</th>
+                  <th>Birthdate</th>
+                  <th>Type</th>
+                  <th>Member Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="offsprin in offspring">
+                  <td><span ng-bind="offsprin.RegNo"></span></td>
+                  <td><span ng-bind="offsprin.Animal"></span></td>
+                  <td><span ng-bind="offsprin.Description"></span></td>
+                  <td><span ng-bind="offsprin.Birthdate |date:'MM/dd/yyyy'"></span></td>
+                  <td><span ng-bind="offsprin.TypeService"></span></td>
+                  <td><span ng-bind="offsprin.MemberName"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="eidinfoanimal4" class="tab-pane fade align">
+    <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+              <thead>
+                <tr>
+                  <th>EID</th>
+                  <th>Dentition</th>
+                  <th>Applied</th>
+                  <th>Regno</th>
+                  <th>Herd</th>
+                  <th>Birthdate</th>
+                  <th>Color</th>
+                  <th>Description</th>
+                  <th>Owner</th>
+                  <th>Veterinarian</th>
+                  <th>Clinic</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="eidinfo in eidinformation">
+                  <td><span ng-bind="eidinfo.EID"></span></td>
+                  <td><span ng-bind="eidinfo.Dentition"></span></td>
+                  <td><span ng-bind="eidinfo.DateApplied | date:'MM/dd/yyyy'"></span></td>
+                  <td><span ng-bind="eidinfo.RegNo"></span></td>
+                  <td><span ng-bind="eidinfo.PrivateHerd"></span></td>
+                  <td><span ng-bind="eidinfo.birthdate | date:'MM/dd/yyyy'"></span></td>
+                  <td><span ng-bind="eidinfo.color"></span></td>
+                  <td><span ng-bind="eidinfo.description"></span></td>
+                  <td><span ng-bind="eidinfo.Owner"></span></td>
+                  <td><span ng-bind="eidinfo.Veterinarian"></span></td>
+                  <td><span ng-bind="eidinfo.Clinic"></span></td>
+                  <td><span ng-bind="eidinfo.Notes"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="earninganiamal4" class="tab-pane fade align">
+    <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <label>Event Name</label>
+          <input type="text" class="form-control" ng-model="addearnings.name">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <label>Date</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="addearnings.date">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <label>Placing</label>
+          <input type="text" class="form-control" ng-model="addearnings.placing">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <label>Score</label>
+          <input type="text" class="form-control" ng-model-options="{timezone: 'UTC'}" ng-model="addearnings.score">
+        </div>
+      </div>  
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <label> Money Earned  </label>
+          <input type="text" class="form-control" ng-model="addearnings.money">
+        </div>
+      </div>  
+      <br>
+      <button type="button" class="btn btn-color" ng-click="AddEarnings(addearnings,editanimal)">Add</button>
+    </div>
+    <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+              <thead>
+                <tr>
+                  <th>Event Name</th>
+                  <th>Date</th>
+                  <th>Placing</th>
+                  <th>Score</th>
+                  <th>$ Earned</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="earning in earnings">
+                  <td>
+                    <span ng-hide="uearn" ng-bind="earning.EventName"></span>
+                    <input ng-show="uearn" class="form-control" type="text" ng-model="earning.EventName">
+                  </td>
+                  <td>
+                    <span ng-hide="uearn" ng-bind="earning.EventDate | date:'MM/dd/yyyy'"></span>
+                    <input ng-show="uearn" class="form-control" type="text" ng-model="earning.EventDate">
+                  </td>
+                  <td>
+                    <span ng-hide="uearn" ng-bind="earning.Placing"></span>
+                    <input ng-show="uearn" class="form-control" type="text" ng-model="earning.Placing">
+                  </td>
+                  <td>
+                    <span ng-hide="uearn" ng-bind="earning.Score"></span>
+                    <input ng-show="uearn" class="form-control" type="text" ng-model="earning.Score">
+                  </td>
+                  <td>
+                    <span ng-hide="uearn" ng-bind="earning.MoneyEarned"></span>
+                    <input ng-show="uearn" class="form-control" type="text" ng-model="earning.MoneyEarned">
+                  </td>
+                  <td style="white-space: nowrap;">
+                    <i class="btn btn-warning fa fa-edit" ng-hide="uearn" ng-click="uearn=true"></i>
+                    <i class="btn btn-primary fa fa-check" ng-show="uearn" ng-click="UpdateEarning(earning);uearn=false"></i>
+                    <i class="btn btn-danger fa fa-trash" ng-click="DeleteAnimalEarning(earning)"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

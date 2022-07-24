@@ -1,0 +1,17 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Animal Earnings</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" id="earninganimal">
+  <form class="form-group" enctype="multipart/form-data" ng-submit="UploadEarnings(earnings)">
+    <div class="col-md-12">
+      <input type="file" class="form-control" file-model="earnings.file" ng-required="true" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+      <br>
+      <label style="color:red;">**Note: Must be in Excel 97-2003 format (*.xls)</label>
+      <br/>
+      <a class="abc" href="format/Earnings.xls">Download Format</a>
+      <br/>
+      <button class="btn btn-color">Upload</button>
+      <br>
+    </div>
+  </form>
+</div>

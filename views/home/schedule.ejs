@@ -1,0 +1,94 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Schedule</h2>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-hide="schedulehide" ng-init="ScheduleDate();ScheduleInfo()">
+  <div class="row col-md-12" style="color: black; font-size: 18px;">
+    <h2>Upcoming Events as of {{sdate[0].weekago | date:'MM/dd/yyyy'}}</h2>
+  </div>
+  <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Sanction</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Start Day</th>
+        <th>View More</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="sinf in sinfo">
+        <td><span ng-bind="sinf.title"></span></td>
+        <td><span ng-bind="sinf.sanction"></span></td>
+        <td><span ng-bind="sinf.city"></span></td>
+        <td><span ng-bind="sinf.state"></span></td>
+        <td><span ng-bind="sinf.startday | date:'MM/dd/yyyy'"></span></td>
+        <td class="text-center">
+          <i class="fa fa-info btn btn-primary" ng-click="MoreSchedule(sinf)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container" style="height:100%;width:90%;padding: 10px;" ng-show="schedulehide1">
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Event ID {{data1.pevid}}</h4>
+    <label>Title :</label>
+    <span style="color: black;" ng-bind="data1.title"></span>
+    <br>
+    <label>Sanction :</label>
+    <span style="color: black;" ng-bind="data1.sanction"></span>
+    <br>
+    <label>City :</label>
+    <span style="color: black;" ng-bind="data1.city"></span>
+    <br>
+    <label>State :</label>
+    <span style="color: black;" ng-bind="data1.state"></span>
+    <br>
+    <label>Entries Open : </label>{{data1.eoo | date : 'MM/dd/yyyy'}} to {{data1.ec | date : 'MM/dd/yyyy'}}
+  </div>
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Judges</h4>
+    <ul>
+      <li style="color: black;font-weight: bold" ng-repeat="dat in data2">{{dat.jid}} : {{dat.jname}}</li>
+    </ul>
+  </div>
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Competition classes</h4>
+    <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>Date</th>
+          <th>Entries</th>
+          <th>Results PDF</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tjd in data3">
+          <td><a href="#" ng-click="ClassData(tjd)"><span ng-bind="tjd.Class"></span></a></td>
+          <td><span ng-bind="tjd.startdate | date : 'MM/dd/yyyy'"></span></td>
+          <td><span ng-bind="tjd.entries_results"></span></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-color" ng-click="ExitSchedule()">Exit</button>
+</div>
+<div class="container" style="height:100%;width:90%;padding: 10px;" ng-show="classhide">
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Class ID {{cinfo.classid}}</h4>
+    <label>Class :</label>
+    <span style="color: black;" ng-bind="cinfo.class"></span>
+    <br>
+    <label>City :</label>
+    <span style="color: black;" ng-bind="cinfo.city"></span>
+    <br>
+    <label>State :</label>
+    <span style="color: black;" ng-bind="cinfo.state"></span>
+    <br>
+    <label>Start Date : </label>{{cinfo.startdate | date : 'MM/dd/yyyy'}}
+  </div>
+  <button class="btn btn-color" ng-click="ExitClass()">Back</button>
+</div>

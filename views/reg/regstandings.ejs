@@ -1,0 +1,380 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Standings</h2>
+</div>
+<div>
+  <div class="container" style="height:100%;width:90%;padding: 10px;" ng-hide="showstand">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="ShowPPYear(); ViewStandings();">View Standings</h4>
+    <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="GetUpdateData()">Update Standings</h4>
+    <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="ViewDataExport()">Standings Data Export</h4>
+    <br>
+    <br>
+    <h2 ng-init="GetMoney()">Money sums by division this season</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Division</th>
+          <th>Money</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="mon in money">
+          <td><span ng-bind="mon.divcode"></span></td>
+          <td>{{mon.moneysum | currency}} ({{mon.amoneysum | currency}})</td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <br>
+    <h2>Money sums by division in 2019 season</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Division</th>
+          <th>Money</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="mon1 in money1">
+          <td><span ng-bind="mon1.division"></span></td>
+          <td>{{mon1.moneysum | currency}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="container" style="height:100%;width:90%;padding: 10px;" ng-show="updatestand">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">All ABBI & BTCA Standings Update</h2>
+    <br>
+    <h3>Manual Update Buttons</h3>
+    <p><b>Step 1 : </b>Click button to update events for 2021. The process may take a few seconds to complete, so wait for it</p>
+    <br>
+    <button class="btn btn-color" ng-click="CompileSeason(gsu)">COMPILE SEASON EVENTS</button>
+    <br>
+    <br>
+    <p><b>Step 2 : </b>Click button compile raw outs for 2021. The process may take a few seconds to complete, so wait for it</p>
+    <br>
+    <button class="btn btn-color" ng-click="Bucket(gsu)">COMPILE OUT BUCKET</button>
+    <br>
+    <br>
+    <p><b>Step 3 : </b>Click button to calculate out money for 2021. The process may take a few seconds to complete, so wait for it</p>
+    <br>
+    <button class="btn btn-color" ng-click="SetMoney(gsu)">SET MONEY</button>
+    <br>
+    <br>
+    <p><b>Step 4 : </b>Click button to populate standings for 2021. The process may take a few seconds to complete, so wait for it</p>
+    <br>
+    <button class="btn btn-color" ng-click="CompileStand(gsu)">COMPILE STANDINGS</button>
+    <br>
+    <br>
+    <p><b>Step 5 : </b>Click button to populate standings for 2021. The process may take a few seconds to complete, so wait for it</p>
+    <br>
+    <button class="btn btn-color" ng-click="SetPosition(gsu)">SET POSITIONS</button>
+    <br>
+    <br>
+    <hr>
+    <button class="btn btn-color" ng-click="AnimalEarningUpdate(gsu)">UPDATE ANIMAL EARNINGS TABLE</button>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="LegacyDam(gsu)">CURRENT YR LEGACY DAMS</button>
+    <hr>
+    <h3>Request Meta</h3>
+    <label>request step : </label><b>{{gsu.step}}</b>
+    <br>
+    <br>
+    <label>request season : </label><b>{{gsu.season}}</b>
+    <br>
+    <br>
+    <label>official current season : </label><b>{{gsu.CurrentSeason}}</b>
+    <br>
+    <br>
+    <label>Bucket population : </label><b>{{gsu.Bucket_pop}}</b>
+    <br>
+    <br>
+  </div>
+  <div class="container" style="height:100%;width:90%;padding: 10px;" ng-show="showstand1">
+    <div>
+      <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="ShowCurrentStand();CurrentStandDate();SeasonOut()">Current Standings ({{cyear | date : 'yyyy'}})</h4>
+    </div>
+    <div>
+      <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="ShowPastStand();SeasonOut1()">Past Year Standings ({{pyear | date : 'yyyy'}})</h4>
+    </div>
+  </div>
+  <div class="container" style="height:100%;width:90%;padding: 10px;" ng-show="showstand2">
+    <div>
+      <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="ExportStanding()">Export Standings Bucket</h4>
+    </div>
+    <div>
+      <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="AllStanding()">All current standings data</h4>
+    </div>
+  </div>
+  <div ng-show="export" class="container" style="height:100%;width:90%;padding: 10px;">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>bno</th>
+                <th>bname</th>
+                <th>owner</th>
+                <th>bbcid</th>
+                <th>outid</th>
+                <th>score</th>
+                <th>place</th>
+                <th>evid </th>
+                <th>city </th>
+                <th>state</th>
+                <th>sanction </th>
+                <th>evclass</th>
+                <th>evtype </th>
+                <th>divcode</th>
+                <th>money</th>
+                <th>amoney </th>
+                <th>opoint</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="es in ess">
+                <td ng-bind="es.bno"></td>
+                <td ng-bind="es.bname"></td>
+                <td ng-bind="es.owner"></td>
+                <td ng-bind="es.bbcid"></td>
+                <td ng-bind="es.outid"></td>
+                <td ng-bind="es.score"></td>
+                <td ng-bind="es.place"></td>
+                <td ng-bind="es.evid"></td>
+                <td ng-bind="es.city"></td>
+                <td ng-bind="es.state"></td>
+                <td ng-bind="es.sanction"></td>
+                <td ng-bind="es.evclass"></td>
+                <td ng-bind="es.evtype"></td>
+                <td ng-bind="es.divcode"></td>
+                <td ng-bind="es.money"></td>
+                <td ng-bind="es.amoney"></td>
+                <td ng-bind="es.opoint"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="btn btn-color" ng-click="ExitTableStand1()">Exit</button>
+    <br>
+  </div>
+  <div ng-show="showall" class="container" style="height:100%;width:90%;padding: 10px;">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>regno</th>
+                <th>bno</th>
+                <th>bname</th>
+                <th>owner</th>
+                <th>rowid</th>
+                <th>mpos </th>
+                <th>ppos </th>
+                <th>oppos</th>
+                <th>bbcid</th>
+                <th>season </th>
+                <th>division </th>
+                <th>money</th>
+                <th>point_ttl</th>
+                <th>point_avg</th>
+                <th>opoint_ttl </th>
+                <th>outcount </th>
+                <th>qoutcoun</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="as in ass">
+                <td ng-bind="as.regno"></td>
+                <td ng-bind="as.bno"></td>
+                <td ng-bind="as.bname"></td>
+                <td ng-bind="as.owner"></td>
+                <td ng-bind="as.rowid"></td>
+                <td ng-bind="as.mpos"></td>
+                <td ng-bind="as.ppos"></td>
+                <td ng-bind="as.oppos"></td>
+                <td ng-bind="as.bbcid"></td>
+                <td ng-bind="as.season"></td>
+                <td ng-bind="as.division"></td>
+                <td ng-bind="as.money"></td>
+                <td ng-bind="as.point_ttl"></td>
+                <td ng-bind="as.point_avg"></td>
+                <td ng-bind="as.opoint_ttl"></td>
+                <td ng-bind="as.outcount"></td>
+                <td ng-bind="as.qoutcoun"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="btn btn-color" ng-click="ExitTableStand1()">Exit</button>
+  </div>
+  <div ng-show="current" style="height:100%;width:90%;padding: 10px;">
+    <div class="container col-md-12">
+      <h4 class="well well-sm" style="background-color: #503219; color: white;">ABBI Standings as of {{cdate.date | date:'MM/dd/yyyy'}}</h4>
+      <div class="col-md-4">
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data = {division :  'Afut', format : 'money'}" ng-click="AFP(data)">ABBI Futurity ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data1 = {division : 'Afut', format : 'points'} " ng-click="AFP(data1)">ABBI Futurity ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data2 = {division : 'Aderby', format : 'money'} " ng-click="AFP(data2)">ABBI Derby ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data3 = {division : 'Aderby', format : 'points'} " ng-click="AFP(data3)">ABBI Derby ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data4 = {division : 'Aclassic', format : 'money'} " ng-click="AFP(data4)">ABBI Classic ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data5 = {division : 'Aclassic', format : 'points'} " ng-click="AFP(data5)">ABBI Classic ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data6 = {division : 'Ayear', format : 'money'} " ng-click="AFP(data6)">ABBI Yearling ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data7 = {division : 'Ayear', format : 'points'} " ng-click="AFP(data7)">ABBI Yearling ($pts)</h4>
+      </div>
+      <div class="col-md-4">
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data8 = {division : 'ACGfut', format : 'money'} " ng-click="AFP(data8)">ABBI Cowgirl Fut. ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data9 = {division : 'ACGfut', format : 'points'} " ng-click="AFP(data9)">ABBI Cowgirl Fut. ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data10 = {division : 'AJRfut', format : 'money'} " ng-click="AFP(data10)">ABBI Junior Fut. ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data11 = {division : 'AJRfut', format : 'points'} " ng-click="AFP(data11)">ABBI Junior Fut. ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data12 = {division : 'A2K21_FS', format : null}       " ng-click="AFP(data12)">ABBI 2021 Futurity Series</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data13 = {division : 'A2K21_NBLB', format : null}       " ng-click="AFP(data13)">ABBI 2021 NBLB Series</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data14 = {division : 'ARev', format : null}      " ng-click="AFP(data14)">ABBI 2021 Revolution</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data15 = {division : 'A2K21_YS', format : null}      " ng-click="AFP(data15)">ABBI 2021 Yearling Series</h4>
+      </div>
+      <div class="col-md-4">
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data16 = {division : 'AfutC', format : 'money'} " ng-click="AFP(data16)">ABBI-CA Futurity ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data17 = {division : 'AfutC', format : 'points'} " ng-click="AFP(data17)">ABBI-CA Futurity ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data18 = {division : 'AderbyC', format : 'money'} " ng-click="AFP(data18)">ABBI-CA Derby ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data19 = {division : 'AclassicC', format : 'money'} " ng-click="AFP(data19)">ABBI-CA Classic ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data20 = {division : 'AU-year', format : 'points'} " ng-click="AFP(data20)">ABBI-AU Yearling 2 ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data21 = {division : 'AU-fut', format : 'points'} " ng-click="AFP(data21)">ABBI-AU Futurity 3 ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data22 = {division : 'AU-ladies', format : 'points'} " ng-click="AFP(data22)">ABBI-AU Ladies 2-3 ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data23 = {division : 'AU-derby', format : 'points'} " ng-click="AFP(data23)">ABBI-AU Derby 4 ($pts)</h4>
+      </div>
+      <br>
+      <div class="col-md-12">
+        <h4 class="well well-sm" style="background-color: #503219; color: white;">Season Stats</h4>
+        <div class="col-md-6">
+          <table>
+            <tr>
+              <td>Season Outs</td>
+              <td>{{season.souts}}</td>
+            </tr>
+            <tr>
+              <td>Competing Animals</td>
+              <td>{{season.ani_count}}</td>
+            </tr>
+            <tr>
+              <td>Average Bull Score</td>
+              <td>{{season.avg_score}}</td>
+            </tr>
+            <tr>
+              <td>Dropped Single scores</td>
+              <td>{{season.droped_singlesc}}</td>
+            </tr>
+            <tr>
+              <td>Avg Dropped marking</td>
+              <td>{{season.avg_droped_mark}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-color" ng-click="ExitCurrent()">Back</button>
+      <br>
+      <br>
+    </div>
+  </div>
+  <div ng-show="past" style="height:100%;width:90%;padding: 10px;">
+    <div class="col-md-12 container">
+      <div class="col-md-4">
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data1 = {division :  'Afut', format : 'money'}" ng-click="AFP1(data1)">ABBI Futurity ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data2 = {division : 'Afut', format : 'points'}" ng-click="AFP1(data2)">ABBI Futurity ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data3 = {division : 'Aderby', format : 'money'}" ng-click="AFP1(data3)">ABBI Derby ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data4 = {division : 'Aderby', format : 'points'}" ng-click="AFP1(data4)">ABBI Derby ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data5 = {division : 'Aclassic', format : 'money'}" ng-click="AFP1(data5)">ABBI Classic ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data6 = {division : 'Aclassic', format : 'points'}" ng-click="AFP1(data6)">ABBI Classic ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data7 = {division : 'Ayear', format : 'money'}" ng-click="AFP1(data7)">ABBI Yearling ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data8 = {division : 'Ayear', format : 'points'}" ng-click="AFP1(data8)">ABBI Yearling ($pts)</h4>
+      </div>
+      <div class="col-md-4">
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data9 = {division : 'ACGfut', format : 'money'}" ng-click="AFP1(data9)">ABBI Cowgirl Fut. ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data10 = {division : 'ACGfut', format : 'points'}" ng-click="AFP1(data10)">ABBI Cowgirl Fut. ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data11 = {division : 'AJRfut', format : 'money'}" ng-click="AFP1(data11)">ABBI Junior Fut. ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data12 = {division : 'AJRfut', format : 'points'}" ng-click="AFP1(data12)">ABBI Junior Fut. ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data13 = {division : 'A2K21_FS', format : null}      " ng-click="AFP1(data13)">ABBI 2021 Futurity Series</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data14 = {division : 'A2K21_NBLB', format : null}      " ng-click="AFP1(data14)">ABBI 2021 NBLB Series</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data15 = {division : 'ARev', format : null}  " ng-click="AFP1(data15)">ABBI 2021 Revolution</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data16 = {division : 'A2K21_YS', format : null}   " ng-click="AFP1(data16)">ABBI 2021 Yearling Series</h4>
+      </div>
+      <div class="col-md-4">
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data17 = {division : 'AfutC', format : 'money'}" ng-click="AFP1(data17)">ABBI-CA Futurity ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data18 = {division : 'AfutC', format : 'points'}" ng-click="AFP1(data18)">ABBI-CA Futurity ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data19 = {division : 'AderbyC', format : 'money'}" ng-click="AFP1(data19)">ABBI-CA Derby ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data20 = {division : 'AclassicC', format : 'money'}" ng-click="AFP1(data20)">ABBI-CA Classic ($ds)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data21 = {division : 'AU-year', format : 'points'}" ng-click="AFP1(data21)">ABBI-AU Yearling 2 ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data22 = {division : 'AU-fut', format : 'points'}" ng-click="AFP1(data22)">ABBI-AU Futurity 3 ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data23 = {division : 'AU-ladies', format : 'points'}" ng-click="AFP1(data23)">ABBI-AU Ladies 2-3 ($pts)</h4>
+        <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-init="data24 = {division : 'AU-derby', format : 'points'}" ng-click="AFP1(data24)">ABBI-AU Derby 4 ($pts)</h4>
+      </div>
+      <br>
+      <div class="col-md-12">
+        <h4 class="well well-sm" style="background-color: #503219; color: white;">Season Stats</h4>
+        <div class="col-md-6">
+          <table>
+            <tr>
+              <td>Season Outs</td>
+              <td>{{season1.souts}}</td>
+            </tr>
+            <tr>
+              <td>Competing Animals</td>
+              <td>{{season1.ani_count}}</td>
+            </tr>
+            <tr>
+              <td>Average Bull Score</td>
+              <td>{{season1.avg_score}}</td>
+            </tr>
+            <tr>
+              <td>Dropped Single scores</td>
+              <td>{{season1.droped_singlesc}}</td>
+            </tr>
+            <tr>
+              <td>Avg Dropped marking</td>
+              <td>{{season1.avg_droped_mark}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-color" ng-click="ExitPast()">Back</button>
+      <br>
+      <br>
+    </div>
+    <br>
+  </div>
+  <div ng-show="tablestandings" class="container" style="height:100%;width:90%;padding: 10px;">
+    <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+      <thead>
+        <tr>
+          <th>mpos</th>
+          <th>name</th>
+          <th>owner</th>
+          <th>money</th>
+          <th>ttl pts</th>
+          <th>avg</th>
+          <th>outs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="sea in seasons">
+          <td ng-bind="sea.mpos"></td>
+          <td ng-bind="sea.name"></td>
+          <td ng-bind="sea.owner"></td>
+          <td ng-bind="sea.money"></td>
+          <td ng-bind="sea.ttl_pts"></td>
+          <td ng-bind="sea.avg"></td>
+          <td ng-bind="sea.outs"></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <button class="btn btn-color" ng-click="ExitTableStand()">Exit</button>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">DNA Verify</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <form>
+    <div class="row">
+      <div class="col-sm-12">
+        <h5>**Note: this will only show geno matches and matings. This will not modify any database records for parentage cases.</h5>
+      </div>
+      <div class="col-sm-12 form-group">
+        <label>Offspring List:</label>
+        <textarea class="form-control" rows="10" cols="30" ng-model="dnaverify.offspring"></textarea><span>*Enter each Offspring followed by Comma(,)</span>
+      </div>
+      <div class="col-sm-12 form-group">
+        <label>Parent List:</label>
+        <textarea class="form-control" rows="10" cols="30" ng-model="dverifys"></textarea><span>*Enter each Parent followed by Comma(,)</span>
+      </div>  
+      <div class="col-sm-12">
+        <button type="submit" style="margin-left: 118px;" ng-click="DNAVerifyData(dnaverify)" class="btn btn-color">Get Parent List From DB</button>
+        <input class="btn btn-color" ng-click="DNAVerifySubmit(dnaverify,dverifys)" type="submit" value="Get Results">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>OffspringRegNo</th>
+              <th>SireRegNo</th>
+              <th>DamRegNo</th>
+              <th>Matches</th>
+              <th>Exclusions</th>
+              <th>Results</th>
+              <th>OffspringSampleId</th>
+              <th>SireSampleId</th>
+              <th>DamSampleId</th>
+              <th>ExclusionList</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="dvd in dverifydata">
+              <td>{{dvd.Type}}</td>
+              <td>{{dvd.OffspringRegNo}}</td>
+              <td>{{dvd.SireRegNo}}</td>
+              <td>{{dvd.DamRegNo}}</td>
+              <td>{{dvd.Matches}}</td>
+              <td>{{dvd.Exclusions}}</td>
+              <td>{{dvd.Results}}</td>
+              <td>{{dvd.OffspringSampleId}}</td>
+              <td>{{dvd.SireSampleId}}</td>
+              <td>{{dvd.DamSampleId}}</td>
+              <td>{{dvd.ExclusionList}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div> 
+</div>

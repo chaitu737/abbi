@@ -1,0 +1,261 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Add Animal</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="row">
+    <form class="form-group">
+      <div class="col-sm-6">
+        <div class="col-sm-12 form-group">
+          <label>Payment Id: </label>
+          <input type="text" class="form-control" ng-model="addanimal.payment">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Get Payment Id from Work Order:  </label>
+          <input type="text" class="form-control" ng-model="addanimal.paymentwo">
+        </div>
+        <div class="col-sm-12 form-group" ng-init="updatemember()">
+          <label>Member: </label>
+          <input class="form-control" type="text" ng-model="addanimal.memberno" list="names" ng-change="Breeder(addanimal)">
+            <datalist id="names" ng-model="MemberNumber">
+              <option ng-repeat="member in members | filter:addanimal.memberno | limitTo:8" value="{{member.MemberNumber}} - {{member.MemberName}}"></option>
+            </datalist>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Name<span style="color:red">*</span></label>
+          <input type="text" placeholder="Name" class="form-control" ng-model="addanimal.name" ng-keyup="CheckAnimal(addanimal)" ng-required="true">
+         <div ng-if="addanimal.name.length > 0">
+          <b ng-if="animalname>0 || animalname1>0" ng-style="{color: 'red'}" ng-bind="message"></b>
+          <b ng-if="animalname==0 && animalname1==0" ng-style="{color: 'green'}" ng-bind="message"></b>
+          </div>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Sex</label>
+          <select class="form-control" ng-init="addanimal.sex='NB'" ng-model="addanimal.sex">
+            <option value="NB">NB</option>
+            <option value="NC">NC</option>
+            <option value="AB">AB</option>
+            <option value="AC">AC</option>
+            <option value="EB">EB</option>
+            <option value="EC">EC</option>
+            <option value="NM">NM</option>
+            <option value="NS">NS</option>
+            <option value="NG">NG</option>
+            <option value="AM">AM</option>
+            <option value="AS">AS</option>
+            <option value="AG">AG</option>
+            <option value="EM">EM</option>
+            <option value="ES">ES</option>
+            <option value="EG">EG</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Private Herd #<span style="color:red">*</span></label>
+          <input type="text" class="form-control" ng-model="addanimal.herd" maxlength="6" ng-required="true">
+          <!-- <b ng-if="herd>0 || herd1>0" ng-style="{color: 'red'}" ng-bind="hmessage"></b> -->
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Birth Date<span style="color:red">*</span></label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="addanimal.bdate" placeholder="" required="">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>DNA Number</label>
+          <input type="text" class="form-control" ng-blur="CheckDNA(addanimal)" ng-model="addanimal.DNA">
+          <b ng-if="dna>0" ng-style="{color: 'red'}" ng-bind="message"></b>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Main Color</label>
+          <select class="form-control" ng-model="addanimal.main" ng-required="true">
+            <option value="">--Select One--</option>
+            <option value="black">black</option>
+            <option value="white">white</option>
+            <option value="grey">grey</option>
+            <option value="yellow">yellow</option>
+            <option value="cream">cream</option>
+            <option value="orange">orange</option>
+            <option value="blue">blue</option>
+            <option value="red">red</option>
+            <option value="brown">brown</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Secondary Color</label>
+          <select class="form-control" ng-model="addanimal.second">
+            <option value="">--Select One--</option>
+            <option value="black">black</option>
+            <option value="white">white</option>
+            <option value="grey">grey</option>
+            <option value="yellow">yellow</option>
+            <option value="cream">cream</option>
+            <option value="orange">orange</option>
+            <option value="blue">blue</option>
+            <option value="red">red</option>
+            <option value="brown">brown</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Pattern</label>
+          <select class="form-control"  ng-model="addanimal.pattern">
+            <option value="">--Select One--</option>
+            <option value="spotted">spotted</option>
+            <option value="paint">paint</option>
+            <option value="brindle">brindle</option>
+            <option value="roan">roan</option>
+            <option value="speckled">speckled</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Additional Markings</label>
+          <select class="form-control" ng-model="addanimal.markings">
+            <option value="">--Select One--</option>
+            <option value="blaze on face">blaze on face</option>
+            <option value="diamond on face">diamond on face</option>
+            <option value="rings around eyes">rings around eyes</option>
+            <option value="sock">sock</option>
+            <option value="socks">socks</option>
+            <option value="white tail tip">white tail tip</option>
+            <option value="black ears">black ears</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Others</label>
+          <input type="text" class="form-control" ng-model="addanimal.others">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Horns</label>
+          <select class="form-control" ng-init="addanimal.horn='H'" ng-model="addanimal.horn">
+            <option value="H">H</option>
+            <option value="D">D</option>
+            <option value="P">P</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6 form-group">
+        <div class="col-sm-12 form-group">
+          <label>EID Tag</label>
+          <input type="text" class="form-control" ng-model="addanimal.eid">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Notes</label>
+          <textarea class="form-control" ng-model="addanimal.note"></textarea>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Print Certificate  </label>
+          <input type="checkbox" ng-model="addanimal.print" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Original Breeder</label>
+          <input type="text" class="form-control" ng-change="Breeder(addanimal);SearchBreeder1(addanimal.breeder)" ng-model="addanimal.breeder">
+          <div class="items" ng-show="isSelected1">
+            <p ng-click="selectItem1(item.MemberNumber)" ng-repeat='item in items'> {{item.Membername}}
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label class="inline-checkbox">DNA'd
+            <input type="checkbox" ng-model="addanimal.dnad" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+          </label>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>DNA Status</label>
+          <select class="form-control" ng-init="addanimal.status='Pending'" ng-model="addanimal.status">
+            <option value="">--Select One--</option>
+            <option value="Complete">Complete</option>
+            <option value="Waiting For Samples">Waiting For Samples</option>
+            <option value="Waiting For Samples - Overdue">Waiting For Samples - Overdue</option>
+            <option value="Waiting For Samples and Dam Auth.">Waiting For Samples and Dam Auth.</option>
+            <option value="Waiting For Dam Auth.">Waiting For Dam Auth.</option>
+            <option value="Cataloged">Cataloged</option>
+            <option selected="selected" value="Pending">Pending</option>
+            <option value="Complete-DNA Sire">Complete-DNA Sire</option>
+            <option value="Complete-DNA Dam">Complete-DNA Dam</option>
+            <option value="Complete-No Match">Complete-No Match</option>
+            <option value="Multiple">Multiple</option>
+            <option value="Failed Testing">Failed Testing</option>
+            <option value="Failed Testing-Waiting For Dam Auth.">Failed Testing-Waiting For Dam Auth.</option>
+            <option value="Resubmit">Resubmit</option>
+            <option value="Deceased">Deceased</option>
+            <option value="Research">Research</option>
+            <option value="Pending-BR">Pending-BR</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label class="inline-checkbox">Send to DNA
+            <input type="checkbox" ng-model="addanimal.senddna" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+          </label>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>SType</label>
+          <select class="form-control" ng-model="addanimal.stype">
+            <option value="">--Select One--</option>
+            <option value="FTA">FTA</option>
+            <option value="DAT">DAT</option>
+            <option value="BL">BL</option>
+            <option value="HR">HR</option>
+            <option value="SE">SE</option>
+            <option value="TI">TI</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Date Registered</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="addanimal.rdate">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Date Entered</label>
+          <span class="form-control">{{edate | date : 'MM/dd/yyyy'}}</span>
+          <!-- <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="addanimal.edate"> -->
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Last Updated</label>
+          <!-- <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="addanimal.ldate"> -->
+          <span class="form-control">{{ldate | date : 'MM/dd/yyyy'}}</span>
+        </div>
+        <div class="col-sm-12 form-group" style="white-space: nowrap;">
+          <button class="btn btn-color" ng-click="displayModalFunc(addanimal)" ng-disabled="!(animalname==0 && animalname1==0)">Save</button>
+          <button class="btn btn-color" ng-click="saveAndAddNew(addanimal)">Save & Add New</button>
+          <input class="btn btn-color" type="reset" ng-click="ResetAddAnimal(addanimal)">
+        </div>
+      </div>
+    </form>
+    <div id="displayModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+    
+        <!-- Modal content-->
+        <div class="modal-content">
+          <!-- <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div> -->
+          <div class="modal-body">
+            <p>You have not enetered payment id or the payment id is not valid.Entering a payment id allows the application to track animals with payments for acounting purposes.Do you need to continue without payment ID?</p>
+          </div>
+          <div class="modal-footer" style="border-top: none;padding-top: 0;">
+            <button type="button" class="btn btn-default" ng-click="AddAnimalData(addanimal)">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetModal()">Cancel</button>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+    <div id="displayModal1" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+    
+        <!-- Modal content-->
+        <div class="modal-content">
+          <!-- <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div> -->
+          <div class="modal-body">
+            <p>You have not enetered payment id or the payment id is not valid.Entering a payment id allows the application to track animals with payments for acounting purposes.Do you need to continue without payment ID?</p>
+          </div>
+          <div class="modal-footer" style="border-top: none;padding-top: 0;">
+            <button type="button" class="btn btn-default" ng-click="editModal(addanimal)">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="resetModal()">Cancel</button>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+
+</div>

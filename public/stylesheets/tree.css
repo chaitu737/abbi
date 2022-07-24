@@ -1,0 +1,177 @@
+/*Downloaded from https://www.codeseek.co/TheSisb/css-horizontal-family-tree-rCIDG */
+/* -------------------------------------
+ * Style
+ * ------------------------------------- */
+.root {
+  position: relative;
+}
+
+@media print {
+  * {
+      -webkit-print-color-adjust: exact !important; /*Chrome, Safari */
+      color-adjust: exact !important;  /*Firefox*/
+    }
+  }
+.level {
+  margin-left: 340px;
+  position: relative;
+}
+.level:before {
+    content: "";
+    width: 18px;
+    /* border-top: 2px solid #000; */
+    position: absolute;
+    left: 2px;
+    top: 54%;
+    margin-top: 1px;
+}
+.level:before {
+    content: "";
+    width: 18px;
+    /* border-top: 2px solid #000; */
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    margin-top: 1px;
+}
+
+.item {
+  min-height: 112px;
+  position: relative;
+}
+.item:before {
+    content: "";
+    height: 100%;
+    /* border-left: 2px solid #000; */
+    position: absolute;
+    left: 20px;
+}
+.item:after {
+    content: "";
+    width: 49px;
+    /* border-top: 2px solid #000; */
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    margin-top: 1px;
+}
+.item:first-child:before {
+  width: 10px;
+  height: 50%;
+  top: 50%;
+  margin-top: 2px;
+  /* border-top-left-radius: 10px; */
+}
+.item:first-child:after {
+  height: 10px;
+  /* border-top-left-radius: 10px; */
+}
+
+.item:last-child:before {
+    width: 10px;
+    height: 50%;
+    /* border-bottom-left-radius: 10px; */
+}
+.item:last-child:after {
+  height: 10px;
+  border-top: none;
+  /* border-bottom: 2px solid #000; */
+  /* border-bottom-left-radius: 10px; */
+  margin-top: -11px;
+}
+.title {
+    width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: -200px;
+    top: 40%;
+    margin-top: -15px;
+}
+.title1 {
+    width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: -160px;
+    top: 44%;
+    margin-top: -20px;
+}
+.title3{
+  width: 174px;
+  padding: 3px 10px;
+  line-height: 13px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  display: block;
+  position: absolute;
+  left: -260px;
+  top: 50%;
+  margin-top: -15px;
+}
+.title4 {
+  width: 174px;
+  padding: 3px 10px;
+  line-height: 13px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  display: block;
+  position: absolute;
+  left: -260px;
+  top: 30%;
+  margin-top: -35px;
+}
+.title5 {
+  width: 174px;
+  padding: 3px 10px;
+  line-height: 13px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  display: block;
+  position: absolute;
+  left: -370px;
+  top: 58%;
+  margin-top: -15px;
+}
+.title6 {
+  width: 174px;
+  padding: 3px 10px;
+  line-height: 13px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  display: block;
+  position: absolute;
+  left: -370px;
+  top: 44%;
+  margin-top: -15px;
+}
+.title7 {
+  width: 174px;
+  padding: 3px 10px;
+  line-height: 13px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  display: block;
+  position: absolute;
+  left: -370px;
+  top: 10%;
+  margin-top: -15px;
+}
+.title8 {
+  width: 174px;
+  padding: 3px 10px;
+  line-height: 13px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  display: block;
+  position: absolute;
+  left: -370px;
+  top: 10%;
+  margin-top: -65px;
+}

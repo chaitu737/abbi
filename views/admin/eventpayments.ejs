@@ -1,0 +1,143 @@
+<div class="text-center">
+	<h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Event Payment Programs</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+	<div class="row"> <br />
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div ng-hide="hideepay" class="col-md-4">
+				<label>Choose Event:</label>
+				<select ng-change="chooseMember(epayment);chooseDate(epayment);SearchEpayment1(epayment);hideepay1=true" ng-model="epayment.event" ng-click="EventsDropdown()" style="width:150px;">
+					<option ng-repeat="epay in epayments" ng-value="{{epay.Eventid}}">{{epay.Event}}</option>
+				</select>
+			</div>
+			<div ng-show="hideepay1" class="col-md-4">
+				<label>Choose Member:</label>
+				<select ng-init="epayment.member=0" ng-click="SearchEpayment(epayment)" ng-model="epayment.member" style="width:150px;">
+					<option ng-value="0">All Members</option>
+					<option ng-repeat="membersdrop in membersdrops" ng-value="{{membersdrop.memberNumber}}">{{membersdrop.membername}}</option>
+				</select>
+			</div>
+			<div ng-show="hideepay1" class="col-md-4">
+				<label>Choose Date:</label>
+				<select ng-init="epayment.date=0" ng-click="SearchEpayment(epayment)" ng-model="epayment.date" style="width:150px;">
+					<option ng-value="0">Today</option>
+					<option ng-repeat="datedrop in datedrops" ng-value="{{datedrop.scheduleid}}">{{datedrop.ScheduleDate}}</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+					<thead>
+						<tr>
+							<th>Inactive</th>
+							<th>Member Number</th>
+							<th>Member Name</th>
+							<th>RegNo</th>
+							<th>Animal</th>
+							<th>Herd</th>
+							<th>Total ($)</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="epaymentdata in epaymentdatas">
+							<td>{{epaymentdata.inactive}}</td>
+							<td>{{epaymentdata.membernumber}}</td>
+							<td>{{epaymentdata.membername}}</td>
+							<td>{{epaymentdata.regno}}</td>
+							<td>{{epaymentdata.animal}}</td>
+							<td>{{epaymentdata.privateherd}}</td>
+							<td>{{epaymentdata.totalAmount | currency}}</td>
+							<td>
+								<i title="Edit" class="btn btn-warning fa fa-edit" data-toggle="modal" data-target="#editEventPayment" ng-click="modalEventPayment(epaymentdata)"></i>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="editEventPayment" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" type="button" data-dismiss="modal">×</button>
+				</div>
+				<div class="modal-body">
+					<div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+						<form>
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<input type="radio" name="pay" ng-checked="true">
+									<label>Transfer Entry To Different Member</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="col-lg-3 col-md-3">
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-init="updatemember()">
+										<label>Member Names</label>
+										<input class="form-control" type="text" ng-model="epaymt.member" list="names">
+								            <datalist id="names" ng-model="MemberNumber">
+								              <option ng-repeat="member in members | filter:epaymt.member | limitTo:8" value="{{member.MemberNumber}} - {{member.MemberName}}"></option>
+								            </datalist>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<input type="radio" name="pay">
+									<label >Change Nomination</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="col-lg-3 col-md-3">
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+										<label >New Member  </label>
+										<input type="text" class="form-control" ng-model="epaymt.MemberNo">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<div class="col-lg-3 col-md-3">
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+										<label >New Animal  </label>
+										<input type="text" class="form-control" ng-model="epaymt.animal">
+									</div>
+								</div>
+							</div>
+							<div class="row" ng-if="inactive=true">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<input type="radio" name="pay" ng-model="epaymt.active">
+									<label>Mark Entry As Inactive</label>
+								</div>
+							</div>
+							<div class="row" ng-if="inactive=false">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<input type="radio" name="pay" ng-model="epaymt.active">
+									<label>Mark Entry As Active</label>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<button type="button" class="btn btn-color" ng-click="EditEventPayments(epaymt,ep)">Save</button>
+									<button class="close btn btn-color" type="button" data-dismiss="modal">cancel</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

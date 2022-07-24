@@ -1,0 +1,180 @@
+<div class="text-center">
+	<h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Label Report - Membership</h2>
+</div>
+<div>
+	<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" data-target="#allmembershiptype1">All Membership Type</a>
+			</li>
+			<li><a data-toggle="tab" data-target="#rangeofmembernumber1">Range of Member Number</a></li>
+			<li><a data-toggle="tab" data-target="#searchmember1">Search Member</a></li>
+		</ul>
+		<div class="tab-content">
+			<div id="allmembershiptype1" class="tab-pane fade in active">
+				<div class="col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="col-md-12">
+								<select class="form-control" ng-model="lrm.type">
+									<option value="">All</option>
+									<option value="ABHR (Bucking Horses)">ABHR (Bucking Horses)</option>
+									<option value="Veterinarian">Veterinarian</option>
+									<option value="Non Member">Non Member</option>
+									<option value="Standard Membership">Standard Membership</option>
+									<option value="Junior">Junior</option>
+									<option value="Lifetime">Lifetime</option>
+									<option value="Media">Media</option>
+									<option value="Premium">Premium</option>
+									<option value="Standard">Standard</option>
+									<option value="Inactive">Inactive</option>
+									<option value="USBBA Member">USBBA Member</option>
+								</select>
+								<button class="btn btn-color" ng-click="LabelReportMembership(lrm)" type="button">Search</button>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+									<thead>
+										<tr>
+											<th>First Name</th>
+											<th>Last Name </th>
+											<th>Address</th>
+											<th>City</th>
+											<th>State</th>
+											<th>Zip</th>
+											<th>Country</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="lrp in lrps">
+											<td><span ng-bind="lrp.FirstName"></span></td>
+											<td><span ng-bind="lrp.LastName"></span></td>
+											<td><span ng-bind="lrp.Address"></span></td>
+											<td><span ng-bind="lrp.City"></span></td>
+											<td><span ng-bind="lrp.State"></span></td>
+											<td><span ng-bind="lrp.Zip"></span></td>
+											<td><span ng-bind="lrp.Country"></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="rangeofmembernumber1" class="tab-pane fade">
+				<div class="col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<form>
+									<label>From:</label>
+									<input type="text" ng-model="rmn.from">
+									<label>To:</label>
+									<input type="text" ng-model="rmn.to">
+									<button class="btn btn-color" type="submit" ng-click="RangeOfNumber(rmn)">Search</button>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+									<thead>
+										<tr>
+											<th>First Name</th>
+											<th>Last Name </th>
+											<th>Address</th>
+											<th>City</th>
+											<th>State</th>
+											<th>Zip</th>
+											<th>Country</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="rnml in rnms">
+											<td><span ng-bind="rnml.FirstName"></span></td>
+											<td><span ng-bind="rnml.LastName"></span></td>
+											<td><span ng-bind="rnml.Address"></span></td>
+											<td><span ng-bind="rnml.City"></span></td>
+											<td><span ng-bind="rnml.State"></span></td>
+											<td><span ng-bind="rnml.Zip"></span></td>
+											<td><span ng-bind="rnml.Country"></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="searchmember1" class="tab-pane fade">
+				<div class="col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+					<input type="text" ng-model="labelsearch.number">
+					<button type="submit" class="btn btn-color" ng-click="LabelSearchReport(labelsearch)">Search</button>
+					<button class="btn btn-color" ng-click="PrintSearchLabelReport(); hidestable=true;" type="button">Print</button>
+					<button type="submit" class="btn btn-color" ng-click="SearchMemberReport()">View Members</button>
+					<div class="panel panel-default" ng-hide="hidestable">
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+									<thead>
+										<tr>
+											<th>Member Number</th>
+											<th>Member Name </th>
+											<th>Delete</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="lsr in lsrs">
+											<td><span ng-bind="lsr.MemberNumber"></span></td>
+											<td><span ng-bind="lsr.MemberName"></span></td>
+											<td>
+												<i class="fa fa-trash btn btn-danger" ng-click="removeSearchLabel(lsr)"></i>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default" ng-show="hidestable">
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+									<thead>
+										<tr>
+											<th>First Name</th>
+											<th>Last Name </th>
+											<th>Address</th>
+											<th>City</th>
+											<th>State</th>
+											<th>Zip</th>
+											<th>Country</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="psl in psls">
+											<td><span ng-bind="psl.FirstName"></span></td>
+											<td><span ng-bind="psl.LastName"></span></td>
+											<td><span ng-bind="psl.Address"></span></td>
+											<td><span ng-bind="psl.City"></span></td>
+											<td><span ng-bind="psl.State"></span></td>
+											<td><span ng-bind="psl.Zip"></span></td>
+											<td><span ng-bind="psl.Country"></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<button class="btn btn-color" ng-click="hidestable=false">Exit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

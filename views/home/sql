@@ -1,0 +1,1211 @@
+Create        PROCEDURE [dbo].[usp_InventoryList_CurrentABHR]       
+(      
+ @Page int = 1,      
+    @RecsPerPage int = 600000000,      
+ @MemberNumber int = null,      
+ @SearchStatus nvarchar(255) = null,      
+ @SearchItem nvarchar(255) = null,      
+ @regno int = null,      
+ @searchDate datetime = null,      
+ @SortCol int = 1,       
+ @SortDIR nvarchar(5) = 'ASC'      
+)      
+AS      
+      
+SET NOCOUNT ON      
+      
+DECLARE @RecCount int      
+SELECT @RecCount = @RecsPerPage * @Page + 1      
+      
+CREATE TABLE #TempItems      
+(      
+ SID int IDENTITY,      
+ RegNoID int,       
+ RegNo int,      
+ Animal nvarchar(255),      
+ PrivateHerd nvarchar(255),      
+ Birthdate datetime,      
+ Sex nvarchar(250),      
+ SireName Nvarchar(50),      
+ DamName Nvarchar(50),      
+ MemberName nvarchar(255),      
+ MemberNumber int,      
+ Status nvarchar(255),      
+ LastUpdated datetime,      
+ pbs_id int,      
+ outcount int,      
+ avgmark decimal(4,2)      
+)      
+      
+-- Insert the rows from tblItems into the temp. table      
+INSERT INTO #TempItems (RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName,MemberNumber, Status, LastUpdated, pbs_id, outcount, avgmark)      
+SELECT       
+ Registration.ID,      
+ Registration.RegNo,       
+ Registration.Animal,      
+ Registration.PrivateHerd,      
+ Registration.Birthdate,      
+ Registration.TypeService,      
+ (select Animal from registration a where a.regno=Registration.Sire),      
+ (select Animal from registration a where a.regno=Registration.Dam),       
+ Members.LastName + ', ' + Members.FirstName AS MemberName,      
+ Members.MemberNumber,      
+ Registration.Status,      
+ Registration.Lastupdate,      
+ registration.pbs_id,      
+ bs.outcount,      
+ bs.avgmark      
+FROM Registration      
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber      
+left join bullstats bs on registration.pbs_id = bs.pbs_id      
+WHERE      
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))      
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))      
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))      
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))      
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))      
+and Registration.Status <> 'Deceased'      
+and Registration.Status <> 'Waiting For Samples - Overdue'      
+and registration.sold <> 1      AND Registration.TypeService not in ('NB','NC','AB','AC','EB','EC')
+ORDER BY       
+      
+CASE WHEN @SortCol = 1  AND @SortDIR = 'ASC' THEN Registration.RegNo END ASC,      
+CASE WHEN @SortCol = 2  AND @SortDIR = 'ASC' THEN Registration.Animal  END ASC,      
+CASE WHEN @SortCol = 3  AND @SortDIR = 'ASC' THEN Registration.PrivateHerd  END ASC,      
+CASE WHEN @SortCol = 4  AND @SortDIR = 'ASC' THEN Registration.Birthdate  END ASC,      
+CASE WHEN @SortCol = 5  AND @SortDIR = 'ASC' THEN Registration.TypeService  END ASC,      
+CASE WHEN @SortCol = 6  AND @SortDIR = 'ASC' THEN Registration.Sire  END ASC,      
+CASE WHEN @SortCol = 7  AND @SortDIR = 'ASC' THEN Registration.Dam END ASC,      
+CASE WHEN @SortCol = 8  AND @SortDIR = 'ASC' THEN LastName + ', ' + FirstName  END ASC,      
+CASE WHEN @SortCol = 9  AND @SortDIR = 'ASC' THEN Registration.Status  END ASC,      
+CASE WHEN @SortCol = 10 AND @SortDIR = 'ASC' THEN Registration.Lastupdate  END ASC,      
+CASE WHEN @SortCol = 11 AND @SortDIR = 'ASC' THEN Registration.ID END ASC,      
+CASE WHEN @SortCol = 1  AND @SortDIR = 'DESC' THEN Registration.RegNo END DESC,      
+CASE WHEN @SortCol = 2  AND @SortDIR = 'DESC' THEN Registration.Animal  END DESC,      
+CASE WHEN @SortCol = 3  AND @SortDIR = 'DESC' THEN Registration.PrivateHerd  END DESC,      
+CASE WHEN @SortCol = 4  AND @SortDIR = 'DESC' THEN Registration.Birthdate  END DESC,      
+CASE WHEN @SortCol = 5  AND @SortDIR = 'DESC' THEN Registration.TypeService  END DESC,      
+CASE WHEN @SortCol = 6  AND @SortDIR = 'DESC' THEN Registration.Sire  END DESC,      
+CASE WHEN @SortCol = 7  AND @SortDIR = 'DESC' THEN Registration.Dam  END DESC, CASE WHEN @SortCol = 8  AND @SortDIR = 'DESC' THEN LastName + ', ' + FirstName  END DESC,      
+CASE WHEN @SortCol = 9  AND @SortDIR = 'DESC' THEN Registration.Status  END DESC,      
+CASE WHEN @SortCol = 10 AND @SortDIR = 'DESC' THEN Registration.Lastupdate  END DESC,      
+CASE WHEN @SortCol = 11 AND @SortDIR = 'DESC' THEN Registration.ID END DESC      
+      
+      
+-- Find out the first and last record we want      
+DECLARE @FirstRec int, @LastRec int      
+SELECT @FirstRec = (@Page - 1) * @RecsPerPage      
+SELECT @LastRec = (@Page * @RecsPerPage + 1)      
+      
+-- Now, return the set of paged records, plus, an indiciation of we have more records or not!      
+SELECT *,      
+      
+       MoreRecords =       
+      
+            (      
+      
+             SELECT COUNT(SID)       
+      
+             FROM #TempItems TI      
+      
+             WHERE TI.SID > @LastRec      
+      
+            ),      
+      
+               xCount =       
+      
+            (      
+      
+             SELECT COUNT(SID)       
+      
+             FROM #TempItems TI      
+      
+            )       
+FROM #TempItems      
+WHERE SID > @FirstRec AND SID < @LastRec      
+      
+-- Turn NOCOUNT back OFF      
+SET NOCOUNT OFF      
+
+Alter         PROCEDURE [dbo].[usp_InventoryList_Current]       
+(      
+ @Page int = 1,      
+    @RecsPerPage int = 600000000,      
+ @MemberNumber int = null,      
+ @SearchStatus nvarchar(255) = null,      
+ @SearchItem nvarchar(255) = null,      
+ @regno int = null,      
+ @searchDate datetime = null,      
+ @SortCol int = 1,       
+ @SortDIR nvarchar(5) = 'ASC'      
+)      
+AS      
+      
+SET NOCOUNT ON      
+      
+DECLARE @RecCount int      
+SELECT @RecCount = @RecsPerPage * @Page + 1      
+      
+CREATE TABLE #TempItems      
+(      
+ SID int IDENTITY,      
+ RegNoID int,       
+ RegNo int,      
+ Animal nvarchar(255),      
+ PrivateHerd nvarchar(255),      
+ Birthdate datetime,      
+ Sex nvarchar(250),      
+ SireName Nvarchar(50),      
+ DamName Nvarchar(50),      
+ MemberName nvarchar(255),      
+ MemberNumber int,      
+ Status nvarchar(255),      
+ LastUpdated datetime,      
+ pbs_id int,      
+ outcount int,      
+ avgmark decimal(4,2)      
+)      
+      
+-- Insert the rows from tblItems into the temp. table      
+INSERT INTO #TempItems (RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName,MemberNumber, Status, LastUpdated, pbs_id, outcount, avgmark)      
+SELECT       
+ Registration.ID,      
+ Registration.RegNo,       
+ Registration.Animal,      
+ Registration.PrivateHerd,      
+ Registration.Birthdate,      
+ Registration.TypeService,      
+ (select Animal from registration a where a.regno=Registration.Sire),      
+ (select Animal from registration a where a.regno=Registration.Dam),       
+ Members.LastName + ', ' + Members.FirstName AS MemberName,      
+ Members.MemberNumber,      
+ Registration.Status,      
+ Registration.Lastupdate,      
+ registration.pbs_id,      
+ bs.outcount,      
+ bs.avgmark      
+FROM Registration      
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber      
+left join bullstats bs on registration.pbs_id = bs.pbs_id      
+WHERE      
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))      
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))      
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))      
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))      
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))      
+and Registration.Status <> 'Deceased'      
+and Registration.Status <> 'Waiting For Samples - Overdue'      
+and registration.sold <> 1      AND Registration.TypeService in ('NB','NC','AB','AC','EB','EC')
+ORDER BY       
+      
+CASE WHEN @SortCol = 1  AND @SortDIR = 'ASC' THEN Registration.RegNo END ASC,      
+CASE WHEN @SortCol = 2  AND @SortDIR = 'ASC' THEN Registration.Animal  END ASC,      
+CASE WHEN @SortCol = 3  AND @SortDIR = 'ASC' THEN Registration.PrivateHerd  END ASC,      
+CASE WHEN @SortCol = 4  AND @SortDIR = 'ASC' THEN Registration.Birthdate  END ASC,      
+CASE WHEN @SortCol = 5  AND @SortDIR = 'ASC' THEN Registration.TypeService  END ASC,      
+CASE WHEN @SortCol = 6  AND @SortDIR = 'ASC' THEN Registration.Sire  END ASC,      
+CASE WHEN @SortCol = 7  AND @SortDIR = 'ASC' THEN Registration.Dam END ASC,      
+CASE WHEN @SortCol = 8  AND @SortDIR = 'ASC' THEN LastName + ', ' + FirstName  END ASC,      
+CASE WHEN @SortCol = 9  AND @SortDIR = 'ASC' THEN Registration.Status  END ASC,      
+CASE WHEN @SortCol = 10 AND @SortDIR = 'ASC' THEN Registration.Lastupdate  END ASC,      
+CASE WHEN @SortCol = 11 AND @SortDIR = 'ASC' THEN Registration.ID END ASC,      
+CASE WHEN @SortCol = 1  AND @SortDIR = 'DESC' THEN Registration.RegNo END DESC,      
+CASE WHEN @SortCol = 2  AND @SortDIR = 'DESC' THEN Registration.Animal  END DESC,      
+CASE WHEN @SortCol = 3  AND @SortDIR = 'DESC' THEN Registration.PrivateHerd  END DESC,      
+CASE WHEN @SortCol = 4  AND @SortDIR = 'DESC' THEN Registration.Birthdate  END DESC,      
+CASE WHEN @SortCol = 5  AND @SortDIR = 'DESC' THEN Registration.TypeService  END DESC,      
+CASE WHEN @SortCol = 6  AND @SortDIR = 'DESC' THEN Registration.Sire  END DESC,      
+CASE WHEN @SortCol = 7  AND @SortDIR = 'DESC' THEN Registration.Dam  END DESC, CASE WHEN @SortCol = 8  AND @SortDIR = 'DESC' THEN LastName + ', ' + FirstName  END DESC,      
+CASE WHEN @SortCol = 9  AND @SortDIR = 'DESC' THEN Registration.Status  END DESC,      
+CASE WHEN @SortCol = 10 AND @SortDIR = 'DESC' THEN Registration.Lastupdate  END DESC,      
+CASE WHEN @SortCol = 11 AND @SortDIR = 'DESC' THEN Registration.ID END DESC      
+      
+      
+-- Find out the first and last record we want      
+DECLARE @FirstRec int, @LastRec int      
+SELECT @FirstRec = (@Page - 1) * @RecsPerPage      
+SELECT @LastRec = (@Page * @RecsPerPage + 1)      
+      
+-- Now, return the set of paged records, plus, an indiciation of we have more records or not!      
+SELECT *,      
+      
+       MoreRecords =       
+      
+            (      
+      
+             SELECT COUNT(SID)       
+      
+             FROM #TempItems TI      
+      
+             WHERE TI.SID > @LastRec      
+      
+            ),      
+      
+               xCount =       
+      
+            (      
+      
+             SELECT COUNT(SID)       
+      
+             FROM #TempItems TI      
+      
+            )       
+FROM #TempItems      
+WHERE SID > @FirstRec AND SID < @LastRec      
+      
+-- Turn NOCOUNT back OFF      
+SET NOCOUNT OFF      
+      
+      
+  Create         PROCEDURE [dbo].[usp_InventoryList_PreviousABHR]     
+(    
+ @Page int = 1,    
+    @RecsPerPage int = 600000000,    
+ @MemberNumber int = null,    
+ @SearchStatus nvarchar(255) = null,    
+ @SearchItem nvarchar(255) = null,    
+ @regno int = null,    
+ @searchDate datetime = null,    
+ @SortCol int = 1,     
+ @SortDIR nvarchar(5) = 'ASC'    
+)    
+AS    
+-- usp_InventoryList_Previous 1, 60000, 2512    
+SET NOCOUNT ON    
+    
+DECLARE @RecCount int    
+SELECT @RecCount = @RecsPerPage * @Page + 1    
+    
+CREATE TABLE #TempItems    
+(    
+ SID int IDENTITY,    
+ RegNoID int,     
+ RegNo int,    
+ Animal nvarchar(255),    
+ PrivateHerd nvarchar(255),    
+ Birthdate datetime,    
+ Sex nvarchar(250),    
+ SireName Nvarchar(50),    
+ DamName Nvarchar(50),    
+ MemberName nvarchar(255),    
+ MemberNumber int,    
+ Status nvarchar(255),    
+ LastUpdated datetime,    
+ pbs_id int,    
+ Sold bit,    
+ outcount int,    
+ avgmark decimal(4,2)    
+)    
+    
+-- Insert the rows from tblItems into the temp. table    
+INSERT INTO #TempItems (RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName, MemberNumber, Status, LastUpdated, pbs_id, sold, outcount, avgmark)    
+select      RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName, MemberNumber, Status, LastUpdated, pbs_id, sold, outcount, avgmark from (    
+SELECT     
+ Registration.ID as regnoid,    
+ RegistrationHistory.RegNo,     
+ Registration.Animal,    
+ Registration.PrivateHerd,    
+ Registration.Birthdate,    
+ Registration.TypeService as Sex,    
+ (select Animal from registration a where a.regno=Registration.Sire) as SireName,    
+ (select Animal from registration a where a.regno=Registration.Dam) as DamName,     
+ Members.LastName + ', ' + Members.FirstName AS MemberName,    
+ Members.MemberNumber,    
+ Registration.Status,    
+ Registration.Lastupdate as LastUpdated,    
+ Registration.pbs_id,    
+ Registration.Sold,    
+ bs.outcount,    
+ bs.avgmark    
+FROM RegistrationHistory    
+INNER JOIN Registration ON Registration.RegNo = RegistrationHistory.RegNo    
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber    
+left join bullstats bs on Registration.pbs_id = bs.pbs_id    
+WHERE    
+(((@MemberNumber is NULL) OR (RegistrationHistory.PrevMember = @MemberNumber))    
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))    
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))    
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))    
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate))    
+AND ((RegistrationHistory.Regno=Registration.RegNo)))    
+and registration.MemberNo <> @MemberNumber    
+and Registration.MemberNo <> 1657    
+and Registration.Status <> 'Waiting For Samples - Overdue'  And Registration.TypeService not in ('NB','NC','AB','AC','EB','EC')  
+    
+union    
+    
+SELECT     
+ Registration.ID as regnoid,    
+ Registration.RegNo,     
+ Registration.Animal,    
+ Registration.PrivateHerd,    
+ Registration.Birthdate,    
+ Registration.TypeService as Sex,    
+ (select Animal from registration r where r.regno=Registration.Sire) as SireName,    
+ (select Animal from registration r where r.regno=Registration.Dam) as DamName,     
+ 'Sold' AS MemberName,    
+ Members.MemberNumber,    
+ Registration.Status,    
+ Registration.Lastupdate as LastUpdated,    
+ registration.pbs_id,    
+ Registration.Sold,    
+ bs.outcount,    
+ bs.avgmark    
+FROM Registration    
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber    
+left join bullstats bs on Registration.pbs_id = bs.pbs_id    
+    
+WHERE    
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))    
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))    
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))    
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))    
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))    
+and Registration.Status <> 'Deceased'    
+and Registration.Status <> 'Waiting For Samples - Overdue'    
+and registration.sold = 1  And Registration.TypeService not in ('NB','NC','AB','AC','EB','EC')  
+) a    
+ORDER BY     
+    
+CASE WHEN @SortCol = 1  AND @SortDIR = 'ASC' THEN RegNo END ASC,    
+CASE WHEN @SortCol = 2  AND @SortDIR = 'ASC' THEN Animal  END ASC,    
+CASE WHEN @SortCol = 3  AND @SortDIR = 'ASC' THEN PrivateHerd  END ASC,    
+CASE WHEN @SortCol = 4  AND @SortDIR = 'ASC' THEN Birthdate  END ASC,    
+CASE WHEN @SortCol = 5  AND @SortDIR = 'ASC' THEN Sex  END ASC,    
+CASE WHEN @SortCol = 6  AND @SortDIR = 'ASC' THEN SireName  END ASC,    
+CASE WHEN @SortCol = 7  AND @SortDIR = 'ASC' THEN DamName END ASC,    
+CASE WHEN @SortCol = 8  AND @SortDIR = 'ASC' THEN MemberName  END ASC,    
+CASE WHEN @SortCol = 9  AND @SortDIR = 'ASC' THEN Status  END ASC,    
+CASE WHEN @SortCol = 10 AND @SortDIR = 'ASC' THEN LastUpdated  END ASC,    
+CASE WHEN @SortCol = 1  AND @SortDIR = 'DESC' THEN RegNo END DESC,    
+CASE WHEN @SortCol = 2  AND @SortDIR = 'DESC' THEN Animal  END DESC,    
+CASE WHEN @SortCol = 3  AND @SortDIR = 'DESC' THEN PrivateHerd  END DESC,    
+CASE WHEN @SortCol = 4  AND @SortDIR = 'DESC' THEN Birthdate  END DESC,    
+CASE WHEN @SortCol = 5  AND @SortDIR = 'DESC' THEN Sex  END DESC,    
+CASE WHEN @SortCol = 6  AND @SortDIR = 'DESC' THEN SireName  END DESC,    
+CASE WHEN @SortCol = 7  AND @SortDIR = 'DESC' THEN DamName  END DESC, CASE WHEN @SortCol = 8  AND @SortDIR = 'DESC' THEN MemberName  END DESC,    
+CASE WHEN @SortCol = 9  AND @SortDIR = 'DESC' THEN Status  END DESC,    
+CASE WHEN @SortCol = 10 AND @SortDIR = 'DESC' THEN LastUpdated  END DESC    
+    
+    
+-- Find out the first and last record we want    
+DECLARE @FirstRec int, @LastRec int    
+SELECT @FirstRec = (@Page - 1) * @RecsPerPage    
+SELECT @LastRec = (@Page * @RecsPerPage + 1)    
+    
+-- Now, return the set of paged records, plus, an indiciation of we have more records or not!    
+SELECT *,    
+    
+       MoreRecords =     
+    
+            (    
+    
+             SELECT COUNT(SID)     
+    
+             FROM #TempItems TI    
+    
+             WHERE TI.SID > @LastRec    
+    
+            ),    
+    
+               xCount =     
+    
+            (    
+    
+             SELECT COUNT(SID)     
+    
+             FROM #TempItems TI    
+    
+            )     
+FROM #TempItems    
+WHERE SID > @FirstRec AND SID < @LastRec    
+    
+-- Turn NOCOUNT back OFF    
+SET NOCOUNT OFF    
+    
+  Alter         PROCEDURE [dbo].[usp_InventoryList_Previous]     
+(    
+ @Page int = 1,    
+    @RecsPerPage int = 600000000,    
+ @MemberNumber int = null,    
+ @SearchStatus nvarchar(255) = null,    
+ @SearchItem nvarchar(255) = null,    
+ @regno int = null,    
+ @searchDate datetime = null,    
+ @SortCol int = 1,     
+ @SortDIR nvarchar(5) = 'ASC'    
+)    
+AS    
+-- usp_InventoryList_Previous 1, 60000, 2512    
+SET NOCOUNT ON    
+    
+DECLARE @RecCount int    
+SELECT @RecCount = @RecsPerPage * @Page + 1    
+    
+CREATE TABLE #TempItems    
+(    
+ SID int IDENTITY,    
+ RegNoID int,     
+ RegNo int,    
+ Animal nvarchar(255),    
+ PrivateHerd nvarchar(255),    
+ Birthdate datetime,    
+ Sex nvarchar(250),    
+ SireName Nvarchar(50),    
+ DamName Nvarchar(50),    
+ MemberName nvarchar(255),    
+ MemberNumber int,    
+ Status nvarchar(255),    
+ LastUpdated datetime,    
+ pbs_id int,    
+ Sold bit,    
+ outcount int,    
+ avgmark decimal(4,2)    
+)    
+    
+-- Insert the rows from tblItems into the temp. table    
+INSERT INTO #TempItems (RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName, MemberNumber, Status, LastUpdated, pbs_id, sold, outcount, avgmark)    
+select      RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName, MemberNumber, Status, LastUpdated, pbs_id, sold, outcount, avgmark from (    
+SELECT     
+ Registration.ID as regnoid,    
+ RegistrationHistory.RegNo,     
+ Registration.Animal,    
+ Registration.PrivateHerd,    
+ Registration.Birthdate,    
+ Registration.TypeService as Sex,    
+ (select Animal from registration a where a.regno=Registration.Sire) as SireName,    
+ (select Animal from registration a where a.regno=Registration.Dam) as DamName,     
+ Members.LastName + ', ' + Members.FirstName AS MemberName,    
+ Members.MemberNumber,    
+ Registration.Status,    
+ Registration.Lastupdate as LastUpdated,    
+ Registration.pbs_id,    
+ Registration.Sold,    
+ bs.outcount,    
+ bs.avgmark    
+FROM RegistrationHistory    
+INNER JOIN Registration ON Registration.RegNo = RegistrationHistory.RegNo    
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber    
+left join bullstats bs on Registration.pbs_id = bs.pbs_id    
+WHERE    
+(((@MemberNumber is NULL) OR (RegistrationHistory.PrevMember = @MemberNumber))    
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))    
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))    
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))    
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate))    
+AND ((RegistrationHistory.Regno=Registration.RegNo)))    
+and registration.MemberNo <> @MemberNumber    
+and Registration.MemberNo <> 1657    
+and Registration.Status <> 'Waiting For Samples - Overdue'  And Registration.TypeService in ('NB','NC','AB','AC','EB','EC')  
+    
+union    
+    
+SELECT     
+ Registration.ID as regnoid,    
+ Registration.RegNo,     
+ Registration.Animal,    
+ Registration.PrivateHerd,    
+ Registration.Birthdate,    
+ Registration.TypeService as Sex,    
+ (select Animal from registration r where r.regno=Registration.Sire) as SireName,    
+ (select Animal from registration r where r.regno=Registration.Dam) as DamName,     
+ 'Sold' AS MemberName,    
+ Members.MemberNumber,    
+ Registration.Status,    
+ Registration.Lastupdate as LastUpdated,    
+ registration.pbs_id,    
+ Registration.Sold,    
+ bs.outcount,    
+ bs.avgmark    
+FROM Registration    
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber    
+left join bullstats bs on Registration.pbs_id = bs.pbs_id    
+    
+WHERE    
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))    
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))    
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))    
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))    
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))    
+and Registration.Status <> 'Deceased'    
+and Registration.Status <> 'Waiting For Samples - Overdue'    
+and registration.sold = 1  And Registration.TypeService in ('NB','NC','AB','AC','EB','EC')  
+) a    
+ORDER BY     
+    
+CASE WHEN @SortCol = 1  AND @SortDIR = 'ASC' THEN RegNo END ASC,    
+CASE WHEN @SortCol = 2  AND @SortDIR = 'ASC' THEN Animal  END ASC,    
+CASE WHEN @SortCol = 3  AND @SortDIR = 'ASC' THEN PrivateHerd  END ASC,    
+CASE WHEN @SortCol = 4  AND @SortDIR = 'ASC' THEN Birthdate  END ASC,    
+CASE WHEN @SortCol = 5  AND @SortDIR = 'ASC' THEN Sex  END ASC,    
+CASE WHEN @SortCol = 6  AND @SortDIR = 'ASC' THEN SireName  END ASC,    
+CASE WHEN @SortCol = 7  AND @SortDIR = 'ASC' THEN DamName END ASC,    
+CASE WHEN @SortCol = 8  AND @SortDIR = 'ASC' THEN MemberName  END ASC,    
+CASE WHEN @SortCol = 9  AND @SortDIR = 'ASC' THEN Status  END ASC,    
+CASE WHEN @SortCol = 10 AND @SortDIR = 'ASC' THEN LastUpdated  END ASC,    
+CASE WHEN @SortCol = 1  AND @SortDIR = 'DESC' THEN RegNo END DESC,    
+CASE WHEN @SortCol = 2  AND @SortDIR = 'DESC' THEN Animal  END DESC,    
+CASE WHEN @SortCol = 3  AND @SortDIR = 'DESC' THEN PrivateHerd  END DESC,    
+CASE WHEN @SortCol = 4  AND @SortDIR = 'DESC' THEN Birthdate  END DESC,    
+CASE WHEN @SortCol = 5  AND @SortDIR = 'DESC' THEN Sex  END DESC,    
+CASE WHEN @SortCol = 6  AND @SortDIR = 'DESC' THEN SireName  END DESC,    
+CASE WHEN @SortCol = 7  AND @SortDIR = 'DESC' THEN DamName  END DESC, CASE WHEN @SortCol = 8  AND @SortDIR = 'DESC' THEN MemberName  END DESC,    
+CASE WHEN @SortCol = 9  AND @SortDIR = 'DESC' THEN Status  END DESC,    
+CASE WHEN @SortCol = 10 AND @SortDIR = 'DESC' THEN LastUpdated  END DESC    
+    
+    
+-- Find out the first and last record we want    
+DECLARE @FirstRec int, @LastRec int    
+SELECT @FirstRec = (@Page - 1) * @RecsPerPage    
+SELECT @LastRec = (@Page * @RecsPerPage + 1)    
+    
+-- Now, return the set of paged records, plus, an indiciation of we have more records or not!    
+SELECT *,    
+    
+       MoreRecords =     
+    
+            (    
+    
+             SELECT COUNT(SID)     
+    
+             FROM #TempItems TI    
+    
+             WHERE TI.SID > @LastRec    
+    
+            ),    
+    
+               xCount =     
+    
+            (    
+    
+             SELECT COUNT(SID)     
+    
+             FROM #TempItems TI    
+    
+            )     
+FROM #TempItems    
+WHERE SID > @FirstRec AND SID < @LastRec    
+    
+-- Turn NOCOUNT back OFF    
+SET NOCOUNT OFF    
+    
+Create     PROCEDURE [dbo].[usp_InventoryList_DeceasedABHR]     
+(    
+ @Page int = 1,    
+    @RecsPerPage int = 600000000,    
+ @MemberNumber int = null,    
+ @SearchStatus nvarchar(255) = null,    
+ @SearchItem nvarchar(255) = null,    
+ @regno int = null,    
+ @searchDate datetime = null,    
+ @SortCol int = 1,     
+ @SortDIR nvarchar(5) = 'ASC'    
+)    
+AS    
+    
+SET NOCOUNT ON    
+    
+DECLARE @RecCount int    
+SELECT @RecCount = @RecsPerPage * @Page + 1    
+    
+CREATE TABLE #TempItems    
+(    
+ SID int IDENTITY,    
+ RegNoID int,     
+ RegNo int,    
+ Animal nvarchar(255),    
+ PrivateHerd nvarchar(255),    
+ Birthdate datetime,    
+ Sex nvarchar(250),    
+ SireName Nvarchar(50),    
+ DamName Nvarchar(50),    
+ MemberName nvarchar(255),    
+ MemberNumber int,    
+ Status nvarchar(255),    
+ LastUpdated datetime,    
+ pbs_id int,    
+ outcount int,    
+ avgmark decimal(4,2)    
+)    
+    
+-- Insert the rows from tblItems into the temp. table    
+INSERT INTO #TempItems (RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName,MemberNumber, Status, LastUpdated, pbs_id, outcount, avgmark)    
+SELECT     
+ Registration.ID,    
+ Registration.RegNo,     
+ Registration.Animal,    
+ Registration.PrivateHerd,    
+ Registration.Birthdate,    
+ Registration.TypeService,    
+ (select Animal from registration a where a.regno=Registration.Sire),    
+ (select Animal from registration a where a.regno=Registration.Dam),     
+ Members.LastName + ', ' + Members.FirstName AS MemberName,    
+ Members.MemberNumber,    
+ Registration.Status,    
+ Registration.Lastupdate,    
+ registration.pbs_id,    
+ bs.outcount,    
+ bs.avgmark    
+FROM Registration    
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber    
+left join bullstats bs on Registration.pbs_id = bs.pbs_id    
+    
+WHERE    
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))    
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))    
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))    
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))    
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))    
+and Registration.Status = 'Deceased'  And Registration.TypeService not in ('NB','NC','AB','AC','EB','EC')  
+ORDER BY     
+    
+CASE WHEN @SortCol = 1  AND @SortDIR = 'ASC' THEN Registration.RegNo END ASC,    
+CASE WHEN @SortCol = 2  AND @SortDIR = 'ASC' THEN Registration.Animal  END ASC,    
+CASE WHEN @SortCol = 3  AND @SortDIR = 'ASC' THEN Registration.PrivateHerd  END ASC,    
+CASE WHEN @SortCol = 4  AND @SortDIR = 'ASC' THEN Registration.Birthdate  END ASC,    
+CASE WHEN @SortCol = 5  AND @SortDIR = 'ASC' THEN Registration.TypeService  END ASC,    
+CASE WHEN @SortCol = 6  AND @SortDIR = 'ASC' THEN Registration.Sire  END ASC,    
+CASE WHEN @SortCol = 7  AND @SortDIR = 'ASC' THEN Registration.Dam END ASC,    
+CASE WHEN @SortCol = 8  AND @SortDIR = 'ASC' THEN LastName + ', ' + FirstName  END ASC,    
+CASE WHEN @SortCol = 9  AND @SortDIR = 'ASC' THEN Registration.Status  END ASC,    
+CASE WHEN @SortCol = 10 AND @SortDIR = 'ASC' THEN Registration.Lastupdate  END ASC,    
+CASE WHEN @SortCol = 11 AND @SortDIR = 'ASC' THEN Registration.ID END ASC,    
+CASE WHEN @SortCol = 1  AND @SortDIR = 'DESC' THEN Registration.RegNo END DESC,    
+CASE WHEN @SortCol = 2  AND @SortDIR = 'DESC' THEN Registration.Animal  END DESC,    
+CASE WHEN @SortCol = 3  AND @SortDIR = 'DESC' THEN Registration.PrivateHerd  END DESC,    
+CASE WHEN @SortCol = 4  AND @SortDIR = 'DESC' THEN Registration.Birthdate  END DESC,    
+CASE WHEN @SortCol = 5  AND @SortDIR = 'DESC' THEN Registration.TypeService  END DESC,    
+CASE WHEN @SortCol = 6  AND @SortDIR = 'DESC' THEN Registration.Sire  END DESC,    
+CASE WHEN @SortCol = 7  AND @SortDIR = 'DESC' THEN Registration.Dam  END DESC, CASE WHEN @SortCol = 8  AND @SortDIR = 'DESC' THEN LastName + ', ' + FirstName  END DESC,    
+CASE WHEN @SortCol = 9  AND @SortDIR = 'DESC' THEN Registration.Status  END DESC,    
+CASE WHEN @SortCol = 10 AND @SortDIR = 'DESC' THEN Registration.Lastupdate  END DESC,    
+CASE WHEN @SortCol = 11 AND @SortDIR = 'DESC' THEN Registration.ID END DESC    
+    
+    
+-- Find out the first and last record we want    
+DECLARE @FirstRec int, @LastRec int    
+SELECT @FirstRec = (@Page - 1) * @RecsPerPage    
+SELECT @LastRec = (@Page * @RecsPerPage + 1)    
+    
+-- Now, return the set of paged records, plus, an indiciation of we have more records or not!    
+SELECT *,    
+    
+       MoreRecords =     
+    
+            (    
+    
+             SELECT COUNT(SID)     
+    
+             FROM #TempItems TI    
+    
+             WHERE TI.SID > @LastRec    
+    
+            ),    
+    
+               xCount =     
+    
+            (    
+    
+             SELECT COUNT(SID)     
+    
+             FROM #TempItems TI    
+    
+            )     
+FROM #TempItems    
+WHERE SID > @FirstRec AND SID < @LastRec    
+    
+-- Turn NOCOUNT back OFF    
+SET NOCOUNT OFF    
+    
+Alter     PROCEDURE [dbo].[usp_InventoryList_Deceased]     
+(    
+ @Page int = 1,    
+    @RecsPerPage int = 600000000,    
+ @MemberNumber int = null,    
+ @SearchStatus nvarchar(255) = null,    
+ @SearchItem nvarchar(255) = null,    
+ @regno int = null,    
+ @searchDate datetime = null,    
+ @SortCol int = 1,     
+ @SortDIR nvarchar(5) = 'ASC'    
+)    
+AS    
+    
+SET NOCOUNT ON    
+    
+DECLARE @RecCount int    
+SELECT @RecCount = @RecsPerPage * @Page + 1    
+    
+CREATE TABLE #TempItems    
+(    
+ SID int IDENTITY,    
+ RegNoID int,     
+ RegNo int,    
+ Animal nvarchar(255),    
+ PrivateHerd nvarchar(255),    
+ Birthdate datetime,    
+ Sex nvarchar(250),    
+ SireName Nvarchar(50),    
+ DamName Nvarchar(50),    
+ MemberName nvarchar(255),    
+ MemberNumber int,    
+ Status nvarchar(255),    
+ LastUpdated datetime,    
+ pbs_id int,    
+ outcount int,    
+ avgmark decimal(4,2)    
+)    
+    
+-- Insert the rows from tblItems into the temp. table    
+INSERT INTO #TempItems (RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName,MemberNumber, Status, LastUpdated, pbs_id, outcount, avgmark)    
+SELECT     
+ Registration.ID,    
+ Registration.RegNo,     
+ Registration.Animal,    
+ Registration.PrivateHerd,    
+ Registration.Birthdate,    
+ Registration.TypeService,    
+ (select Animal from registration a where a.regno=Registration.Sire),    
+ (select Animal from registration a where a.regno=Registration.Dam),     
+ Members.LastName + ', ' + Members.FirstName AS MemberName,    
+ Members.MemberNumber,    
+ Registration.Status,    
+ Registration.Lastupdate,    
+ registration.pbs_id,    
+ bs.outcount,    
+ bs.avgmark    
+FROM Registration    
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber    
+left join bullstats bs on Registration.pbs_id = bs.pbs_id    
+    
+WHERE    
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))    
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))    
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))    
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))    
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))    
+and Registration.Status = 'Deceased'  And Registration.TypeService in ('NB','NC','AB','AC','EB','EC')  
+ORDER BY     
+    
+CASE WHEN @SortCol = 1  AND @SortDIR = 'ASC' THEN Registration.RegNo END ASC,    
+CASE WHEN @SortCol = 2  AND @SortDIR = 'ASC' THEN Registration.Animal  END ASC,    
+CASE WHEN @SortCol = 3  AND @SortDIR = 'ASC' THEN Registration.PrivateHerd  END ASC,    
+CASE WHEN @SortCol = 4  AND @SortDIR = 'ASC' THEN Registration.Birthdate  END ASC,    
+CASE WHEN @SortCol = 5  AND @SortDIR = 'ASC' THEN Registration.TypeService  END ASC,    
+CASE WHEN @SortCol = 6  AND @SortDIR = 'ASC' THEN Registration.Sire  END ASC,    
+CASE WHEN @SortCol = 7  AND @SortDIR = 'ASC' THEN Registration.Dam END ASC,    
+CASE WHEN @SortCol = 8  AND @SortDIR = 'ASC' THEN LastName + ', ' + FirstName  END ASC,    
+CASE WHEN @SortCol = 9  AND @SortDIR = 'ASC' THEN Registration.Status  END ASC,    
+CASE WHEN @SortCol = 10 AND @SortDIR = 'ASC' THEN Registration.Lastupdate  END ASC,    
+CASE WHEN @SortCol = 11 AND @SortDIR = 'ASC' THEN Registration.ID END ASC,    
+CASE WHEN @SortCol = 1  AND @SortDIR = 'DESC' THEN Registration.RegNo END DESC,    
+CASE WHEN @SortCol = 2  AND @SortDIR = 'DESC' THEN Registration.Animal  END DESC,    
+CASE WHEN @SortCol = 3  AND @SortDIR = 'DESC' THEN Registration.PrivateHerd  END DESC,    
+CASE WHEN @SortCol = 4  AND @SortDIR = 'DESC' THEN Registration.Birthdate  END DESC,    
+CASE WHEN @SortCol = 5  AND @SortDIR = 'DESC' THEN Registration.TypeService  END DESC,    
+CASE WHEN @SortCol = 6  AND @SortDIR = 'DESC' THEN Registration.Sire  END DESC,    
+CASE WHEN @SortCol = 7  AND @SortDIR = 'DESC' THEN Registration.Dam  END DESC, CASE WHEN @SortCol = 8  AND @SortDIR = 'DESC' THEN LastName + ', ' + FirstName  END DESC,    
+CASE WHEN @SortCol = 9  AND @SortDIR = 'DESC' THEN Registration.Status  END DESC,    
+CASE WHEN @SortCol = 10 AND @SortDIR = 'DESC' THEN Registration.Lastupdate  END DESC,    
+CASE WHEN @SortCol = 11 AND @SortDIR = 'DESC' THEN Registration.ID END DESC    
+    
+    
+-- Find out the first and last record we want    
+DECLARE @FirstRec int, @LastRec int    
+SELECT @FirstRec = (@Page - 1) * @RecsPerPage    
+SELECT @LastRec = (@Page * @RecsPerPage + 1)    
+    
+-- Now, return the set of paged records, plus, an indiciation of we have more records or not!    
+SELECT *,    
+    
+       MoreRecords =     
+    
+            (    
+    
+             SELECT COUNT(SID)     
+    
+             FROM #TempItems TI    
+    
+             WHERE TI.SID > @LastRec    
+    
+            ),    
+    
+               xCount =     
+    
+            (    
+    
+             SELECT COUNT(SID)     
+    
+             FROM #TempItems TI    
+    
+            )     
+FROM #TempItems    
+WHERE SID > @FirstRec AND SID < @LastRec    
+    
+-- Turn NOCOUNT back OFF    
+SET NOCOUNT OFF    
+
+Create procedure [dbo].[usp_InventoryList_AllnewABHR]      
+(        
+ @Page int = 1,        
+ @RecsPerPage int = 600000000,        
+ @MemberNumber int = null,        
+ @SearchStatus nvarchar(255) = null,        
+ @SearchItem nvarchar(255) = null,        
+ @regno int = null,        
+ @searchDate datetime = null,        
+ @SortCol int = 1,         
+ @SortDIR nvarchar(5) = 'ASC'        
+)        
+AS        
+SET NOCOUNT ON        
+        
+DECLARE @RecCount int        
+SELECT @RecCount = @RecsPerPage * @Page + 1        
+        
+CREATE TABLE #TempItems        
+(        
+ SID int IDENTITY,        
+ RegNoID int,         
+ RegNo int,        
+ Animal nvarchar(255),        
+ PrivateHerd nvarchar(255),        
+ Birthdate datetime,        
+ Sex nvarchar(250),        
+ SireName Nvarchar(50),        
+ DamName Nvarchar(50),        
+ MemberName nvarchar(255),        
+ MemberNumber int,        
+ Status nvarchar(255),        
+ LastUpdated datetime,        
+ pbs_id int,        
+ Sold bit,      
+ outcount int,        
+ avgmark decimal(4,2)        
+)        
+-- Insert the rows from tblItems into the temp. table        
+INSERT INTO #TempItems (RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName,MemberNumber, Status, LastUpdated, pbs_id,sold, outcount, avgmark)        
+SELECT         
+ Registration.ID,        
+ Registration.RegNo,         
+ Registration.Animal,        
+ Registration.PrivateHerd,        
+ Registration.Birthdate,        
+ Registration.TypeService,        
+ (select Animal from registration a where a.regno=Registration.Sire),    
+ (select Animal from registration a where a.regno=Registration.Dam),        
+ Members.LastName + ', ' + Members.FirstName AS MemberName,        
+ Members.MemberNumber,        
+ Registration.Status,        
+ Registration.Lastupdate,        
+ registration.pbs_id,        
+ '',      
+ bs.outcount,        
+ bs.avgmark        
+FROM Registration        
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber        
+left join bullstats bs on registration.pbs_id = bs.pbs_id        
+WHERE        
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))        
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))        
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))        
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))        
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))        
+and Registration.Status <> 'Deceased'        
+and Registration.Status <> 'Waiting For Samples - Overdue'        
+and registration.sold <> 1 And Registration.TypeService not in ('NB','NC','AB','AC','EB','EC')       
+Union      
+select  RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName, MemberNumber, Status, LastUpdated, pbs_id, sold, outcount, avgmark from (        
+SELECT         
+ Registration.ID as regnoid,        
+ RegistrationHistory.RegNo,         
+ Registration.Animal,        
+ Registration.PrivateHerd,        
+ Registration.Birthdate,        
+ Registration.TypeService as Sex,        
+ (select Animal from registration a where a.regno=Registration.Sire)as SireName,        
+ (select Animal from registration a where a.regno=Registration.Dam) as DamName,         
+ Members.LastName + ', ' + Members.FirstName AS MemberName,        
+ Members.MemberNumber,        
+ Registration.Status,        
+ Registration.Lastupdate as LastUpdated,        
+ Registration.pbs_id,        
+ Registration.Sold,        
+ bs.outcount,        
+ bs.avgmark        
+FROM RegistrationHistory        
+INNER JOIN Registration ON Registration.RegNo = RegistrationHistory.RegNo        
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber        
+left join bullstats bs on Registration.pbs_id = bs.pbs_id        
+WHERE        
+(((@MemberNumber is NULL) OR (RegistrationHistory.PrevMember = @MemberNumber))        
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))        
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))        
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))        
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate))        
+AND ((RegistrationHistory.Regno=Registration.RegNo)))        
+and registration.MemberNo <> @MemberNumber    and Registration.MemberNo <> 1657        
+and Registration.Status <> 'Waiting For Samples - Overdue' And Registration.TypeService not in ('NB','NC','AB','AC','EB','EC')       
+        
+union        
+        
+SELECT         
+ Registration.ID as regnoid,        
+ Registration.RegNo,         
+ Registration.Animal,        
+ Registration.PrivateHerd,        
+ Registration.Birthdate,        
+ Registration.TypeService as Sex,        
+ (select Animal from registration r where r.regno=Registration.Sire)as SireName,        
+ (select Animal from registration r where r.regno=Registration.Dam) as DamName,         
+ 'Sold' AS MemberName,        
+ Members.MemberNumber,        
+ Registration.Status,        
+ Registration.Lastupdate as LastUpdated,        
+ registration.pbs_id,        
+ Registration.Sold,        
+ bs.outcount,        
+ bs.avgmark        
+FROM Registration        
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber        
+left join bullstats bs on Registration.pbs_id = bs.pbs_id        
+        
+WHERE        
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))        
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))        
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))        
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))        
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))        
+and Registration.Status <> 'Deceased'        
+and Registration.Status <> 'Waiting For Samples - Overdue'        
+and registration.sold = 1  And Registration.TypeService not in ('NB','NC','AB','AC','EB','EC')      
+) a        
+      
+--ORDER BY         
+        
+--CASE WHEN @SortCol = 1  AND @SortDIR = 'ASC' THEN Registration.RegNo END ASC,        
+--CASE WHEN @SortCol = 2  AND @SortDIR = 'ASC' THEN Registration.Animal  END ASC,        
+--CASE WHEN @SortCol = 3  AND @SortDIR = 'ASC' THEN Registration.PrivateHerd  END ASC,        
+--CASE WHEN @SortCol = 4  AND @SortDIR = 'ASC' THEN Registration.Birthdate  END ASC,        
+--CASE WHEN @SortCol = 5  AND @SortDIR = 'ASC' THEN Registration.TypeService  END ASC,        
+--CASE WHEN @SortCol = 6  AND @SortDIR = 'ASC' THEN Registration.Sire  END ASC,        
+--CASE WHEN @SortCol = 7  AND @SortDIR = 'ASC' THEN Registration.Dam END ASC,        
+----CASE WHEN @SortCol = 8  AND @SortDIR = 'ASC' THEN LastName + ', ' + FirstName  END ASC,        
+--CASE WHEN @SortCol = 9  AND @SortDIR = 'ASC' THEN Registration.Status  END ASC,        
+--CASE WHEN @SortCol = 10 AND @SortDIR = 'ASC' THEN Registration.Lastupdate  END ASC,        
+--CASE WHEN @SortCol = 11 AND @SortDIR = 'ASC' THEN Registration.ID END ASC,        
+--CASE WHEN @SortCol = 1  AND @SortDIR = 'DESC' THEN Registration.RegNo END DESC,        
+--CASE WHEN @SortCol = 2  AND @SortDIR = 'DESC' THEN Registration.Animal  END DESC,        
+--CASE WHEN @SortCol = 3  AND @SortDIR = 'DESC' THEN Registration.PrivateHerd  END DESC,        
+--CASE WHEN @SortCol = 4  AND @SortDIR = 'DESC' THEN Registration.Birthdate  END DESC,        
+--CASE WHEN @SortCol = 5  AND @SortDIR = 'DESC' THEN Registration.TypeService  END DESC,        
+--CASE WHEN @SortCol = 6  AND @SortDIR = 'DESC' THEN Registration.Sire  END DESC,        
+----CASE WHEN @SortCol = 7  AND @SortDIR = 'DESC' THEN Registration.Dam  END DESC, CASE WHEN @SortCol = 8  AND @SortDIR = 'DESC' THEN LastName + ', ' + FirstName  END DESC,        
+--CASE WHEN @SortCol = 9  AND @SortDIR = 'DESC' THEN Registration.Status  END DESC,        
+--CASE WHEN @SortCol = 10 AND @SortDIR = 'DESC' THEN Registration.Lastupdate  END DESC,        
+--CASE WHEN @SortCol = 11 AND @SortDIR = 'DESC' THEN Registration.ID END DESC        
+-- Find out the first and last record we want        
+DECLARE @FirstRec int, @LastRec int        
+SELECT @FirstRec = (@Page - 1) * @RecsPerPage        
+    
+SELECT @LastRec = (@Page * @RecsPerPage + 1)        
+  -- Now, return the set of paged records, plus, an indiciation of we have more records or not!        
+SELECT *,        
+         MoreRecords =         
+            (        
+             SELECT COUNT(SID)         
+             FROM #TempItems TI        
+             WHERE TI.SID > @LastRec        
+            ),      
+   xCount =         
+            (        
+             SELECT COUNT(SID)         
+             FROM #TempItems TI        
+            )         
+FROM #TempItems        
+WHERE SID > @FirstRec AND SID < @LastRec        
+-- Turn NOCOUNT back OFF        
+SET NOCOUNT OFF        
+    
+Alter procedure [dbo].[usp_InventoryList_Allnew]      
+(        
+ @Page int = 1,        
+ @RecsPerPage int = 600000000,        
+ @MemberNumber int = null,        
+ @SearchStatus nvarchar(255) = null,        
+ @SearchItem nvarchar(255) = null,        
+ @regno int = null,        
+ @searchDate datetime = null,        
+ @SortCol int = 1,         
+ @SortDIR nvarchar(5) = 'ASC'        
+)        
+AS        
+SET NOCOUNT ON        
+        
+DECLARE @RecCount int        
+SELECT @RecCount = @RecsPerPage * @Page + 1        
+        
+CREATE TABLE #TempItems        
+(        
+ SID int IDENTITY,        
+ RegNoID int,         
+ RegNo int,        
+ Animal nvarchar(255),        
+ PrivateHerd nvarchar(255),        
+ Birthdate datetime,        
+ Sex nvarchar(250),        
+ SireName Nvarchar(50),        
+ DamName Nvarchar(50),        
+ MemberName nvarchar(255),        
+ MemberNumber int,        
+ Status nvarchar(255),        
+ LastUpdated datetime,        
+ pbs_id int,        
+ Sold bit,      
+ outcount int,        
+ avgmark decimal(4,2)        
+)        
+-- Insert the rows from tblItems into the temp. table        
+INSERT INTO #TempItems (RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName,MemberNumber, Status, LastUpdated, pbs_id,sold, outcount, avgmark)        
+SELECT         
+ Registration.ID,        
+ Registration.RegNo,         
+ Registration.Animal,        
+ Registration.PrivateHerd,        
+ Registration.Birthdate,        
+ Registration.TypeService,        
+ (select Animal from registration a where a.regno=Registration.Sire),    
+ (select Animal from registration a where a.regno=Registration.Dam),        
+ Members.LastName + ', ' + Members.FirstName AS MemberName,        
+ Members.MemberNumber,        
+ Registration.Status,        
+ Registration.Lastupdate,        
+ registration.pbs_id,        
+ '',      
+ bs.outcount,        
+ bs.avgmark        
+FROM Registration        
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber        
+left join bullstats bs on registration.pbs_id = bs.pbs_id        
+WHERE        
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))        
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))        
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))        
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))        
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))        
+and Registration.Status <> 'Deceased'        
+and Registration.Status <> 'Waiting For Samples - Overdue'        
+and registration.sold <> 1 And Registration.TypeService in ('NB','NC','AB','AC','EB','EC')       
+Union      
+select  RegNoID, RegNo, Animal, PrivateHerd, Birthdate, Sex, SireName, DamName, MemberName, MemberNumber, Status, LastUpdated, pbs_id, sold, outcount, avgmark from (        
+SELECT         
+ Registration.ID as regnoid,        
+ RegistrationHistory.RegNo,         
+ Registration.Animal,        
+ Registration.PrivateHerd,        
+ Registration.Birthdate,        
+ Registration.TypeService as Sex,        
+ (select Animal from registration a where a.regno=Registration.Sire)as SireName,        
+ (select Animal from registration a where a.regno=Registration.Dam) as DamName,         
+ Members.LastName + ', ' + Members.FirstName AS MemberName,        
+ Members.MemberNumber,        
+ Registration.Status,        
+ Registration.Lastupdate as LastUpdated,        
+ Registration.pbs_id,        
+ Registration.Sold,        
+ bs.outcount,        
+ bs.avgmark        
+FROM RegistrationHistory        
+INNER JOIN Registration ON Registration.RegNo = RegistrationHistory.RegNo        
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber        
+left join bullstats bs on Registration.pbs_id = bs.pbs_id        
+WHERE        
+(((@MemberNumber is NULL) OR (RegistrationHistory.PrevMember = @MemberNumber))        
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))        
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))        
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))        
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate))        
+AND ((RegistrationHistory.Regno=Registration.RegNo)))        
+and registration.MemberNo <> @MemberNumber    and Registration.MemberNo <> 1657        
+and Registration.Status <> 'Waiting For Samples - Overdue' And Registration.TypeService in ('NB','NC','AB','AC','EB','EC')       
+        
+union        
+        
+SELECT         
+ Registration.ID as regnoid,        
+ Registration.RegNo,         
+ Registration.Animal,        
+ Registration.PrivateHerd,        
+ Registration.Birthdate,        
+ Registration.TypeService as Sex,        
+ (select Animal from registration r where r.regno=Registration.Sire)as SireName,        
+ (select Animal from registration r where r.regno=Registration.Dam) as DamName,         
+ 'Sold' AS MemberName,        
+ Members.MemberNumber,        
+ Registration.Status,        
+ Registration.Lastupdate as LastUpdated,        
+ registration.pbs_id,        
+ Registration.Sold,        
+ bs.outcount,        
+ bs.avgmark        
+FROM Registration        
+INNER JOIN Members ON Registration.MemberNo = Members.MemberNumber        
+left join bullstats bs on Registration.pbs_id = bs.pbs_id        
+        
+WHERE        
+(((@MemberNumber is NULL) OR (Members.MemberNumber = @MemberNumber))        
+AND ((@regno is null) OR (Registration.RegNo = @regno) OR (Registration.Sire = @regno) OR (Registration.Dam = @regno))        
+AND ((@SearchItem is NULL) OR (Animal LIKE '%' + @SearchItem + '%') OR (PrivateHerd LIKE '%' + @SearchItem + '%') OR (TypeService LIKE '%' + @SearchItem + '%') OR (Status LIKE '%' + @SearchItem + '%'))        
+AND ((@SearchStatus is NULL) OR (Registration.Status = @SearchStatus))        
+AND ((@searchDate is NULL) OR (Registration.Birthdate = @searchDate) OR (Registration.Lastupdate = @searchDate)))        
+and Registration.Status <> 'Deceased'        
+and Registration.Status <> 'Waiting For Samples - Overdue'        
+and registration.sold = 1  And Registration.TypeService in ('NB','NC','AB','AC','EB','EC')      
+) a        
+      
+--ORDER BY         
+        
+--CASE WHEN @SortCol = 1  AND @SortDIR = 'ASC' THEN Registration.RegNo END ASC,        
+--CASE WHEN @SortCol = 2  AND @SortDIR = 'ASC' THEN Registration.Animal  END ASC,        
+--CASE WHEN @SortCol = 3  AND @SortDIR = 'ASC' THEN Registration.PrivateHerd  END ASC,        
+--CASE WHEN @SortCol = 4  AND @SortDIR = 'ASC' THEN Registration.Birthdate  END ASC,        
+--CASE WHEN @SortCol = 5  AND @SortDIR = 'ASC' THEN Registration.TypeService  END ASC,        
+--CASE WHEN @SortCol = 6  AND @SortDIR = 'ASC' THEN Registration.Sire  END ASC,        
+--CASE WHEN @SortCol = 7  AND @SortDIR = 'ASC' THEN Registration.Dam END ASC,        
+----CASE WHEN @SortCol = 8  AND @SortDIR = 'ASC' THEN LastName + ', ' + FirstName  END ASC,        
+--CASE WHEN @SortCol = 9  AND @SortDIR = 'ASC' THEN Registration.Status  END ASC,        
+--CASE WHEN @SortCol = 10 AND @SortDIR = 'ASC' THEN Registration.Lastupdate  END ASC,        
+--CASE WHEN @SortCol = 11 AND @SortDIR = 'ASC' THEN Registration.ID END ASC,        
+--CASE WHEN @SortCol = 1  AND @SortDIR = 'DESC' THEN Registration.RegNo END DESC,        
+--CASE WHEN @SortCol = 2  AND @SortDIR = 'DESC' THEN Registration.Animal  END DESC,        
+--CASE WHEN @SortCol = 3  AND @SortDIR = 'DESC' THEN Registration.PrivateHerd  END DESC,        
+--CASE WHEN @SortCol = 4  AND @SortDIR = 'DESC' THEN Registration.Birthdate  END DESC,        
+--CASE WHEN @SortCol = 5  AND @SortDIR = 'DESC' THEN Registration.TypeService  END DESC,        
+--CASE WHEN @SortCol = 6  AND @SortDIR = 'DESC' THEN Registration.Sire  END DESC,        
+----CASE WHEN @SortCol = 7  AND @SortDIR = 'DESC' THEN Registration.Dam  END DESC, CASE WHEN @SortCol = 8  AND @SortDIR = 'DESC' THEN LastName + ', ' + FirstName  END DESC,        
+--CASE WHEN @SortCol = 9  AND @SortDIR = 'DESC' THEN Registration.Status  END DESC,        
+--CASE WHEN @SortCol = 10 AND @SortDIR = 'DESC' THEN Registration.Lastupdate  END DESC,        
+--CASE WHEN @SortCol = 11 AND @SortDIR = 'DESC' THEN Registration.ID END DESC        
+-- Find out the first and last record we want        
+DECLARE @FirstRec int, @LastRec int        
+SELECT @FirstRec = (@Page - 1) * @RecsPerPage        
+    
+SELECT @LastRec = (@Page * @RecsPerPage + 1)        
+  -- Now, return the set of paged records, plus, an indiciation of we have more records or not!        
+SELECT *,        
+         MoreRecords =         
+            (        
+             SELECT COUNT(SID)         
+             FROM #TempItems TI        
+             WHERE TI.SID > @LastRec        
+            ),      
+   xCount =         
+            (        
+             SELECT COUNT(SID)         
+             FROM #TempItems TI        
+            )         
+FROM #TempItems        
+WHERE SID > @FirstRec AND SID < @LastRec        
+-- Turn NOCOUNT back OFF        
+SET NOCOUNT OFF        
+    

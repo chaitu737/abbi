@@ -1,0 +1,2493 @@
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-init="EventData()" ng-hide="PastScreen">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Title</th>
+                <th>Start Date</th>
+                <th>Sanction</th>
+                <th>City</th>
+                <th>State</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="em in ems">
+                <td><span ng-bind="em.Id"></span></td>
+                <td><a ng-click="EventInfo(em)">{{em.title}}</a></td>
+                <td><span ng-bind="em.startday | date:'MM/dd/yyyy'"></span></td>
+                <td><span ng-bind="em.sanction"></span></td>
+                <td><span ng-bind="em.city"></span></td>
+                <td><span ng-bind="em.state"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="ShowEntries">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">All Entries</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Animal</th>
+                <th>Birth Year</th>
+                <th>Owner</th>
+                <th>Handler</th>
+                <th>Del</th>
+                <th>Evstring</th>
+                <th>Evids</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="sae in saes">
+                <td><span ng-bind="sae.hip"></span></td>
+                <td><span ng-bind="sae.animal"></span></td>
+                <td><span ng-bind="sae.birthyear"></span></td>
+                <td><span ng-bind="sae.owner"></span></td>
+                <td><span ng-bind="sae.handler"></span></td>
+                <td><span ng-bind="sae.del"></span></td>
+                <td><span ng-bind="sae.evstring"></span></td>
+                <td><span ng-bind="sae.evid"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="ShowHandler">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Handler</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Handler</th>
+                <th>Animals</th>
+                <th>Contact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="sh in shs">
+                <td><span ng-bind="sh.handler"></span></td>
+                <td><span ng-bind="sh.Animal_Count"></span></td>
+                <td><span ng-bind="sh.phone"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="hiptaglist">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">PDF Hip Tag List</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Del</th>
+                <th>Animal</th>
+                <th>Owner</th>
+                <th>Handler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="htl in htls">
+                <td><span ng-bind="htl.hip"></span></td>
+                <td><span ng-bind="htl.del"></span></td>
+                <td><span ng-bind="htl.animal"></span></td>
+                <td><span ng-bind="htl.owner"></span></td>
+                <td><span ng-bind="htl.handler"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="hiptaghandler">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">PDF Hip Tag List (By Handler)</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Del</th>
+                <th>Animal</th>
+                <th>Owner</th>
+                <th>Handler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="hth in hths">
+                <td><span ng-bind="hth.hip"></span></td>
+                <td><span ng-bind="hth.del"></span></td>
+                <td><span ng-bind="hth.animal"></span></td>
+                <td><span ng-bind="hth.owner"></span></td>
+                <td><span ng-bind="hth.handler"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="pdfhipted">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">PDF (TED) Hip Tags</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Del</th>
+                <th>Animal</th>
+                <th>Owner</th>
+                <th>Handler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="pht in phts">
+                <td><span ng-bind="pht.hip"></span></td>
+                <td><span ng-bind="pht.del"></span></td>
+                <td><span ng-bind="pht.animal"></span></td>
+                <td><span ng-bind="pht.owner"></span></td>
+                <td><span ng-bind="pht.handler"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="pdftedhandler">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">PDF (Ted) Hip Tag (By Handler)</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Del</th>
+                <th>Animal</th>
+                <th>Owner</th>
+                <th>Handler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="pth in pths">
+                <td><span ng-bind="pth.hip"></span></td>
+                <td><span ng-bind="pth.del"></span></td>
+                <td><span ng-bind="pth.animal"></span></td>
+                <td><span ng-bind="pth.owner"></span></td>
+                <td><span ng-bind="pth.handler"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="pdfjudgehip">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">PDF Judge sheets by Hip Tag</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Del</th>
+                <th>Animal</th>
+                <th>Score</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="pjh in pjhs">
+                <td><span ng-bind="pjh.hip"></span></td>
+                <td><span ng-bind="pjh.del"></span></td>
+                <td><span ng-bind="pjh.animal"></span></td>
+                <td><span ng-bind="pjh.score"></span></td>
+                <td><span ng-bind="pjh.note"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="bchiptag">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">BC Hip Tag List</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Del</th>
+                <th>Bno</th>
+                <th>Bname</th>
+                <th>Owner</th>
+                <th>Handler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="bht in bhts">
+                <td><span ng-bind="bht.hip"></span></td>
+                <td><span ng-bind="bht.del"></span></td>
+                <td><span ng-bind="bht.bno"></span></td>
+                <td><span ng-bind="bht.bname"></span></td>
+                <td><span ng-bind="bht.owner"></span></td>
+                <td><span ng-bind="bht.handler"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="bchiphandler">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">BC Hip Tag List (By Handler)</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Del</th>
+                <th>Bno</th>
+                <th>Bname</th>
+                <th>Owner</th>
+                <th>Handler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="bhh in bhhs">
+                <td><span ng-bind="bhh.hip"></span></td>
+                <td><span ng-bind="bhh.del"></span></td>
+                <td><span ng-bind="bhh.bno"></span></td>
+                <td><span ng-bind="bhh.bname"></span></td>
+                <td><span ng-bind="bhh.owner"></span></td>
+                <td><span ng-bind="bhh.handler"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="parentagedaysheet">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Parentage Daytsheet Report</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Del</th>
+                <th>Animal</th>
+                <th>Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="pds in pdss">
+                <td><span ng-bind="pds.hip"></span></td>
+                <td><span ng-bind="pds.D"></span></td>
+                <td>Sire : {{pds.Sire}} ({{pds.SSire}} * {{pds.SDam}})<br>
+                  {{pds.Animal}} ({{pds.Birthyear}})<br>
+                  Dam : {{pds.Dam}} ({{pds.DSire}} * {{pds.DDam}})
+                </td>
+                <td>Handler : {{pds.Handler}}<br>
+                  {{pds.Owner}}<br>
+                  [Open D]
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="ShowHip">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Hip Tag</h2>
+    <div ng-if="hiplength != 0">
+     <b><a class="abc" ng-click="HipTagList(eis)">PDF Hip Tag list</a> -- <a class="abc" ng-click="HipTagListHandler(eis)">PDF Hip Tag list (by handler)</a></b>
+     <br>
+     <br>
+     <b><a class="abc" ng-click="PdfHipTed(eis)">PDF (Ted) Hip Tags</a> -- <a class="abc" ng-click="PdfTedHandler(eis)">PDF (Ted) Hip Tags (by handler)</a></b>
+     <br>
+     <br>
+     <b><a class="abc" ng-click="PdfJudgeHip(eis)">PDF Judge Sheets by Hip Tag</a></b>
+     <br>
+     <br>
+     <b><a class="abc" ng-click="BcHipTag(eis)">BC Hip Tag list</a></b>
+     <br>
+     <br>
+     <b><a class="abc" ng-click="BcHipHandler(eis)">BC Hip Tag list by handler</a></b>
+     <br>
+     <br>
+     <b><a class="abc" ng-click="ParentageDaysheet(eis)">Parentage Daysheet Report</a></b>
+     <br>
+     <br>
+     <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Hip</th>
+                <th>Del</th>
+                <th>Animal</th>
+                <th>Owner</th>
+                <th>Handler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="ship in ships">
+                <td><span ng-bind="ship.hip"></span></td>
+                <td><span ng-bind="ship.del"></span></td>
+                <td><span ng-bind="ship.animal"></span></td>
+                <td><span ng-bind="ship.owner"></span></td>
+                <td><span ng-bind="ship.handler"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="WipeHipTag(eis)">Wipe Hip Tags</button>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+  <div ng-if="hiplength == 0">
+   <label>OH MY! hip tags aren't set!</label>
+   <br>
+   <br>
+   <label>Do this AFTER you do all the class draws</label>
+   <br>
+   <br>
+   <button class="btn btn-color" ng-click="GenerateHip(eis)">Generate Hip Tags</button>
+   <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+ </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="ShowDraw">
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Draw Groups</h2>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Group</th>
+              <th>Add/Remove</th>
+              <th>Class</th>
+              <th>Entries/Results</th>
+              <th>Draw It</th>
+              <th>Day Sheet</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="draw in drs">
+              <td>
+                <span ng-if="draw.draw_grp==0">-</span>
+                <span ng-if="draw.draw_grp!=0" ng-bind="draw.draw_grp"></span>
+              </td>
+              <td ng-if="drs1.draw_grp == null">
+                <select>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                </select>
+              </td>
+              <td ng-if="drs1.draw_grp != null">
+                <select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value=""></option>
+                </select>
+              </td>
+              <td>{{draw.sanction}} {{draw.evclass}} {{draw.evtype}}</td>
+              <td><span ng-bind="draw.entries_results"></span></td>
+              <td><span ng-if="draw.draw_grp>=1"><a class="abc" ng-click="Group(draw)">Draw Group {{draw.draw_grp}}</a></span></td>
+              <td><span ng-if="draw.draw_grp>=1"><a class="abc" ng-click="Daysheet(draw)">Daysheet</a></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showgroup">
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Draw Group 1</h2>
+  <br>
+  <div ng-repeat="sg1 in sg">
+    <label>CLASS: {{sg1.evid}}</label> - <p>{{sg1.sanction}} {{sg1.evclass}} {{sg1.evtype}} {{sg1.startdate | date : 'yyyy-mm-dd hh:mm:ss'}}</p>
+  </div>
+  <br>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+    <div class="col-md-4">
+      <input type="text" class="form-control" ng-model="max.size" placeholder="Max per side">
+      {{sg1}}
+      <br>
+      <button class="btn btn-color" ng-click="DrawThis(sg1,max)">DRAW THIS</button>
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control" ng-model="sg.size" placeholder="Max per side">
+      <br>
+      <button class="btn btn-color" ng-click="EvaluateDraw(sg,maxside)">EVALUATE DRAW</button>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-color" ng-click="WipeDraw(sg)">WIPE DRAW</button>
+    </div>
+    <div class="col-md-12" ng-if="eds">
+      <p><b>{{eds.row1}}</b></p>
+      <p><b>{{eds.row2}}</b></p>
+      <p><b>{{eds.row3}}</b></p>
+      <p><b>{{eds.row4}}</b></p>
+      <p><b>{{eds.row5}}</b></p>
+      <p><b>{{eds.row6}}</b></p>
+      <p><b>{{eds.row7}}</b></p>
+      <p><b>{{eds.row8}}</b></p>
+    </div>
+  </div>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Draw</th>
+              <th>Del</th>
+              <th>ID</th>
+              <th>Animal</th>
+              <th>Paid?</th>
+              <th>Move</th>
+              <th>Move</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="sgt1 in sgt">
+              <td><span ng-bind="sgt1.draw"></span></td>
+              <td><span ng-bind="sgt1.del"></span></td>
+              <td><span ng-bind="sgt1.rowid"></span></td>
+              <td><span ng-bind="sgt1.animal"></span></td>
+              <td><span ng-bind="sgt1.paid"></span></td>
+              <td>
+                <button class="fa fa-toggle-up btn btn-success"></button>
+              </td>
+              <td>
+                <button class="fa fa-toggle-down btn btn-danger"></button>
+              </td>
+              <td>
+                <button class="btn btn-info fa fa-info"></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showdaysheet">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Draw</th>
+              <th>Hip</th>
+              <th>Reg no</th>
+              <th>Animal</th>
+              <th>Owner</th>
+              <th>Handler</th>
+              <th>Del</th>
+              <th>Evid_Str</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="sd in sds">
+              <td><span ng-bind="sd.draw"></span></td>
+              <td><span ng-bind="sd.hip"></span></td>
+              <td><span ng-bind="sd.regno"></span></td>
+              <td><span ng-bind="sd.animal"></span></td>
+              <td><span ng-bind="sd.Owner"></span></td>
+              <td><span ng-bind="sd.handler"></span></td>
+              <td><span ng-bind="sd.del"></span></td>
+              <td><span ng-bind="sd.evstring"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="ShowCheckIn">
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Checkin List</h2>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Entid</th>
+              <th>Classes</th>
+              <th>Hip</th>
+              <th>Reg No</th>
+              <th>Birth Year</th>
+              <th>Bbcid</th>
+              <th>Animal</th>
+              <th>Del</th>
+              <th>Owner</th>
+              <th>Handler</th>
+              <th>Email</th>
+              <th>Jacket Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="check in chis">
+              <td><span ng-bind="check.entid"></span></td>
+              <td><span ng-bind="check.classes"></span></td>
+              <td><span ng-bind="check.hip"></span></td>
+              <td><span ng-bind="check.regno"></span></td>
+              <td><span ng-bind="check.birthyear"></span></td>
+              <td><span ng-bind="check.bbcid"></span></td>
+              <td><span ng-bind="check.animal"></span></td>
+              <td><span ng-bind="check.del"></span></td>
+              <td><span ng-bind="check.owner"></span></td>
+              <td><span ng-bind="check.handler"></span></td>
+              <td><span ng-bind="check.email"></span></td>
+              <td><span ng-bind="check.jacket_size"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="ShowPayment">
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Payment Reports</h2>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Entry Id</th>
+              <th>Animals</th>
+              <th>Owner</th>
+              <th>Total Fees</th>
+              <th>Total Paid</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pr in prs">
+              <td><span ng-bind="pr.entid"></span></td>
+              <td><span ng-bind="pr.animal"></span></td>
+              <td><span ng-bind="pr.owner"></span></td>
+              <td><span ng-bind="pr.Total_Fees"></span></td>
+              <td><span ng-bind="pr.TotalPaid"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="ShowLetter">
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Participation Letter</h2>
+  <textarea class="form-control" cols="10" rows="5"></textarea>
+  <br>
+  <button class="btn btn-color" ng-click="CreateLetter()">Create</button>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="PastScreen1">
+  <div>
+    <div class="col-md-12" style="background-color: #fff">
+      <h4 class="well well-sm" style="background-color: #503219; color: white;">{{eis.city}}, {{eis.state}} ({{eis.sanction}})</h4>
+      <div>
+        <label>Season : {{eis.season}}</label>
+      </div>
+      <br>
+      <div>
+        <label>Date : {{eis.startday | date:'MM/dd/yyyy'}}</label>
+      </div>
+      <br>
+      <div>
+        <label>Event Id : {{eis.pevid}}</label>
+      </div>
+      <br>
+      <div>
+        <label>Sanction : {{eis.sanction}}</label>
+      </div>
+      <br>
+      <div>
+        <label>Status : <span ng-if="eis.status=='On'" style="background-color:lightgreen; padding:5px;">{{eis.status}}</span><span ng-if="eis.status=='Off'" style="background-color:red; padding:5px;">{{eis.status}}</span></label>
+      </div>
+      <br>
+      <div>
+        <label>Entries Open : {{eis.eoo | date : 'yyyy-MM-dd 00:00:00'}}</label>
+      </div>
+      <br>
+      <div>
+        <label>Entries Closed : {{eis.ec | date : 'yyyy-MM-dd 00:00:00'}}</label>
+      </div>
+      <br>
+      <div ng-if="note">
+        <span>* accepting rider fees for this event untill</span>
+      </div>
+      <br>
+      <br>
+      <div>
+        <div>
+          <label style="background-color: #503219; color: white; padding: 5px; border-radius: 5px;">{{msg}}</label>
+        </div>
+        <a class="abc" ng-click="AllEntries(eis)">See All Entries</a>
+      </div>
+      <br>
+      <div>
+        <b><a class="abc" ng-click="Handlers(eis)">Handlers</a> -- <a class="abc" ng-click="Hip(eis)">Hip Tags</a></b>
+      </div>
+      <br>
+      <div>
+        <b><a class="abc" ng-click="Draw(eis)">Draw Groups</a> -- <a class="abc" ng-click="CheckIn(eis)">Check In List</a> -- <a class="abc" ng-click="PaymentReport(eis)">Payments Report</a> -- <a class="abc" ng-click="ParticipationLetter(eis)"> Participant Letter</a></b>
+      </div>
+      <br>
+    </div>
+  </div>
+  <br>
+  <h4 class="well well-sm" style="background-color: #503219; color: white;">Classes</h4>
+  <br>
+  <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+    <thead>
+      <tr>
+        <th>Class</th>
+        <th>Ent/Res</th>
+        <th>Date / Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="tei in teis">
+        <td><a class="abc" ng-click="CompetitionAdmin(tei)">{{tei.Class}}</a></td>
+        <td ng-if="msg != 'Entries Open'">{{tei.entries_results}}</td>
+        <td ng-if="msg == 'Entries Open'"><a class="abc" ng-click="OpenClass(tei)">{{tei.entries_results}}</a></td>
+        <td><span ng-bind="tei.startdate | date : 'MM/dd/yyyy hh:mm a'"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-if="jud">Judges</h4>
+  <br>
+  <ul ng-repeat = "ju in jud">
+    <li><label>{{ju.jid}} : {{ju.jname}}</label></li>
+  </ul>
+  <br>
+  <div class="col-md-6">
+    <button class="btn btn-color" ng-click="EditEvent(eis)">Edit Event Info</button>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="AddEditJudge(eis)">Add/Edit Judges</button>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="Draw(eis)">Set Draw Groups</button>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="Hip(eis)">Generate Hip Tags</button>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="ExitPastScrrenInfo()">Back</button>
+  </div>
+  <div class="col-md-6">
+    <button class="btn btn-color" ng-click="AddClasss()">ADD CLASS</button>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="AddEvent1(eis)">DUPLICATE</button>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="RiderFee(eis)">ACCEPT RIDER FEES</button>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="Destroy(eis)">DESTROY</button>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="openclass">
+  <label><a class="abc" ng-click="NewEntry()">CLICK HERE to add entries</a></label>
+  <br>
+  <br>
+  <label>Entries Are Open</label>
+  <br>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="addopennewentry">
+  <h3>Search Animal to enter</h3>
+  <form>
+    <label>ABBI#</label>
+    <input type="text" placeholder="ABBI #, Animal Brand, Name or leave blank" class="form-control" ng-model="seanimal.name">
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="AddNewEntry(seanimal)">Load Animal</button>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </form>
+  <br>
+  <div ng-if="sas1" class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Bbcid</th>
+              <th>Reg No</th>
+              <th>Animal</th>
+              <th>Owner</th>
+              <th>Handler</th>
+              <th>Del</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="sa in sas1">
+              <td>{{sa.bbcid}}</td>
+              <td>{{sa.regno}}</td>
+              <td><a ng-click="EditsAnimal(sa)">{{sa.bno}} {{sa.bname}} ({{sa.birthyear}})</a></td>
+              <td>{{sa.owner}}</td>
+              <td>{{sa.handler}}</td>
+              <td>{{sa.del}}</td>
+              <td>
+                <button class="btn btn-color" ng-click="LoadAnimalData(sa,tei1)">Load</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="loadanimal">
+  <div class="container">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">ANIMAL LOADED</h4>
+    <label>Please adjust owner, handler name, and delivery fields as necessary and click 'ENTER ANIMAL' to complete entry process.</label>
+  </div>
+  <br>
+  <br>
+  <div class="container col-md-12" ng-if="!load.message">
+    <form class="form-group">
+      <div class="col-md-6">
+        <label>ABBI #</label>
+        <input type="text" class="form-control" ng-model="load.regno">
+        <label>EID Tag</label>
+        <input type="text" class="form-control" ng-model="load.EID">
+        <label>Delivery</label>
+        <select class="form-control" ng-model="load.delivery">
+          <option value="">--Select One--</option>
+          <option value="L">Left</option>
+          <option value="R">Right</option>
+          <option value="E">Either</option>
+        </select>
+        <label>Entry Contact Email</label>
+        <input type="text" class="form-control" ng-model="load.email">
+        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="load.entrydupe">Force New Entry
+      </div>
+      <div class="col-md-6">
+        <label>Animal Brand #</label>
+        <input type="text" class="form-control" ng-model="load.brand">
+        <label>Animal Name</label>
+        <input type="text" class="form-control" ng-model="load.animal">
+        <label>Owner / Partners</label>
+        <input type="text" class="form-control" ng-model="load.owner">
+        <label>Handler</label>
+        <input type="text" class="form-control" ng-model="load.handler">
+      </div>
+      <button class="btn btn-color" ng-click="EnterAnimalReg(load)">Enter Animal</button>
+      <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+    </form>
+  </div>
+  <div class="container" ng-if="load.message">
+    <h2 class="text-danger">{{load.message}}</h2>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="addevent1">
+  <form class="form-group" class="col-md-12">
+    <div class="col-md-6">
+      <label>City</label>
+      <input type="text" class="form-control" ng-model="adde.city" required="true">
+      <label>State (or Province)</label>
+      <input type="text" class="form-control" ng-model="adde.state" required="true">
+      <label>Event Date(yyyy-mm-dd hh:mm:ss)</label>
+      <input type="text" class="form-control" ng-model="adde.startday" required="true">
+      <label>Season (year)</label>
+      <input type="text" class="form-control" ng-model="adde.season" required="true">
+      <label>Status</label>
+      <select class="form-control" ng-model="adde.status">
+        <option value="">--Select One--</option>
+        <option value="On">On</option>
+        <option value="Off">Off</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label>Event Title (label)</label>
+      <input type="text" class="form-control" ng-model="adde.title" required="true">
+      <label>Sanction (ABBI or ABBI/UBBI, etc.)</label>
+      <input type="text" class="form-control" ng-model="adde.sanction" ng-model-options="{timezone: 'UTC'}" required="true">
+      <label>Entries Open</label>
+      <input type="text" class="form-control" placeholder="yyyy-mm-dd hh:mm:ss" ng-model-options="{timezone: 'UTC'}" ng-model="adde.eoo" required="true">
+      <label>Entries Close</label>
+      <input type="text" class="form-control" placeholder="yyyy-mm-dd hh:mm:ss" ng-model-options="{timezone: 'UTC'}" ng-model="adde.ec" required="true">
+      <br>
+      <button class="btn btn-color" ng-click="AddEventReg(adde)">Add Event</button>
+      <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+    </div>
+  </form>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="addclass">
+  <form class="form-group col-md-12">
+    <div>
+      <label ng-hide="true">Parent Event</label>
+      <input ng-hide="true" type="text" class="form-control" ng-model="acs.pevid">
+      <label>Class Date(YYYY-MM-DD hh:mm:ss)</label>
+      <input type="text" class="form-control" ng-model="acs.startdate" placeholder="yyyy-mm-dd hh:mm:ss">
+      <label>Sanction (ABBI or ABBI/UBBI, etc.)</label>
+      <input type="text" class="form-control" ng-model="acs.sanction">
+      <label>Entry Fees</label>
+      <input type="text" class="form-control" ng-model="acs.fees">
+      <label>Added $</label>
+      <input type="text" class="form-control" ng-model="acs.added">
+    </div>
+    <div>
+      <label>Status</label>
+      <select class="form-control" ng-model="acs.status">
+        <option value="">--Choose one--</option>
+        <option value="On">On</option>
+        <option value="Off">Off</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+      <label>Comp. Type</label>
+      <select class="form-control" ng-model="acs.evtype">
+        <option value="">--- Choose one ---</option>
+        <option value="Yearling">Yearling</option>
+        <option value="Futurity" selected="">Futurity</option>
+        <option value="Derby">Derby</option>
+        <option value="Classic">Classic</option>
+        <option value="Maturity">Maturity</option>
+        <option value="All In">All In</option>
+        <option value="Fee Only">Fee Only</option>
+        <option value="AU-Heifer">AU-Heifer</option>
+        <option value="AU-Yearling-2">AU-Yearling-2</option>
+        <option value="AU-Futurity-3">AU-Futurity-3</option>
+        <option value="AU-Ladies-2-3">AU-Ladies-2-3</option>
+        <option value="AU-Derby-4">AU-Derby-4</option>
+        <option value="Fee Only">Fee Only</option>
+      </select>
+      <label>Comp. Class</label>
+      <select class="form-control" ng-model="acs.evclass">
+        <option value="">--- Choose one ---</option>
+        <option value="Open">Open</option>
+        <option value="Open Tiered">Open Tiered</option>
+        <option value="Cowgirl">Cowgirl</option>
+        <option value="Junior">Junior</option>
+        <option value="ABBI Junior Points">ABBI Junior Points</option>
+        <option value="Limited">Limited</option>
+        <option value="3D">3D</option>
+        <option value="4D">4D</option>
+        <option value="Featured">Featured</option>
+        <option value="Elite">Elite</option>
+        <option value="Heritage" selected="">Heritage</option>
+        <option value="Incentive">Incentive</option>
+        <option value="Lifetime">Lifetime</option>
+        <option value="Heifer">Heifer</option>
+        <option value="Side Pot">Side Pot</option>
+        <option value="Wild Card">Wild Card</option>
+        <option value="Exhibition">Exhibition</option>
+        <option value="ABBI Points">ABBI Points</option>
+        <option value="ABBI Cowgirl Points">ABBI Cowgirl Points</option>
+        <option value="BFTS">BFTS</option>
+        <option value="PBR Premier Series">PBR Premier Series</option>
+        <option value="Canada">Canada</option>
+        <option value="Second Chance">Second Chance</option>
+        <option value="World Finals">World Finals</option>
+        <option value="2021 Series">2021 Series</option>
+        <option value="2021 NBLB">2021 NBLB</option>
+        <option value="Revolution">Revolution</option>
+        <option value="TwoBulls">TwoBulls</option>
+        <option value="Legacy">Legacy</option>
+        <option value="85 Slide">85 Slide</option>
+        <option value="87 Slide">87 Slide</option>
+        <option value="88 Slide">88 Slide</option>
+        <option value="Video">Video</option>
+        <option value="Video Jr">Video Jr</option>
+        <option value="Video Cowgirl">Video Cowgirl</option>
+      </select>
+      <label>Label (Ex. Round 2)</label>
+      <input type="text" class="form-control" ng-model="acs.evlabel">
+      <label>Scheduled Fee Payments?</label>
+      <select class="form-control" ng-model="acs.schedfees">
+        <option value="0" selected="">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+    <br>
+    <button class="btn btn-color" ng-click="AddClass(acs,eis)">Add Class</button>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </form>
+  <br>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="addeditjudges">
+  <div ng-if="alertc == true" class="alert alert-success alert-dismissible">
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Added Successfully!</strong>
+  </div>
+  <div ng-if="alertc == false" class="alert alert-danger alert-dismissible">
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Error! Please try again later.</strong>
+  </div>
+  <form class="form-group" class="col-md-12">
+    <div class="col-md-6">
+      <input ng-hide="true" ng-if="judge[0].jid==null" type="text"  ng-model="judge[0].jid" ng-init="judge[0].jid='j1'">
+      <input type="text" ng-model="judge[0].jname" class="form-control" placeholder="Judge 1">
+      <input ng-hide="true" ng-if="judge[1].jid==null" type="text"  ng-model="judge[1].jid" ng-init="judge[1].jid='j2'">
+      <input type="text" ng-model="judge[1].jname" class="form-control" placeholder="Judge 2">
+      <input ng-hide="true" ng-if="judge[2].jid==null" type="text"  ng-model="judge[2].jid" ng-init="judge[2].jid='j3'">
+      <input type="text" ng-model="judge[2].jname" class="form-control" placeholder="Judge 3">
+      <input ng-hide="true" ng-if="judge[3].jid==null" type="text"  ng-model="judge[3].jid" ng-init="judge[3].jid='j4'">
+      <input type="text" ng-model="judge[3].jname" class="form-control" placeholder="Judge 4">
+      <input ng-hide="true" ng-if="judge[4].jid==null" type="text"  ng-model="judge[4].jid" ng-init="judge[4].jid='j5'">
+      <input type="text" ng-model="judge[4].jname" class="form-control" placeholder="Judge 5">
+      <input ng-hide="true" ng-if="judge[5].jid==null" type="text"  ng-model="judge[5].jid" ng-init="judge[5].jid='j6'">
+      <input type="text" ng-model="judge[5].jname" class="form-control" placeholder="Judge 6">
+      <br>
+      <button class="btn btn-color" ng-click="UpdateJudge(judge,eis)">Set Judge</button>
+      <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+    </div>
+  </form>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="editevent">
+  <br>
+  <form class="form-group" class="col-md-12">
+    <div class="col-md-6">
+      <label>City</label>
+      <input type="text" class="form-control" ng-model="ede.city" required="true">
+      <label>State (or Province)</label>
+      <input type="text" class="form-control" ng-model="ede.state" required="true">
+      <label>Event Date</label>
+      <input type="text" class="form-control" ng-model="ede.startday" required="true">
+      <label>Season (year)</label>
+      <input type="text" class="form-control" ng-model="ede.season" required="true">
+      <label>Status</label>
+      <select class="form-control" ng-model="ede.status">
+        <option value="">--Select One--</option>
+        <option value="On">On</option>
+        <option value="Off">Off</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label>Event Title (label)</label>
+      <input type="text" class="form-control" ng-model="ede.title" required="true">
+      <label>Sanction (ABBI or ABBI/UBBI, etc.)</label>
+      <input type="text" class="form-control" ng-model="ede.sanction" required="true">
+      <label>Entries Open</label>
+      <input type="text" class="form-control" placeholder="yyyy-mm-dd hh:mm:ss" ng-model="ede.eoo" required="true">
+      <label>Entries Close</label>
+      <input type="text" class="form-control" placeholder="yyyy-mm-dd hh:mm:ss" ng-model="ede.ec" required="true">
+      <br>
+      <button class="btn btn-color" ng-click="UpdateEvent(ede)">Update</button>
+      <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+    </div>
+  </form>
+  <br>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showcomadmin">
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Event {{sca.evid}}</h2>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Class : {{sca.evclass}} ({{sca.sanction}}) </h2>
+  <br>
+  <b>Start Time</b> : {{sca.startdate | date : 'MM-dd-yyyy hh:mm a'}}
+  <br>
+  <b>Fees</b> : {{sca.fees}} -- <b>Payline Count</b> : {{sca.payline_count}} -- <b>Season</b> : {{sca.season}}
+  <br>
+  <table class="table table-bordered">
+    <tr>
+      <td>Entries</td>
+      <td>{{sca.entries}}</td>
+      <td ng-if="sca.results !=0">entries locked</td>
+      <td ng-if="sca.results ==0"><a class="abc">Entry Views</a></td>
+      <td><a class="abc" ng-click="EntriesExports()">Entries Exports</a></td>
+    </tr>
+    <tr>
+      <td>Draw</td>
+      <td>{{sca.draw}}</td>
+      <td ng-if="sca.results !=0">draw locked</td>
+      <td ng-if="sca.results ==0"><a class="abc">Draw Tools/Views</a></td>
+      <td><a class="abc" ng-click="DaySheet()">Draw/Daysheet Exports</a></td>
+    </tr>
+    <tr>
+      <td>Results</td>
+      <td>{{sca.results}}</td>
+      <td><a class="abc" ng-click="ResultsView()">Results Views</a></td>
+      <td><a class="abc" ng-click="ResultsExports()">Results Exports</a></td>
+    </tr>
+  </table>
+  <br>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Entry Menu</h2>
+  <b><a class="abc" ng-click="AddEntries(sca)">Entry List</a></b><br>
+  <b><a class="abc" ng-click="AddEntries(sca)">Add Entries</a></b>
+  <br>
+  <button class="btn btn-color" ng-click="EditClass(sca)">Edit Class Info</button>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="editclass">
+  <br>
+  <form class="form-group" class="col-md-12">
+    <div>
+      <label ng-hide="true">Parent Event</label>
+      <input ng-hide="true" type="text" class="form-control" ng-model="ecs.pevid">
+      <label>Class Date(YYYY-MM-DD hh:mm:ss)</label>
+      <input type="text" class="form-control" ng-model="ecs.startdate" placeholder="yyyy-mm-dd hh:mm:ss">
+      <label>Sanction (ABBI or ABBI/UBBI, etc.)</label>
+      <input type="text" class="form-control" ng-model="ecs.sanction">
+      <label>Entry Fees</label>
+      <input type="text" class="form-control" ng-model="ecs.fees">
+      <label>Added $</label>
+      <input type="text" class="form-control" ng-model="ecs.added">
+    </div>
+    <div>
+      <label>Status</label>
+      <select class="form-control" ng-model="ecs.status">
+        <option value="">--Choose one--</option>
+        <option value="On">On</option>
+        <option value="Off">Off</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+      <label>Comp. Type</label>
+      <select class="form-control" ng-model="ecs.evtype">
+        <option value="">--- Choose one ---</option>
+        <option value="Yearling">Yearling</option>
+        <option value="Futurity" selected="">Futurity</option>
+        <option value="Derby">Derby</option>
+        <option value="Classic">Classic</option>
+        <option value="Maturity">Maturity</option>
+        <option value="All In">All In</option>
+        <option value="Fee Only">Fee Only</option>
+        <option value="AU-Heifer">AU-Heifer</option>
+        <option value="AU-Yearling-2">AU-Yearling-2</option>
+        <option value="AU-Futurity-3">AU-Futurity-3</option>
+        <option value="AU-Ladies-2-3">AU-Ladies-2-3</option>
+        <option value="AU-Derby-4">AU-Derby-4</option>
+        <option value="Fee Only">Fee Only</option>
+      </select>
+      <label>Comp. Class</label>
+      <select class="form-control" ng-model="ecs.evclass">
+        <option value="">--- Choose one ---</option>
+        <option value="Open">Open</option>
+        <option value="Open Tiered">Open Tiered</option>
+        <option value="Cowgirl">Cowgirl</option>
+        <option value="Junior">Junior</option>
+        <option value="ABBI Junior Points">ABBI Junior Points</option>
+        <option value="Limited">Limited</option>
+        <option value="3D">3D</option>
+        <option value="4D">4D</option>
+        <option value="Featured">Featured</option>
+        <option value="Elite">Elite</option>
+        <option value="Heritage" selected="">Heritage</option>
+        <option value="Incentive">Incentive</option>
+        <option value="Lifetime">Lifetime</option>
+        <option value="Heifer">Heifer</option>
+        <option value="Side Pot">Side Pot</option>
+        <option value="Wild Card">Wild Card</option>
+        <option value="Exhibition">Exhibition</option>
+        <option value="ABBI Points">ABBI Points</option>
+        <option value="ABBI Cowgirl Points">ABBI Cowgirl Points</option>
+        <option value="BFTS">BFTS</option>
+        <option value="PBR Premier Series">PBR Premier Series</option>
+        <option value="Canada">Canada</option>
+        <option value="Second Chance">Second Chance</option>
+        <option value="World Finals">World Finals</option>
+        <option value="2021 Series">2021 Series</option>
+        <option value="2021 NBLB">2021 NBLB</option>
+        <option value="Revolution">Revolution</option>
+        <option value="TwoBulls">TwoBulls</option>
+        <option value="Legacy">Legacy</option>
+        <option value="85 Slide">85 Slide</option>
+        <option value="87 Slide">87 Slide</option>
+        <option value="88 Slide">88 Slide</option>
+        <option value="Video">Video</option>
+        <option value="Video Jr">Video Jr</option>
+        <option value="Video Cowgirl">Video Cowgirl</option>
+      </select>
+      <label>Label (Ex. Round 2)</label>
+      <input type="text" class="form-control" ng-model="ecs.evlabel">
+      <label>Scheduled Fee Payments?</label>
+      <select class="form-control" ng-model="ecs.schedfees">
+        <option value="0" selected="">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </div>
+    <br>
+    <button class="btn btn-color" ng-click="UpdateClass(ecs)">Edit Class</button>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </form>
+  <br>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="entriesexport">
+  <br>
+  <div class="col-md-12">
+    <div class="col-md-6">
+      <a ng-click="TOE(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Table of Entries</h2></a>
+      <a ng-click="RCE(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Rebecca Custom Entries List</h2></a>
+      <a ng-click="AEL(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Accepted Entries List</h2></a>
+      <a ng-click="AEP(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Accepted Entries / Payments</h2></a>
+      <a ng-click="LEL(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Linda Entries List</h2></a>
+    </div>
+    <div class="col-md-6">
+      <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%" ng-click="TOS(sca)">Table of Entries / Standings</h2>
+      <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%" ng-click="CP(sca)">Calculated Payout</h2>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="daysheetexport">
+  <br>
+  <div class="col-md-12">
+    <div class="col-md-6">
+      <a ng-click="PDFD(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">PDF Daysheet</h2></a>
+      <a ng-click="PDFP(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">PDF Daysheet with parentage</h2></a>
+      <a ng-click="TBLP(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">TBL Daysheet with parentage</h2></a>
+      <a ng-click="TBLD(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">TBL Daysheet</h2></a>
+      <br>
+      <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+    </div>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="resultview">
+  <br>
+  <div class="col-md-12">
+    <div class="col-md-6">
+      <a ng-click="CR(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Class Results</h2></a>
+      <a ng-click="CRP(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Class Payout Report</h2></a>
+      <br>
+      <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+    </div>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="resultsexport">
+  <br>
+  <div class="col-md-12">
+    <div class="col-md-6">
+      <a ng-click="CRT(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Class Results Table</h2></a>
+      <a ng-click="LRT(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Linda Results Table</h2></a>
+      <a ng-click="JST(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Judge Scores Table</h2></a>
+      <a ng-click="JER(sca)"><h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Judge Eval Reports</h2></a>
+    </div>
+    <div class="col-md-6">
+      <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%" ng-click="BJR(sca)">Billy Jaynes Report</h2>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showcrt">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Outid</th>
+              <th>Pevid</th>
+              <th>Entid</th>
+              <th>Regno</th>
+              <th>Pbid</th>
+              <th>Bbcid</th>
+              <th>Bno</th>
+              <th>Bname</th>
+              <th>Owner</th>
+              <th>Del</th>
+              <th>J1</th>
+              <th>J2</th>
+              <th>J3</th>
+              <th>J4</th>
+              <th>J5</th>
+              <th>J6</th>
+              <th>Bot</th>
+              <th>Raw Score</th>
+              <th>dropped Judge</th>
+              <th>dropped Score</th>
+              <th>Spread</th>
+              <th>Score</th>
+              <th>Imp Score</th>
+              <th>Handi Score</th>
+              <th>Row Id</th>
+              <th>Evid</th>
+              <th>Evlinkid</th>
+              <th>Perf</th>
+              <th>Go</th>
+              <th>Sc</th>
+              <th>Tier</th>
+              <th>Tier Place</th>
+              <th>Money</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="crts in crt">
+              <td><span ng-bind="crts.outid"></span></td>
+              <td><span ng-bind="crts.pevid"></span></td>
+              <td><span ng-bind="crts.entid"></span></td>
+              <td><span ng-bind="crts.regno"></span></td>
+              <td><span ng-bind="crts.pbid"></span></td>
+              <td><span ng-bind="crts.bbcid"></span></td>
+              <td><span ng-bind="crts.bno"></span></td>
+              <td><span ng-bind="crts.bname"></span></td>
+              <td><span ng-bind="crts.owner"></span></td>
+              <td><span ng-bind="crts.del"></span></td>
+              <td><span ng-bind="crts.j1"></span></td>
+              <td><span ng-bind="crts.j2"></span></td>
+              <td><span ng-bind="crts.j3"></span></td>
+              <td><span ng-bind="crts.j4"></span></td>
+              <td><span ng-bind="crts.j5"></span></td>
+              <td><span ng-bind="crts.j6"></span></td>
+              <td><span ng-bind="crts.bot"></span></td>
+              <td><span ng-bind="crts.raw_score"></span></td>
+              <td><span ng-bind="crts.dropped_judge"></span></td>
+              <td><span ng-bind="crts.dropped_score"></span></td>
+              <td><span ng-bind="crts.spread"></span></td>
+              <td><span ng-bind="crts.score"></span></td>
+              <td><span ng-bind="crts.imp_score"></span></td>
+              <td><span ng-bind="crts.handi_score"></span></td>
+              <td><span ng-bind="crts.rowid"></span></td>
+              <td><span ng-bind="crts.evid"></span></td>
+              <td><span ng-bind="crts.evlinkid"></span></td>
+              <td><span ng-bind="crts.perf"></span></td>
+              <td><span ng-bind="crts.go"></span></td>
+              <td><span ng-bind="crts.sc"></span></td>
+              <td><span ng-bind="crts.tier"></span></td>
+              <td><span ng-bind="crts.tier_place"></span></td>
+              <td><span ng-bind="crts.money"></span></td>
+              <td><span ng-bind="crts.points"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showlrt">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Regno</th>
+              <th>Bno</th>
+              <th>Bname</th>
+              <th>Owner</th>
+              <th>Bbcid</th>
+              <th>Pevid</th>
+              <th>Evid</th>
+              <th>Go</th>
+              <th>Sc</th>
+              <th>Place</th>
+              <th>Money</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="lrts in lrt">
+              <td><span ng-bind="lrts.regno"></span></td>
+              <td><span ng-bind="lrts.bno"></span></td>
+              <td><span ng-bind="lrts.bname"></span></td>
+              <td><span ng-bind="lrts.owner"></span></td>
+              <td><span ng-bind="lrts.bbcid"></span></td>
+              <td><span ng-bind="lrts.pevid"></span></td>
+              <td><span ng-bind="lrts.evid"></span></td>
+              <td><span ng-bind="lrts.go"></span></td>
+              <td><span ng-bind="lrts.sc"></span></td>
+              <td><span ng-bind="lrts.place"></span></td>
+              <td><span ng-bind="lrts.money"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showjst">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Outid</th>
+              <th>Pevid</th>
+              <th>Entid</th>
+              <th>Regno</th>
+              <th>Pbid</th>
+              <th>Bbcid</th>
+              <th>Bno</th>
+              <th>Bname</th>
+              <th>Owner</th>
+              <th>Del</th>
+              <th>J1</th>
+              <th>J2</th>
+              <th>J3</th>
+              <th>J4</th>
+              <th>J5</th>
+              <th>J6</th>
+              <th>bot</th>
+              <th>Raw Score</th>
+              <th>Dropped Judge</th>
+              <th>Dropped Score</th>
+              <th>Spread Score</th>
+              <th>Imp Score</th>
+              <th>Handi Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="jsts in jst">
+              <td><span ng-bind="jsts.outid"></span></td>
+              <td><span ng-bind="jsts.pevid"></span></td>
+              <td><span ng-bind="jsts.entid"></span></td>
+              <td><span ng-bind="jsts.regno"></span></td>
+              <td><span ng-bind="jsts.pbid"></span></td>
+              <td><span ng-bind="jsts.bbcid"></span></td>
+              <td><span ng-bind="jsts.bno"></span></td>
+              <td><span ng-bind="jsts.bname"></span></td>
+              <td><span ng-bind="jsts.owner"></span></td>
+              <td><span ng-bind="jsts.del"></span></td>
+              <td><span ng-bind="jsts.j1"></span></td>
+              <td><span ng-bind="jsts.j2"></span></td>
+              <td><span ng-bind="jsts.j3"></span></td>
+              <td><span ng-bind="jsts.j4"></span></td>
+              <td><span ng-bind="jsts.j5"></span></td>
+              <td><span ng-bind="jsts.j6"></span></td>
+              <td><span ng-bind="jsts.bot"></span></td>
+              <td><span ng-bind="jsts.raw_score"></span></td>
+              <td><span ng-bind="jsts.dropped_judge"></span></td>
+              <td><span ng-bind="jsts.dropped_score"></span></td>
+              <td><span ng-bind="jsts.spread"></span></td>
+              <td><span ng-bind="jsts.imp_score"></span></td>
+              <td><span ng-bind="jsts.handi_score"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showjer">
+  <br>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">{{jer0.evclass}} {{jer0.evtype}}, {{jer0.city}}, {{jer0.state}} {{jer0.startday | date : 'yyyy-MM-dd'}}</h2>
+  <br>
+  <ul>
+    <span ng-repeat="jers1 in jer1" style="float: left"><a class="abc" ng-click="JudgeDetails(sca,jers1);SingleJudge(sca,jers1);JudgeScore(sca,jers1)"><b>{{jers1.jname}}</b></a></span>
+  </ul>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Outid</th>
+              <th>Pevid</th>
+              <th>Regno</th>
+              <th>Bbcid</th>
+              <th>Bno</th>
+              <th>Bname</th>
+              <th>Owner</th>
+              <th>Del</th>
+              <th>J1</th>
+              <th>J2</th>
+              <th>J3</th>
+              <th>J4</th>
+              <th>J5</th>
+              <th>Raw Score</th>
+              <th>Dropped Judge</th>
+              <th>Dropped Score</th>
+              <th>Spread</th>
+              <th>Score</th> 
+              <th>Evid</th>
+              <th>Evlinkid</th>
+              <th>Perf</th>
+              <th>Go</th>
+              <th>Sc</th>
+              <th>Place</th>    
+              <th>Tier</th>
+              <th>Tier Place</th>
+              <th>Money</th>               
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="jers in jer2">
+              <td><span ng-bind="jers.outid"></span></td>
+              <td><span ng-bind="jers.pevid"></span></td>
+              <td><span ng-bind="jers.regno"></span></td>
+              <td><span ng-bind="jers.bbcid"></span></td>
+              <td><span ng-bind="jers.bno"></span></td>
+              <td><span ng-bind="jers.bname"></span></td>
+              <td><span ng-bind="jers.owner"></span></td>
+              <td><span ng-bind="jers.del"></span></td>
+              <td><span ng-bind="jers.j1"></span></td>
+              <td><span ng-bind="jers.j2"></span></td>
+              <td><span ng-bind="jers.j3"></span></td>
+              <td><span ng-bind="jers.j4"></span></td>
+              <td><span ng-bind="jers.j5"></span></td>
+              <td><span ng-bind="jers.raw_score"></span></td>
+              <td><span ng-bind="jers.dropped_judge"></span></td>
+              <td><span ng-bind="jers.dropped_score"></span></td>
+              <td><span ng-bind="jers.spread"></span></td>
+              <td><span ng-bind="jers.score"></span></td>
+              <td><span ng-bind="jers.evid"></span></td>
+              <td><span ng-bind="jers.evlinkid"></span></td>
+              <td><span ng-bind="jers.perf"></span></td>
+              <td><span ng-bind="jers.go"></span></td>
+              <td><span ng-bind="jers.sc"></span></td>
+              <td><span ng-bind="jers.place"></span></td>
+              <td><span ng-bind="jers.tier"></span></td>
+              <td><span ng-bind="jers.tier_place"></span></td>
+              <td><span ng-bind="jers.money"></span></td> 
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="judgedetails">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Jid</th>
+              <th>Jname</th>
+              <th>Himark</th>
+              <th>lomark</th>
+              <th>scores</th>
+              <th>Distinct Marks</th>
+              <th>Spread</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="jd in jds">
+              <td>{{jd.jid}}</td>
+              <td>{{jd.jname}}</td>
+              <td>{{jd.himark}}</td>
+              <td>{{jd.lowmark}}</td>
+              <td>{{jd.scores}}</td>
+              <td>{{jd.distinct_marks}}</td>
+              <td>{{jd.spread}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Mark</th>
+              <th>Mark_Cnt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="sjss in sjs">
+              <td>{{sjss.mark}}</td>
+              <td>{{sjss.mark_cnt}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Outid</th>
+              <th>Animal</th>
+              <th>Bbcid</th>
+              <th>Jname</th>
+              <th>J mark</th>
+              <th>Avgmark</th>
+              <th>J1 Score</th>
+              <th>Raw Score</th>
+              <th>Actual Score</th>
+              <th>Actual Place</th>
+              <th>J Place</th>
+              <th>Row Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="jsss in jss">
+              <td>{{jsss.outid}}</td>
+              <td>{{jsss.animal}}</td>
+              <td>{{jsss.bbcid}}</td>
+              <td>{{jsss.jname}}</td>
+              <td>{{jsss.j_mark}}</td>
+              <td>{{jsss.avgmark}}</td>
+              <td>{{jsss.j1score}}</td>
+              <td>{{jsss.raw_score}}</td>
+              <td>{{jsss.actual_score}}</td>
+              <td>{{jsss.actual_place}}</td>
+              <td>{{jsss.j_place}}</td>
+              <td>{{jsss.row_count}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showbjr">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Pevid</th>
+              <th>Evid</th>
+              <th>Place</th>
+              <th>Bno</th>
+              <th>Bname</th>
+              <th>Owner</th>
+              <th>Del</th>
+              <th>J1</th>
+              <th>J2</th>
+              <th>J3</th>
+              <th>J4</th>
+              <th>J5</th>
+              <th>J6</th>
+              <th>Score</th>
+              <th>Raw Score</th>
+              <th>Dropped Score</th>
+              <th>Dropped judge</th>
+              <th>Spread</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="bjrs in bjr">
+              <td><span ng-bind="bjrs.pevid"></span></td>
+              <td><span ng-bind="bjrs.evid"></span></td>
+              <td><span ng-bind="bjrs.place"></span></td>
+              <td><span ng-bind="bjrs.bno"></span></td>
+              <td><span ng-bind="bjrs.bname"></span></td>
+              <td><span ng-bind="bjrs.owner"></span></td>
+              <td><span ng-bind="bjrs.del"></span></td>
+              <td><span ng-bind="bjrs.j1"></span></td>
+              <td><span ng-bind="bjrs.j2"></span></td>
+              <td><span ng-bind="bjrs.j3"></span></td>
+              <td><span ng-bind="bjrs.j4"></span></td>
+              <td><span ng-bind="bjrs.j5"></span></td>
+              <td><span ng-bind="bjrs.j6"></span></td>
+              <td><span ng-bind="bjrs.score"></span></td>
+              <td><span ng-bind="bjrs.raw_score"></span></td>
+              <td><span ng-bind="bjrs.dropped_score"></span></td>
+              <td><span ng-bind="bjrs.dropped_judge"></span></td>
+              <td><span ng-bind="bjrs.spread"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showcr">
+  <br>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Event {{cr1.evid}} : {{cr1.city}}, {{cr1.state}}, {{cr1.title}}</h2>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Class : {{cr1.evclass}}, ({{cr1.sanction}})</h2>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Score</th>
+              <th>Animal</th>
+              <th>Owner</th>
+              <th>Marks</th>
+              <th>Money</th>
+              <th>Regno</th>
+              <th>Sanction</th>
+              <th>Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="crs in cr">
+              <td><span ng-bind="crs.score"></span></td>
+              <td><span ng-bind="crs.animal"></span></td>
+              <td><span ng-bind="crs.owner"></span></td>
+              <td>{{crs.j1}}, {{crs.j2}}, {{crs.j3}}, {{crs.j4}}, {{crs.j5}}, {{crs.j6}}}</td>
+              <td><span ng-bind="crs.money"></span></td>
+              <td><span ng-bind="crs.regno"></span></td>
+              <td><span ng-bind="crs.sanction"></span></td>
+              <td><span ng-bind="crs.del"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showcrp">
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="col-md-6">
+        <table>
+          <thead>
+            <tr>
+              <th style="background-color: #503219; color:white" colspan="2" class="text-center">ABBI Payout Report</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Entries</td>
+              <td>{{pos.Entries}}</td>
+            </tr>
+            <tr>
+              <td>Fees</td>
+              <td>{{pos.Fees}}</td>
+            </tr>
+            <tr>
+              <td>Added Money</td>
+              <td>{{pos.Added}}</td>
+            </tr>
+            <tr>
+              <td>Gross Pot</td>
+              <td>{{pos.Gross_pot}}</td>
+            </tr>
+            <tr>
+              <td>Admin Drag</td>
+              <td>{{pos.Admin_drag}}</td>
+            </tr>
+            <tr>
+              <td>Normal Drag</td>
+              <td>{{pos.Normal_drag}}</td>
+            </tr>
+            <tr>
+              <td>Net Payout</td>
+              <td>{{pos.Net_pay}}</td>
+            </tr>
+            <tr>
+              <td>Payout Places</td>
+              <td>{{pos.Payout_place}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <h3>Drag Percentage: {{pos.drag_perc}}</h3>
+        <label>Try a different drag percentage</label>
+        <input class="form-control" type="text" ng-model="cal.calculate">
+        <br>
+        <button class="btn btn-color" ng-click="PayOut(cal,sca)">RECALCULATE</button>
+        <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row col-md-12">
+    <div class="col-md-6">
+      <table>
+        <thead>
+          <tr>
+            <th style="background-color: #503219; color:white" colspan="2" class="text-center">ABBI Payout Places</th>
+          </tr>
+        </thead>
+        <thead>
+          <tr>
+            <th>Place</th>
+            <th>$</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1,530.00</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>1,147.50</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>765.00</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>382.50</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showpdfd">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Draw</th>
+              <th>Animal</th>
+              <th>ABBI</th>
+              <th>Owner</th>
+              <th>Handler</th>
+              <th>Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pdfds in pdfd">
+              <td><span ng-bind="pdfds.draw"></span></td>
+              <td><span ng-bind="pdfds.animal"></span></td>
+              <td><span ng-bind="pdfds.regno"></span></td>
+              <td><span ng-bind="pdfds.owner"></span></td>
+              <td><span ng-bind="pdfds.handler"></span></td>
+              <td><span ng-bind="pdfds.del"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showpdfp">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Draw</th>
+              <th>Animal</th>
+              <th>Sire</th>
+              <th>Dam</th>
+              <th>Owner</th>
+              <th>Handler</th>
+              <th>Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pdfps in pdfp">
+              <td><span ng-bind="pdfps.draw"></span></td>
+              <td><span ng-bind="pdfps.animal"></span></td>
+              <td><span ng-bind="pdfps.Sire"></span></td>
+              <td><span ng-bind="pdfps.Dam"></span></td>
+              <td><span ng-bind="pdfps.owner"></span></td>
+              <td><span ng-bind="pdfps.handler"></span></td>
+              <td><span ng-bind="pdfps.del"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showtblp">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Draw</th>
+              <th>Hip</th>
+              <th>RegNo</th>
+              <th>Entid</th>
+              <th>Animal</th>
+              <th>Owner</th>
+              <th>Handler</th>
+              <th>Del</th>
+              <th>Sire</th>
+              <th>Dam</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="tblp1 in tblp">
+              <td><span ng-bind="tblp1.draw"></span></td>
+              <td><span ng-bind="tblp1.hip"></span></td>
+              <td><span ng-bind="tblp1.regno"></span></td>
+              <td><span ng-bind="tblp1.entid"></span></td>
+              <td><span ng-bind="tblp1.animal"></span></td>
+              <td><span ng-bind="tblp1.owner"></span></td>
+              <td><span ng-bind="tblp1.handler"></span></td>
+              <td><span ng-bind="tblp1.del"></span></td>
+              <td><span ng-bind="tblp1.sire"></span></td>
+              <td><span ng-bind="tblp1.dam"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showtbld">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Draw</th>
+              <th>Hip</th>
+              <th>RegNo</th>
+              <th>Entid</th>
+              <th>Animal</th>
+              <th>Owner</th>
+              <th>Handler</th>
+              <th>Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="tbld1 in tbld">
+              <td><span ng-bind="tbld1.draw"></span></td>
+              <td><span ng-bind="tbld1.hip"></span></td>
+              <td><span ng-bind="tbld1.regno"></span></td>
+              <td><span ng-bind="tbld1.entid"></span></td>
+              <td><span ng-bind="tbld1.animal"></span></td>
+              <td><span ng-bind="tbld1.owner"></span></td>
+              <td><span ng-bind="tbld1.handler"></span></td>
+              <td><span ng-bind="tbld1.del"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showtoe">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Entid</th>
+              <th>Birth Year</th>
+              <th>Reg No</th>
+              <th>Bbcid</th>
+              <th>Animal</th>
+              <th>Owner</th>
+              <th>Handler</th>
+              <th>Del</th>
+              <th>Fees</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="toes in toe">
+              <td><span ng-bind="toes.entid"></span></td>
+              <td><span ng-bind="toes.birthyear"></span></td>
+              <td><span ng-bind="toes.regno"></span></td>
+              <td><span ng-bind="toes.bbcid"></span></td>
+              <td><span ng-bind="toes.animal"></span></td>
+              <td><span ng-bind="toes.owner"></span></td>
+              <td><span ng-bind="toes.handler"></span></td>
+              <td><span ng-bind="toes.del"></span></td>
+              <td><span ng-bind="toes.fees"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showrce">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Entry</th>
+              <th>Regno</th>
+              <th>EID</th>
+              <th>Animal</th>
+              <th>Del</th>
+              <th>Handler</th>
+              <th>Fees</th>
+              <th>Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="rces in rce">
+              <td><span ng-bind="rces.entid"></span></td>
+              <td><span ng-bind="rces.regno"></span></td>
+              <td><span ng-bind="rces.bbcid"></span></td>
+              <td><span ng-bind="rces.animal"></span></td>
+              <td><span ng-bind="rces.del"></span></td>
+              <td><span ng-bind="rces.handler"></span></td>
+              <td><span ng-bind="rces.fees"></span></td>
+              <td><span ng-bind="rces.Payment"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showael">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Regno</th>
+              <th>Brand</th>
+              <th>Name</th>
+              <th>Owner</th>
+              <th>Del</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="aels in ael">
+              <td><span ng-bind="aels.regno"></span></td>
+              <td><span ng-bind="aels.brand"></span></td>
+              <td><span ng-bind="aels.name"></span></td>
+              <td><span ng-bind="aels.owner"></span></td>
+              <td><span ng-bind="aels.del"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showaep()">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Entid</th>
+              <th>Total Price</th>
+              <th>Payment Id</th>
+              <th>Bbcid</th>
+              <th>Evid</th>
+              <th>Class Fees</th>
+              <th>Bno</th>
+              <th>Bname</th>
+              <th>Owner</th>
+              <th>Entry Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="aeps in aep">
+              <td><span ng-bind="aeps.entid"></span></td>
+              <td><span ng-bind="aeps.ttl_price"></span></td>
+              <td><span ng-bind="aeps.paymentid"></span></td>
+              <td><span ng-bind="aeps.bbcid"></span></td>
+              <td><span ng-bind="aeps.evid"></span></td>
+              <td><span ng-bind="aeps.class fees"></span></td>
+              <td><span ng-bind="aeps.bno"></span></td>
+              <td><span ng-bind="aeps.bname"></span></td>
+              <td><span ng-bind="aeps.owner"></span></td>
+              <td><span ng-bind="aeps.entrytime"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showlel">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Entid</th>
+              <th>Regno</th>
+              <th>Brand</th>
+              <th>Name</th>
+              <th>Owner</th>
+              <th>Fee Sum</th>
+              <th>Paid</th>
+              <th>Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="lels in lel">
+              <td><span ng-bind="lels.entid"></span></td>
+              <td><span ng-bind="lels.regno"></span></td>
+              <td><span ng-bind="lels.brand"></span></td>
+              <td><span ng-bind="lels.name"></span></td>
+              <td><span ng-bind="lels.owner"></span></td>
+              <td><span ng-bind="lels.feesum"></span></td>
+              <td><span ng-bind="lels.paid"></span></td>
+              <td><span ng-bind="lels.method"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="showtos">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Entid</th>
+              <th>Regno</th>
+              <th>Bbcid</th>
+              <th>Animal</th>
+              <th>Owner</th>
+              <th>Handler</th>
+              <th>Del</th>
+              <th>Standings</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="toss in tos">
+              <td><span ng-bind="toss.entid"></span></td>
+              <td><span ng-bind="toss.regno"></span></td>
+              <td><span ng-bind="toss.bbcid"></span></td>
+              <td><span ng-bind="toss.animal"></span></td>
+              <td><span ng-bind="toss.owner"></span></td>
+              <td><span ng-bind="toss.handler"></span></td>
+              <td><span ng-bind="toss.del"></span></td>
+              <td><span ng-bind="toss.standings"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="addentry">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Draw</th>
+              <th>Animal</th>
+              <th>Del</th>
+              <th>Paid ?</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="ae in aes">
+              <td>{{index+1}}</td>
+              <td>{{ae.bbcid}} - {{ae.regno}} {{ae.bname}}<br>
+              {{ae.owner}} ({{ae.handler}})</span></td>
+              <td><span ng-bind="ae.del"></span></td>
+              <td ng-if="ae.paid==0" style="color: red">Not Paid</td>
+              <td ng-if="ae.paid!=0" style="color: green">Paid</td>
+              <td>
+                <i class="fa fa-info btn btn-info" ng-click="ViewEntry(ae,eis,sca)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="viewentry">
+  <b>Event Id {{ves1.evid}}</b> --> Entry ID {{ves1.entid}}
+  <br>
+  <br>
+  <b>Event</b> : {{ves.title}}, {{ves.state}} - {{ves.city}} {{ves.startday | date:'MM-dd-yyyy'}}
+  <br>
+  <br>
+  <b>Animal</b> : <a class="abc" ng-click="AnimalDetails(ves1)">{{ves1.animal}}</a>
+  <br>
+  <br>
+  <b>Owner</b> : {{ves1.owner}}
+  <br>
+  <br>
+  <b>Handler</b> : {{ves1.handler}}
+  <br>
+  <br>
+  <b>ABBI #</b> : {{ves1.regno}}
+  <br>
+  <br>
+  <b>Delivery</b> : {{ves1.del}}
+  <br>
+  <br>
+  <b>Total Fees</b> : {{ves1.feesum}} <span ng-if="ves1.paid==0"><a class="abc">Make Payment</a></span>
+  <br>
+  <br>
+  <b ng-if="ves1.paid==0">Paid</b> : <span ng-if="ves1.paid==0">No</span>
+  <b ng-if="ves1.paid==1">Paid</b> : <span ng-if="ves1.paid==1">Yes</span>
+  <br>
+  <br>
+  <b>System Info</b> : System dump for entry {{ves1.entid}}
+  <br>
+  <br>
+  <h3>Classes Entered</h3>
+  <br>
+  <br>
+  <div class="well well-sm" ng-repeat="ves3 in ves2">
+    <b><a>{{ves3.evclass}}</a> - {{ves3.startdate | date:'MM-dd-yyyy hh:mm:ss'}}</b><br>
+    <span>Fee : {{ves3.fees}}</span>
+    <br>
+    <button class="btn btn-color" ng-click="RemoveClass(ves1)">Remove from class</button>
+  </div>
+  <br>
+  <br>
+  <button class="btn btn-color" ng-click="SwitchDelivery(ves1)">Switch Delivery</button>
+  <button class="btn btn-color" ng-click="MarkPaid(ves1)">Mark Paid</button>
+  <button class="btn btn-color" ng-click="SwitchAnimal()">Switch Animal</button>
+  <button class="btn btn-color" ng-click="DeleteEntry(ves1)">Delete Entry</button>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="switchanimal">
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px">Entry Animal Switch - Entry {{ves1.entid}}</h2>
+  <p>This form will allow you to switch an entry from one animal to another. New animal must be setup correctly in the system first.</p>
+  <p>This will not draw or hip tag, but will simply replace one animal with another.</p>
+  <label>New Animal ID</label>
+  <input class="form-control" type="text" ng-model="switch1.newbbcid" placeholder="bbcid for new animal">
+  <br>
+  <button class="btn btn-color" ng-click="SwitchAnimal1(ves1,switch1)">Switch</button>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="animaldet">
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">{{ands.bno}} {{ands.bname}} ({{ands.birthyear}})</h2>
+  <div class="col-md-12">
+    <div class="col-md-6">
+      Owner : {{ands.owner}}<br><br>
+      Handler : {{ands.handler}}<br><br>
+      Register : {{ands.regno}}<br><br>
+      EID Tag : {{ands.eartag}}
+    </div>
+    <div class="col-md-6">
+      Born : {{ands.birthyear}}<br><br>
+      2021 competition age : <br><br>
+      Delivery : {{ands.del}}<br><br>
+      Last Updated : {{ands.loadtime | date:'MM-dd-yyyy hh:mm a'}} 
+    </div>
+    <br>
+    <div class="col-md-12">
+      <div class="col-md-6">
+        <b><a ng-click="OutsStandings(ves1)">Outs & Standings Data</a></b>
+      </div>
+      <div class="col-md-6">
+        <b><a>Judged By List</a></b>
+      </div>
+    </div>
+    <br>
+    <div class="col-md-12">
+      <br>
+      <button class="btn btn-color" ng-click="EditAnimal(ves1)">Edit Animal Record</button>
+      <button class="btn btn-color">Enter Events</button>
+      <button class="btn btn-color">Switch Comp Records</button>
+      <button class="btn btn-color">Sync</button>
+      <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+    </div>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="editanimal">
+  <div ng-if="alertd == true" class="alert alert-success alert-dismissible">
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Updated Successfully!</strong>
+  </div>
+  <div ng-if="alertd == false" class="alert alert-danger alert-dismissible">
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Error! Please try again later.</strong>
+  </div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">Edit Animal Record</h2>
+  <br>
+  <p>This tool has no effect on an animal's ABBI Registration record. It only changes the way they are represented in the BBC Entry System.</p>
+  <br>
+  <form class="form-group">
+    <label>ABBI #</label>
+    <input type="text" class="form-control" ng-model="eas.regno">
+    <label>EID/Ear Tag#</label>
+    <input type="text" class="form-control" ng-model="eas.eartag">
+    <label>PBS Id/Code</label>
+    <input type="text" class="form-control" ng-model="eas.pbid">
+    <label>Brand #</label>
+    <input type="text" class="form-control" ng-model="eas.bno">
+    <label>Animal Name</label>
+    <input type="text" class="form-control" ng-model="eas.bname">
+    <label>Owner</label>
+    <input type="text" class="form-control" ng-model="eas.owner">
+    <label>Handler</label>
+    <input type="text" class="form-control" ng-model="eas.handler">
+    <label>Delivery</label>
+    <input type="text" class="form-control" ng-model="eas.del">
+    <label>Birth year</label>
+    <input type="text" class="form-control" ng-model="eas.birthyear">
+    <br>
+    <button class="btn btn-color" ng-click="UpdateAnimal(eas)">Update Animal</button>
+    <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+  </form>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="outstand">
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">Season Standing data for bbcid {{outs[0].bbcid}}</h2>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Regno</th>
+              <th>Bno</th>
+              <th>Bname</th>
+              <th>Owner</th>
+              <th>Bbcid</th>
+              <th>Outid</th>
+              <th>Score</th>
+              <th>Place</th>
+              <th>Evid</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Sanction</th>
+              <th>Evclass</th>
+              <th>Evtype</th>
+              <th>Divcode</th>
+              <th>Money</th>
+              <th>Amoney</th>
+              <th>Opoints</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="out in outs">
+              <td><span ng-bind="out.regno"></span></td>
+              <td><span ng-bind="out.bno"></span></td>
+              <td><span ng-bind="out.bname"></span></td>
+              <td><span ng-bind="out.owner"></span></td>
+              <td><span ng-bind="out.bbcid"></span></td>
+              <td><span ng-bind="out.outid"></span></td>
+              <td><span ng-bind="out.score"></span></td>
+              <td><span ng-bind="out.place"></span></td>
+              <td><span ng-bind="out.evid"></span></td>
+              <td><span ng-bind="out.city"></span></td>
+              <td><span ng-bind="out.state"></span></td>
+              <td><span ng-bind="out.sanction"></span></td>
+              <td><span ng-bind="out.evclass"></span></td>
+              <td><span ng-bind="out.evtype"></span></td>
+              <td><span ng-bind="out.divcode"></span></td>
+              <td><span ng-bind="out.money"></span></td>
+              <td><span ng-bind="out.amoney"></span></td>
+              <td><span ng-bind="out.opoints"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">System Outs for bbcid {{outs[0].bbcid}}</h2>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Season</th>
+              <th>Outid</th>
+              <th>Pevid</th>
+              <th>Entid</th>
+              <th>Regno</th>
+              <th>Pbid</th>
+              <th>Bbcid</th>
+              <th>Bno</th>
+              <th>Bname</th>
+              <th>Owner</th>
+              <th>Del</th>
+              <th>J1</th>
+              <th>J2</th>
+              <th>J3</th>
+              <th>J4</th>
+              <th>J5</th>
+              <th>J6</th>
+              <th>bot</th>
+              <th>Raw Score</th>
+              <th>Dropped Judge</th>
+              <th>Droped Score</th>
+              <th>Spread</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="out1 in outs1">
+              <td><span ng-bind="out1.season"></span></td>
+              <td><span ng-bind="out1.outid"></span></td>
+              <td><span ng-bind="out1.pevid"></span></td>
+              <td><span ng-bind="out1.entid"></span></td>
+              <td><span ng-bind="out1.regno"></span></td>
+              <td><span ng-bind="out1.pbid"></span></td>
+              <td><span ng-bind="out1.bbcid"></span></td>
+              <td><span ng-bind="out1.bno"></span></td>
+              <td><span ng-bind="out1.bname"></span></td>
+              <td><span ng-bind="out1.owner"></span></td>
+              <td><span ng-bind="out1.del"></span></td>
+              <td><span ng-bind="out1.j1"></span></td>
+              <td><span ng-bind="out1.j2"></span></td>
+              <td><span ng-bind="out1.j3"></span></td>
+              <td><span ng-bind="out1.j4"></span></td>
+              <td><span ng-bind="out1.j5"></span></td>
+              <td><span ng-bind="out1.j6"></span></td>
+              <td><span ng-bind="out1.bot"></span></td>
+              <td><span ng-bind="out1.raw_score"></span></td>
+              <td><span ng-bind="out1.dropped_judge"></span></td>
+              <td><span ng-bind="out1.dropped_score"></span></td>
+              <td><span ng-bind="out1.spread"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">Compiled Standing data for bbcid {{outs[0].bbcid}}</h2>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Rowid</th>
+              <th>Mpos</th>
+              <th>Ppos</th>
+              <th>Oppos</th>
+              <th>Bbcid</th>
+              <th>Season</th>
+              <th>Division</th>
+              <th>Money</th>
+              <th>Point Total</th>
+              <th>Point Average</th>
+              <th>Opoint Total</th>
+              <th>Outcount</th>
+              <th>Qoutcount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="out2 in outs2">
+              <td><span ng-bind="out2.rowid"></span></td>
+              <td><span ng-bind="out2.mpos"></span></td>
+              <td><span ng-bind="out2.ppos"></span></td>
+              <td><span ng-bind="out2.oppos"></span></td>
+              <td><span ng-bind="out2.bbcid"></span></td>
+              <td><span ng-bind="out2.division"></span></td>
+              <td><span ng-bind="out2.Money"></span></td>
+              <td><span ng-bind="out2.point_ttl"></span></td>
+              <td><span ng-bind="out2.point_avg"></span></td>
+              <td><span ng-bind="out2.opoint_ttl"></span></td>
+              <td><span ng-bind="out2."></span></td>
+              <td><span ng-bind="out2.outcount"></span></td>
+              <td><span ng-bind="out2.qoutcount"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="ExitShowEntries()">Back</button>
+</div>
+</div>

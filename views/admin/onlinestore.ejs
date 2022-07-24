@@ -1,0 +1,451 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Online Store</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="row"> <br />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div ng-show="tabledata">
+        <label>Category:</label>
+        <select ng-model="product.ProductCategory" ng-init="OnlineProducts(); InitialProducts()" ng-change="ViewProducts(product)">
+          <option value="">All</option>
+          <option ng-repeat="op1 in ops" value="{{op1.ProductCategory}}">{{op1.ProductCategory}}</option>
+        </select>
+        <button class="btn btn-color" type="button" data-toggle="modal" data-target="#AddNewProducts" ng-click="ReportCategoryDropdown();SelectMessageDropdown();DisplayTempData()" ng-if="security1==3">Add New Product</button>
+      </div>
+      <div class="modal fade" id="AddNewProducts" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" type="button" data-dismiss="modal">×</button>
+              <h4 class="modal-title text-center">New Product</h4>
+            </div>
+            <div class="modal-body">
+              <div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;">
+                <div class="row">
+                  <form class="form-group">
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Category:</label>
+                        <select class="form-control" ng-model="newproduct.ProductCategory">
+                          <option ng-repeat="rcd in rcds" value="{{rcd.ReportCategoryId}}">{{rcd.Heading}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Product Number:</label>
+                        <input type="text" class="form-control" ng-model="newproduct.ProductNumber">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Product Name:</label>
+                        <input type="text" class="form-control" ng-model="newproduct.ProductName">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Price ($):</label>
+                        <input type="text" class="form-control" ng-model="newproduct.Price">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Product Source:</label>
+                        <select ng-model="newproduct.USBBA" class="form-control">
+                          <option value="1" ng-checked="true">ABBI</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Qty on Hand:</label>
+                        <input type="text" class="form-control" ng-model="newproduct.QtyOnHand">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Out of Stock Message:</label>
+                        <select class="form-control" ng-click="SelectMessageDropdown()" ng-model="newproduct.message">
+                          <option ng-repeat="smd in smds" value="{{smd.OutOfStockMsg}}">{{smd.OutOfStockMsg}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Weight:</label>
+                        <input type="text" class="form-control" ng-model="newproduct.weight">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Product Description:</label>
+                        <textarea ng-model="newproduct.ProductDescription" class="form-control"></textarea>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label class="inline-checkbox"> Display Product <span
+                          style="color:red;">*</span>
+                          <input type="checkbox" ng-model="newproduct.Display">
+                        </label>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label class="inline-checkbox"> Members Only 
+                          <input type="checkbox" ng-model="newproduct.MembersOnly">
+                        </label>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label class="inline-checkbox"> Vets Only 
+                          <input type="checkbox" ng-model="newproduct.VetsOnly">
+                        </label>
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Cost ($) :</label>
+                        <input type="text" class="form-control" ng-model="newproduct.Cost">
+                      </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                        <label>Report Category: </label>
+                        <input type="text" class="form-control" ng-model="newproduct.ReportCategoryId">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <br>
+                <div ng-show="productShow">
+                  <hr>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Description </label>
+                      <textarea class="form-control" ng-model="newproduct1.Decsription"></textarea>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Option Code   </label>
+                      <input type="text" placeholder="XXL" class="form-control" ng-model="newproduct1.OptionCode">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Quantity  </label>
+                      <input type="number" class="form-control" ng-model="newproduct1.Quantity">
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Extra Charge</label>
+                      <input type="number" class="form-control" ng-model="newproduct1.ExtraCharge">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Extra Weight  </label>
+                      <input type="number" class="form-control" ng-model="newproduct1.ExtraWeight">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button type="button" class="btn btn-color" ng-click="AddNewProduct(newproduct1)">Add</button>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+                <div  ng-show="producthide">
+                  <hr>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Description </label>
+                      <textarea class="form-control" ng-model="newproduct2.Decsription"></textarea>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Option Code   </label>
+                      <input type="text" placeholder="XXL" class="form-control" ng-model="newproduct2.OptionCode">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Quantity  </label>
+                      <input type="number" ng-model="newproduct2.Quantity" class="form-control">
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Extra Charge</label>
+                      <input type="number" ng-model="newproduct2.ExtraCharge" class="form-control">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                      <label> Extra Weight  </label>
+                      <input type="number" ng-model="newproduct2.ExtraWeight" class="form-control">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button type="button" class="btn btn-color" ng-click="UpdateNewProduct(newproduct2)">Update</button>
+                    </div>
+                  </div>
+                  <br>
+                </div>
+                <div class="row">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+                      <thead>
+                        <tr>
+                          <th>Description </th>
+                          <th>Option Code </th>
+                          <th>Quantity </th>
+                          <th>Extra Charge </th>
+                          <th>Extra Weight</th>
+                          <th ng-if="security1==3">Edit</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="atp in atps">
+                          <td>{{atp.Decsription}}</td>
+                          <td>{{atp.OptionCode}}</td>
+                          <td>{{atp.Quantity}}</td>
+                          <td>{{atp.ExtraCharge}}</td>
+                          <td>{{atp.ExtraWeight}}</td>
+                          <td ng-if="security1==3">
+                            <i title="Edit" class="btn btn-warning fa fa-edit" ng-click="editProduct(atp)"></i>
+                            <i title="Delete" ng-click="DeleteNewProduct(atp)" class="btn btn-danger fa fa-trash"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group" style="white-space: nowrap;">
+                    <button class="btn btn-color" ng-click="SaveAddNewProducts(newproduct)" type="button">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div ng-show="editdata">
+    <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;">
+      <div class="row">
+        <form class="form-group" enctype="multipart/form-data">
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Category:</label>
+              <select class="form-control" ng-click="ReportCategoryDropdown()" ng-model="editproduct.ProductCategory">
+                <option ng-repeat="rcd in rcds" value="{{rcd.ReportCategoryId}}">{{rcd.Heading}}</option>
+              </select>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Product Number:</label>
+              <input type="text" class="form-control" ng-model="editproduct.ProductNumber">
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Product Name:</label>
+              <input type="text" class="form-control" ng-model="editproduct.ProductName">
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Price ($): </label>
+              <input type="text" class="form-control" ng-model="editproduct.Price">
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Product Source:</label>
+              <select ng-model="editproduct.USBBA" class="form-control">
+                <option value="1" ng-checked="true">ABBI</option>
+              </select>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Qty on Hand:</label>
+              <input type="text" class="form-control" ng-model="editproduct.QtyOnHand">
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Out of Stock Message:</label>
+              <select class="form-control" ng-model="editproduct.message"></select>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Weight:</label>
+              <input type="text" class="form-control" ng-model="editproduct.weight">
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Product Description:</label>
+              <textarea name="" class="form-control" ng-model="editproduct.ProductDescription"></textarea>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Picture:</label>
+              <img ng-if="editproduct.Picture" src="images/store/{{editproduct.Picture}}" width="10%" height="10%">
+              <img ng-if="!editproduct.Picture" src="images/image.jpg" width="10%" height="10%">
+              <br>
+              <input ng-show="changeimage" type="file" class="form-control" file-model="editproduct.Picture">
+              <br>
+              <a class="abc" target="_blank" href="images/store/{{editproduct.Picture}}" title="view">View</a> 
+              <a class="abc" href="#" ng-click="changeimage=true" title="Change Image">Change Image</a>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label class="inline-checkbox"> Display Product 
+                <input type="checkbox" ng-model="editproduct.Display" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+              </label>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label class="inline-checkbox"> Members Only 
+                <input type="checkbox" ng-model="editproduct.MembersOnly">
+              </label>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label class="inline-checkbox"> Vets Only 
+                <input type="checkbox" ng-model="editproduct.VetsOnly" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+              </label>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Cost ($) :</label>
+              <input type="text" class="form-control" ng-model="editproduct.Cost">
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+              <label>Report Category: </label>
+              <input type="text" class="form-control" ng-model="editproduct.ReportCategoryId">
+            </div>
+          </div>
+        </form>
+      </div>
+      <br>
+      <div ng-show="productShow">
+        <hr>
+        <br>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Description </label>
+            <textarea class="form-control" ng-model="newproduct3.Decsription"></textarea>
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Option Code   </label>
+            <input type="text" placeholder="XXL" class="form-control" ng-model="newproduct3.OptionCode">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Quantity  </label>
+            <input type="number" class="form-control" ng-model="newproduct3.Quantity">
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Extra Charge</label>
+            <input type="number" class="form-control" ng-model="newproduct3.ExtraCharge">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Extra Weight  </label>
+            <input type="number" class="form-control" ng-model="newproduct3.ExtraWeight">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-color" ng-click="AddNewProduct1(newproduct3)">Add</button>
+          </div>
+        </div>
+        <br>
+      </div>
+      <div  ng-show="producthide">
+        <hr>
+        <br>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Description </label>
+            <textarea class="form-control" ng-model="newproduct4.Decsription"></textarea>
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Option Code   </label>
+            <input type="text" placeholder="XXL" class="form-control" ng-model="newproduct4.OptionCode">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Quantity  </label>
+            <input type="number" class="form-control" ng-model="newproduct4.Quantity">
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Extra Charge</label>
+            <input type="number" class="form-control" ng-model="newproduct4.ExtraCharge">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+            <label> Extra Weight  </label>
+            <input type="number" class="form-control" ng-model="newproduct4.ExtraWeight">
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-color" ng-click="UpdateNewProduct1(newproduct4)">save</button>
+          </div>
+        </div>
+        <br>
+      </div>
+      <div class="row">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Description </th>
+                <th>Option Code </th>
+                <th>Quantity </th>
+                <th>Extra Charge </th>
+                <th>Extra Weight</th>
+                <th ng-if="security1==3">Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="option in options">
+                <td>{{option.Decsription}}</td>
+                <td>{{option.OptionCode}}</td>
+                <td>{{option.Quantity}}</td>
+                <td>{{option.ExtraCharge}}</td>
+                <td>{{option.ExtraWeight}}</td>
+                <td ng-if="security1==3">
+                  <i title="Edit" class="btn btn-warning fa fa-edit" ng-click="editProduct1(option)"></i>
+                  <i title="Delete" class="btn btn-danger fa fa-trash" ng-click="DeleteNewProduct1(option)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group" style="white-space: nowrap;">
+          <button class="btn btn-color" type="button" ng-click="SaveAddNewProducts1(editproduct)">Save</button>
+          <button type="submit" class="btn btn-color" ng-click="ExitEditProduct()">Exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="panel panel-default" ng-show="tabledata">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng"
+        dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+        <thead>
+          <tr>
+            <th>Categories</th>
+            <th>Products </th>
+            <th>Price ($) </th>
+            <th>Qty On Hand </th>
+            <th>Display </th>
+            <th ng-if="security1==3">View/Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="vos in voss">
+            <td>{{vos.ProductCategory}}</td>
+            <td>{{vos.ProductName}}</td>
+            <td>{{vos.Price | currency}}</td>
+            <td>{{vos.QtyOnHand}}</td>
+            <td>{{vos.Display}}</td>
+            <td ng-if="security1==3">
+              <i title="View" class="btn btn-warning fa fa-eye"  ng-click="editdata1(vos)"></i>
+              <i title="Delete" class="btn btn-danger fa fa-trash" ng-click="DeleteAddedProduct(vos)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>

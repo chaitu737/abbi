@@ -1,0 +1,156 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Geno Research</h2>
+</div>
+<div class="container" style="height:100%;width:90%;padding: 10px;" ng-init="GenoData()">
+  <div class="container edge" style="background-color: #d8ceb9;height:100%;width:90%;padding: 69px;">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label>Parameter</label>
+          <input type="text" class="form-control" ng-model="gds.Custpar1" readonly required>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label>Type</label>
+          <select class="form-control" ng-model="gds.Custpartype1" readonly>
+            <option value="Select DataType">Select DataType</option>
+            <option value="Bit">Bit</option>
+            <option selected="selected" value="Int">Int</option>
+            <option value="Money">Money</option>
+            <option value="DateTime">DateTime</option>
+            <option value="VarChar">VarChar</option>
+            <option value="Text">Text</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label>Value</label>
+          <input type="text" class="form-control" ng-model="gds.Custparval1" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label>Parameter</label>
+          <input type="text" class="form-control" ng-model="gds.Custpar2" readonly required>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label>Type</label>
+          <select class="form-control" ng-model="gds.Custpartype2" readonly>
+            <option value="Select DataType">Select DataType</option>
+            <option value="Bit">Bit</option>
+            <option selected="selected" value="Int">Int</option>
+            <option value="Money">Money</option>
+            <option value="DateTime">DateTime</option>
+            <option value="VarChar">VarChar</option>
+            <option value="Text">Text</option>
+
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label>Value</label>
+          <input type="text" class="form-control" ng-model="gds.Custparval2" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label>Parameter</label>
+          <input type="text" class="form-control" ng-model="gds.Custpar3" readonly required>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label>Type</label>
+          <select class="form-control" ng-model="gds.Custpartype3" readonly>
+            <option value="Select DataType">Select DataType</option>
+            <option value="Bit">Bit</option>
+            <option selected="selected" value="Int">Int</option>
+            <option value="Money">Money</option>
+            <option value="DateTime">DateTime</option>
+            <option value="VarChar">VarChar</option>
+            <option value="Text">Text</option>
+
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="form-group">
+          <label>Value</label>
+          <input type="text" class="form-control" ng-model="gds.Custparval3" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <button class="btn btn-color" type="button" ng-click="GenoRecords(gds)">Get Records!</button>
+        <button class="btn btn-color" type="button" ng-click="GenoCount(gds)">Get Count!</button>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row" ng-if="gcs">
+      <table>
+        <thead>
+          <tr>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{gcs.count}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <br>
+    <div class="row table-responsive" ng-if="grs">
+      <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%" ng-init="genorecords()">
+          <thead>
+            <tr>
+              <th>RegNo</th>
+              <th>Sample Id</th>
+              <th>Marker</th>
+              <th>Results</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="gr in grs">
+              <td><span ng-bind="gr.regno"></span></td>
+              <td><span ng-bind="gr.sampleid"></span></td>
+              <td>
+                <span ng-hide="editgeno" ng-bind="gr.Marker"></span>
+                <input ng-show="editgeno" type="text" ng-model="gr.Marker">
+              </td>
+              <td>
+                <span ng-hide="editgeno" ng-bind="gr.Results"></span>
+                <input ng-show="editgeno" type="text" ng-model="gr.Results">
+              </td>
+              <td>
+                <button ng-hide="editgeno" ng-click="editgeno=true;" class="btn btn-color">Edit</button>
+                <button ng-show="editgeno" ng-click="editgeno=false;EditGenoData(gr)" class="btn btn-color">Update</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+  <br>
+  <br>
+</div>

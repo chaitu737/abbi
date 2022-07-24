@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<title>PageLoader...</title>
+<meta http-equiv="refresh" content="2;url=login">
+<head>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  }
+  div.loader {
+    left: 50%;
+    top: 50%;
+    margin: -40px 0 0 -40px;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: #C6FF00;
+    animation: load 3s ease-in-out infinite;
+  }
+  div.loader:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -30px 0 0 -30px;
+    width: 60px;
+    height: 60px;
+    background: #2ecc71;
+    animation: load-rev 3s ease-in-out infinite;
+  }
+
+  @keyframes load {
+    50% {
+      border-radius: 100%;
+      background: #E91E63;
+      transform: rotate(360deg) scale(0.3);
+    }
+    100% {
+      border-radius: none;
+      transform: rotate(720deg) scale(1);
+    }
+  }
+  @keyframes load-rev {
+    50% {
+      border-radius: 100%;
+      background: #00BCD4;
+      transform: rotate(720deg) scale(0.7);
+    }
+    100% {
+      border-radius: none;
+      transform: rotate(0deg) scale(1);
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+</body>
+</html>

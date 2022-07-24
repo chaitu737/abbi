@@ -1,0 +1,74 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Label Report - Certificate</h2>
+</div>
+<div>
+	<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+		<form>
+			<div class="row">
+				<div class="col-md-6">  
+					<input class="form-control" placeholder="Enter Member Number" type="search" ng-model="find.member">
+				</div>
+				<div class="col-md-6">
+					<button class="btn btn-color" ng-click="UpdateLabelCertiReport(find)" type="button">Find Member</button>
+					<button class="btn btn-color" ng-click="PrintLabelCertiReport(); hideftable=true;" type="button">Print</button>
+				</div>
+			</div>
+		</form>
+		<br>
+		<div class="panel panel-default" ng-hide="hideftable" ng-init="LabelCertiReport()">
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Member # </th>
+								<th> Member Name </th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="lc in lcs">
+								<td><span ng-bind="lc.MemberNumber"></span></td>
+								<td><span ng-bind="lc.MemberName"></span></td>
+								<td>
+									<i class="fa fa-trash btn btn-danger" ng-click="RemoveLabelCertiReport(lc)"></i>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default" ng-show="hideftable">
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+						<thead>
+							<tr>
+								<th>First Name</th>
+								<th>Last Name </th>
+								<th>Address</th>
+								<th>City</th>
+								<th>State</th>
+								<th>Zip</th>
+								<th>Country</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="plc in plcs">
+								<td><span ng-bind="plc.FirstName"></span></td>
+								<td><span ng-bind="plc.LastName"></span></td>
+								<td><span ng-bind="plc.Address"></span></td>
+								<td><span ng-bind="plc.City"></span></td>
+								<td><span ng-bind="plc.State"></span></td>
+								<td><span ng-bind="plc.Zip"></span></td>
+								<td><span ng-bind="plc.Country"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<button class="btn btn-color" ng-click="hideftable=false">Exit</button>
+		</div>
+	</div>
+</div>

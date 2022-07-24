@@ -1,0 +1,42 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Member Approvals</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%" ng-init="MemberApprovalData()">
+          <thead>
+            <tr>
+              <th>Member Picture</th>
+              <th>Member Number</th>
+              <th>Member Name</th>
+              <th>Ranch Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="mad in mads">
+              <td>
+                <img src="../images/members/{{mad.Picture}}" height="100" width="100">
+                <br>
+                <a href="http://34.66.91.118/images/members/{{mad.Picture}}", target="_blank">View</a>
+              </td>
+              <td><span ng-bind="mad.MemberNumber"></span></td>
+              <td><span ng-bind="mad.Member"></span></td>
+              <td><span ng-bind="mad.RanchName"></span></td>
+              <td><span ng-bind="mad.Email"></span></td>
+              <td><span ng-bind="mad.Phone"></span></td>
+              <td>
+                <button class="fa fa-check btn btn-success" ng-click="MemberApprovalButton(mad)"></button>
+                <button class="fa fa-close btn btn-danger" ng-click="MemberDenyButton(mad)"></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

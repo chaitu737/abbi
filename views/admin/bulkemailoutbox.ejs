@@ -1,0 +1,156 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Bulk Email Outbox</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="row"> <br />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <button class="btn btn-color" type="button" ng-click="SendEmailOutbox()">Send Email </button>
+      <button class="btn btn-color" type="button" data-toggle="modal" data-target="#addNewEmail" ng-click="getdata()">New Email</button>
+      <button class="btn btn-color" type="button" data-toggle="modal" data-target="#managegropup" style="float: right;">Manage Groups</button>
+    </div>
+    <div class="modal fade" id="managegropup" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal">×</button>
+          </div>
+          <div class="modal-body">
+            <div class="container edge"
+            style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;" ng-init="GetOutboxEmailData()">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+                    <thead>
+                      <tr>
+                        <th  style="white-space:nowrap;">Group Name</th>
+                        <th  style="white-space:nowrap;">Type </th>
+                        <th  style="white-space:nowrap;">Logging</th>
+                        <th  style="white-space:nowrap;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="goe in goes">
+                        <td>
+                          <span ng-hide="getoutbox" ng-bind="goe.GroupName"></span>
+                          <input ng-show="getoutbox" type="text" ng-model="goe.GroupName">
+                        </td>
+                        <td>
+                          <span ng-hide="getoutbox" ng-bind="goe.Type"></span>
+                          <input ng-show="getoutbox" type="text" ng-model="goe.Type">
+                        </td>
+                        <td> <input type="checkbox" ng-model="goe.LoggingFlag">  </td>
+                        <td>
+                          <i ng-hide="getoutbox" title="Edit" class="btn btn-warning fa fa-edit" ng-click="getoutbox=true"></i>
+                          <i ng-show="getoutbox" title="Update" class="btn btn-primary fa fa-check" ng-click="UpdateOutboxData(goe);getoutbox=false"></i>
+                          <i title="Delete" class="btn btn-danger fa fa-trash" ng-click="DeleteOutboxData(goe)"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 ">
+                <label> Group Name</label>
+                <input type="text" ng-model="addmail.GroupName" class="form-control">
+              </div>
+              <div class="col-md-4 ">
+                <label> Group Type</label>
+                <input type="text" ng-model="addmail.Type" class="form-control">
+              </div>
+              <div class="col-md-4 " style="top: 30px;">
+                <input type="checkbox" ng-model="addmail.LoggingFlag" >
+                <label>Logging</label>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" class="btn btn-color" ng-click="AddOutbox(addmail)">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addNewEmail" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" type="button" data-dismiss="modal">×</button>
+          <h4 class="modal-title text-center">New Email</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container edge"
+          style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+          <form class="form-group">
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                <label>Distribution Group:</label>
+                <select class="form-control" ng-init="DGList()" ng-model="dg.group" ng-change="ChangeDG(dg)">
+                  <option value="0">--Select One--</option>
+                  <option ng-repeat="dgl in dgls" value="{{dgl.groupid}}">{{dgl.groupname}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div ng-if="dg.group==1" class="col-md-6 col-lg-6 col-sm-12 col-xs-12" ng-init="EventList()">
+                <label>Events:</label>
+                <select class="form-control" ng-model="dg.event" ng-change="ChangeDG1(dg)">
+                  <option value="{{el.Eventid}}" ng-repeat="el in els">{{el.Event}}</option>
+                </select>
+              </div>
+            </div>
+            <br>
+            <h2 style="text-align: center;color: #2c3e50;font-variant: all-petite-caps;">Distribution List</h2>
+            <div class="row">
+             <div ng-repeat="dg in dgel">  
+              <label><input type="checkbox" ng-model="selected" ng-checked="exist(dg)" ng-click="toggleSelection(dg)"/>
+              {{dg.MemberName}}</label>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
+              <label>Subject:</label>
+              <input type="text" class="form-control" ng-model="dg.subject">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
+              <label>Body:</label>
+              <div ckeditor="dge.options" ng-model="dg.body">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
+              <label>Read-Receipt To: </label>
+              <input type="text" class="form-control" ng-model="dg.receipt">
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
+              <button class="btn btn-color" type="button" ng-click="AddQueue(dg,selected)">Add To Queue</button>
+              <button class="btn btn-color" type="button" ng-click="SaveDefault(dg)">Save As Default</button>
+              <button class="btn btn-color" type="button" ng-click="SendTestMail(dg)">Send Test Email </button>
+              <button class="btn btn-color" type="button" data-dismiss="modal">Exit </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>

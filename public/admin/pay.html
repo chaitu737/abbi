@@ -1,0 +1,40 @@
+<div ng-show="paymentscreen">
+        <div id="Checkout" class="inline">
+          <h1>Pay</h1>
+          <form>
+            <div class="card-row">
+              <span class="visa"></span>
+              <span class="mastercard"></span>
+              <span class="amex"></span>
+              <span class="discover"></span>
+            </div>
+            <div class="form-group">
+              <label>Amount : </label>
+              <!-- <input class="form-control" ng-model="amount" disabled="" type="text"> -->
+              <span ng-bind="amount | currency"></span>
+            </div>
+            <div class="form-group">
+              <label for="CreditCardNumber">Card number</label>
+              <input id="CreditCardNumber" class="null card-image form-control" ng-model="pay.cc" type="text">
+            </div>
+            <div class="expiry-date-group form-group">
+              <label for="ExpiryDate">Expiry date</label>
+              <input id="ExpiryDate" class="form-control" type="text" placeholder="MM / YY" ng-model="pay.expire" maxlength="5">
+            </div>
+            <div class="security-code-group form-group">
+              <label for="SecurityCode">Security code</label>
+              <div class="input-container" >
+                <input id="SecurityCode" class="form-control" type="text" ng-model="pay.cvv">
+                <i id="cvc" class="fa fa-question-circle"></i>
+              </div>
+              <div class="cvc-preview-container two-card hide">
+                <div class="amex-cvc-preview"></div>
+                <div class="visa-mc-dis-cvc-preview"></div>
+              </div>
+            </div>
+            <button id="PayButton" class="btn btn-block btn-success submit-button" type="button" ng-click="">
+              <span class="submit-button-lock"></span>
+            </button>
+          </form>
+        </div>
+      </div>

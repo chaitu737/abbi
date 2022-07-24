@@ -1,0 +1,36 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Super Stakes</h2>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;">
+  <div class="row col-md-12" style="color: black; font-size: 18px;">
+    <p>All birth year  bull calves may be enrolled until Dec 31 through online enrollment</p>
+    <b>All Super Stakes eligible calves must be birth year registered and have (or have on order) an EID tag.</b>
+    <p>View the <a class="abc" href="http://www.abbinow.com/content.aspx?id=237" target="_blank">Super Stakes Entry Information page</a> for further explanation of the Super Stakes incentive program and payout information.</p>
+    <p>Below is your animals listed in the Super Stakes Program</p>
+  </div>
+</div>
+  <br>
+<div class="container border" style="height:100%;width:90%;padding: 10px;">
+  <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%" ng-init="SuperStacksTable">
+    <thead>
+      <tr>
+        <th>Enter</th>
+        <th>RegNo</th>
+        <th>Animal</th>
+        <th>Herd No</th>
+        <th>Birth Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="sst in ssts">
+        <td>
+          <input type="checkbox" ng-model="sst.incentive">
+        </td>
+        <td><span ng-bind="sst.Regno"></span></td>
+        <td><span ng-bind="sst.Animal"></span></td>
+        <td><span ng-bind="sst.PrivateHerd"></span></td>
+        <td><span ng-bind="sst.birthdate | date : 'MM/dd/yyyy'"></span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,47 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Add Events</h2>
+</div>
+<div>
+  <div ng-if="alert == true" class="alert alert-success alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Added Successfully!</strong>
+  </div>
+  <div ng-if="alert == false" class="alert alert-danger alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Error! Please try again later.</strong>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Add Event</h2>
+    <form class="form-group" class="col-md-12">
+      <div class="col-md-6">
+        <label>City</label>
+        <input type="text" class="form-control" ng-model="adde.city" required="true">
+        <label>State (or Province)</label>
+        <input type="text" class="form-control" ng-model="adde.state" required="true">
+        <label>Event Date</label>
+        <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="adde.startday" required="true">
+        <label>Season (year)</label>
+        <input type="text" class="form-control" ng-model="adde.season" required="true">
+        <label>Status</label>
+        <select class="form-control" ng-model="adde.status">
+          <option value="">--Select One--</option>
+          <option value="On">On</option>
+          <option value="Off">Off</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label>Event Title (label)</label>
+        <input type="text" class="form-control" ng-model="adde.title" required="true">
+        <label>Sanction (ABBI or ABBI/UBBI, etc.)</label>
+        <input type="text" class="form-control" ng-model="adde.sanction" required="true">
+        <label>Entries Open</label>
+        <input type="text" class="form-control" ng-model="adde.eoo" placeholder="yyyy-mm-dd hh:mm:ss" required="true">
+        <label>Entries Close</label>
+        <input type="text" class="form-control" ng-model="adde.ec" placeholder="yyyy-mm-dd hh:mm:ss" required="true">
+        <br>
+        <button class="btn btn-color" ng-click="AddEvent(adde)">Add Event</button>
+      </div>
+    </form>
+  </div>
+</div>

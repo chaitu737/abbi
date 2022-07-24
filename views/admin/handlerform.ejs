@@ -1,0 +1,121 @@
+<style>
+    a:hover{
+      color: darkred!important;
+      text-decoration: none;
+    }
+    body {
+      font-size: 1.5em;
+      line-height: 1.6;
+      font-weight: 400;
+      font-family: 'Work Sans', sans-serif;
+      color: #111111;
+      word-wrap: break-word;
+      margin: 0;
+      background-color: whitesmoke;
+  }
+  .darklav {
+    background-color: #c6cde3;
+}
+form {
+    display: block;
+    margin-top: 0em;
+}
+input[type="hidden" i] {
+    appearance: none;
+    background-color: initial;
+    cursor: default;
+    display: none !important;
+    padding: initial;
+    border: initial;
+}
+button, input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+label, legend {
+    display: block;
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: 100%;
+}
+label {
+    cursor: default;
+}
+input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select {
+    height: 35px;
+    padding: 6px 10px;
+    background-color: #FFF;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    box-shadow: none;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+.blankbar {
+    margin: 0;
+    padding: 10px;
+}
+.button-primary {
+    color: ghostwhite;
+    background-color: #1EAEDB;
+    border-color: #1EAEDB;
+}
+.button-primary:hover {
+    color: #FFF;
+    background-color: #188aae;
+    border-color: #188aae;
+}
+.button, button, input[type="submit"], input[type="reset"], input[type="button"] {
+    display: inline-block;
+    height: 35px;
+    padding: 0 20px;
+    color: #333333;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 35px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: #decbc8;
+    border-radius: 4px;
+    border: 1px solid slategrey;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+  </style>
+  
+  <div class="container" style="background-color: #dedede!important;box-sizing: border-box;border: 1px solid slategrey;padding: 10px;margin-bottom: 1rem;margin-top: 1rem;
+  height:100%;width:90%;padding: 10px;height: 90px;" ng-init="getHandlerForm()">
+    <p class="u-full-width-bbc medline menucolor" id="blankbar" >
+      <span class="fancyline biggerline" style="font-size: 150%;">ABBI Competition Admin</span><br>
+      <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/eventhome">home</a> |
+       <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/pastevent">past events</a> | 
+  <a  style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px;"  href="http://localhost/admin/home#!/addevent">add event</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/classlink">Link 2 Classes</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/bullboss">animals</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/handlerlist">handlers</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/program">programs</a></p>
+  </div>
+  <div class="container" style="background-color: #f1f1f1 !important;height:100%;width:90%;padding: 0;margin-top: 0;margin-bottom: 12px;">
+    <h5 class="blankbar darklav">
+        <a style="background-color:transparent!important;color:darkblue;text-decoration:none" style="margin: 0;padding: 10px;">Handler List</a>
+         &gt; Add / Edit Handler</h5>
+  </div>
+  <div class="container" style="background-color: #f1f1f1 !important;height:100%;width:90%;padding: 0;margin-top: 0;margin-bottom: 12px;"  >
+    <div class="u-full-width-blue darklav" style="padding: 10px;">
+        <form method="POST">
+           <label for="handler">handler</label> 
+           <input type="text" id="handler" name="handler" ng-model="addhandler.handler" placeholder="Handler Name">
+           <label for="memno">memno</label> 
+           <input type="text" id="memno" name="memno" ng-model="addhandler.memno" placeholder="Handler Member #">
+           <label for="phone">phone</label> 
+           <input type="text" id="phone" name="phone" ng-model="addhandler.phone" placeholder="Phone Number">
+           <button type="button"  class="button-primary" ng-click="addnewHandler()" ng-if="!updatehandler">Add New handler</button> 
+           <button type="button"  class="button-primary" ng-click="updateHandler()" ng-if="updatehandler">Update handler</button>
+        </form>
+    </div>
+  </div>

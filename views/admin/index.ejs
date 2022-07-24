@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sandeep Siva">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta name="keywords" content="bull,futurity, classic, American,bucking,events,schedule,calendar,line-up,lineup" />
+  <meta name="description" content="American Bucking Bull, Inc. is the leading bucking cattle DNA registry in the world. ABBI holds and sanctions competitive events for Classic (3 and 4-year-old) and Futurity (2-year-old) bucking bulls, along with other competition formats.  ABBI paid out over $1.7 million dollars in 2010. Over $800,000 was paid out in prize money to ABBI bulls at the 2010 Las Vegas ABBI Finals alone." />
+  <title>
+    American Bucking Bull, Inc. | Admin
+  </title>
+  <!-- Bootstrap core CSS-->
+  <link rel="stylesheet" href="../angular/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../angular/css/datatables.bootstrap.css">
+  <!-- datepickerLinks -->
+  <link href="../angular/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+  <!--Datatables-->
+  <link rel="stylesheet" type="text/css" href="../angular/css/buttons.datatables.min.css">
+  <link rel="stylesheet" href="../angular/css/font-awesome.min.css">
+  <!-- Custom styles for this template-->
+  <link href="../angular/css/style.css" rel="stylesheet">
+  <link href="../angular/css/style-responsive.css" rel="stylesheet">
+  <!--front-end styles-->
+  <link href="../angular/css/style1.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../angular/css/spinners.css">
+  <link href="../angular/css/angularprint.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../stylesheets/tree.css">
+</head>
+<style>
+.content {display:none;}
+.preload { 
+  position: fixed;
+}
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}
+table th {
+  white-space: nowrap;
+}
+.lisize{
+  width: 50%;
+}
+.preloader {
+  position: absolute;
+  left: 49.5%;
+  top: 46%;
+}
+
+.preloader-body {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 99999999;
+  background: white;
+  top: 0;
+}
+.ab .cke_button cke_button__scayt cke_button_off{
+  background-color: lightgrey !important;
+}
+</style>
+</head>
+<body ng-app="adminApp">
+  <div class="preload">
+    <div id="preloaderbody" class="preloader-body">
+      <div class="preloader">
+        <span class="whirly-loader">Loading&#8230</span>
+      </div>
+    </div>
+  </div>
+  <section id="container" class="content" ng-controller="EditAnimalController" ng-init="AdminUserData();EditAnimalsfullData()">
+    <!-- ng-controller="EditAnimalController" ng-init="AdminUserData()" -->
+    <header class="header black-bg">
+      <div class="sidebar-toggle-box">
+        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+      </div>
+      <!-- logo start-->
+      <a class="logo" href="#"><b><img src="../images/about/logo.webp" style="height:55px;width:100px;margin-top:-13px"></b></a>
+      <!-- logo end-->
+      <div class="top-menu">
+        <ul class="nav pull-right top-menu">
+          <li><a class="logout" href="/adminlogout">Logout</a></li>
+        </ul>
+      </div>
+    </header>
+    <div class="nav-collapse" id="sidebar">
+      <ul class="sidebar-menu" id="nav-accordion" style="position: relative;height: 845px;">
+        <p ng-if="!image" class="centered"><a href="#"><img class="img-circle" src="../images/users/user.jpg" width="80">
+          <p ng-if="image" class="centered"><a href="#"><img class="img-circle" src="../images/users/{{image}}" width="80"></a></p>
+          <h5 class="centered"><span ng-bind="uname"></span></h5>
+          <li class="sub-menu"><a href="#!main"><i class="fa fa-home"></i><span>Main</span></a></li>
+          <li class="sub-menu"><a><i class="fas fa-horse"></i><span>Animal</span></a>
+            <ul class="sub">
+              <li class="smen active"><a href="#!editanimal"><span>Edit Animal</span></a></li>
+              <li><a href="#!addnewanimal"><span>Add Animal</span></a></li>
+              <li><a href="#!searchanimal"><span>Search Animal</span></a></li>
+            </ul>
+          </li>
+          <li class="sub-menu"><a href="#!transferedanimals"><i class="glyphicon glyphicon-transfer"></i><span>Animal Transfer</span></a></li>
+          <li ng-if="security1=='3'" class="sub-menu"><a href="#!eventwithouteid"><i class="fa fa-tag"></i><span>Event Without EID</span></a></li>
+          <li class="sub-menu"><a><i class="fa fa-users"></i><span>Members</span></a>
+            <ul class="sub">
+              <li class="smen active"><a href="#!searchmembers" style="margin-left: -10px;"><span>Search Members</span></a></li>
+              <li><a href="#!addmember" style="margin-left: -10px;"><span>Add Members</span></a></li>
+            </ul>
+          </li>
+          <li class="sub-menu"><a href="#!workorder"><i class="fa fa-search"></i><span>Work Order</span></a></li>
+          <li class="sub-menu"><a href="#!memberpayments"><i class="fa fa-dollar"></i><span>Member Payments</span></a></li>
+          <li class="sub-menu" ng-if="id==55"><a href="#!custompayments"><i class="fa fa-credit-card"></i><span>Custom Payments</span></a></li>
+          <!-- <li class="sub-menu"><a href="#!groupcustompay"><i class="fa fa-credit-card"></i><span>Group Payments</span></a></li> -->
+          <li class="sub-menu"><a><i class="fa fa-calendar"></i><span>Event Section</span></a>
+            <ul class="sub">
+              <!-- <li class="smen active"><a href="#!oevents"><span>Online Events</span></a></li>
+              <li><a href="#!eventpayments"><span>Event Payment Programs    </span></a></li>
+              <li><a href="#!eventroster"><span>Events Roster</span></a></li>
+              <li><a href="#!eventeidmanager"><span>Event EID Manager</span></a></li>
+              <li><a href="#!eventeidimport"><span>Event EID Import</span></a></li> -->
+              <!-- <li class="smen active"> -->
+                <li><a href="#!regevents"></i><span>Events</span></a></li>
+              <li><a href="#!bullboss"><span>Animals</span></a></li> 
+             <!-- <li><a href="#!reghandlers"><span>Handlers</span></a></li>
+              <li><a href="#!regprograms"><span>Programs</span></a></li>
+              <li><a href="#!regaddevent"><span>Add Event</span></a></li>
+              <li><a href="#!regstandings"><span>Standings</span></a></li>
+              <li><a href="#!regeventresults"><span>Results</span></a></li>
+              <li><a href="#!regimportjpad"><span>Import Jpad</span></a></li> -->
+            </ul>
+          </li>
+          <!-- <li class="sub-menu"><a><i class="fa fa-trophy"></i><span>ABBI Competition</span></a>
+            <ul class="sub">
+              <li class="smen active"><a href="#!regevents"><i class="fa fa-calendar"></i><span>Events</span></a></li>
+              <li><a href="#!regpastevents"><i class="fa fa-calendar-times-o"></i><span>Past Events</span></a></li>
+              <li><a href="#!reglink2classes"><i class="fa fa-link"></i><span>Link 2 Classes</span></a></li> 
+              <li><a href="#!reganimals"><i class="fa fa-horse"></i><span>Animals</span></a></li>
+              <li><a href="#!reghandlers"><i class="fa fa-users"></i><span>Handlers</span></a></li>
+              <li><a href="#!regprograms"><i class="fa fa-calendar"></i><span>Programs</span></a></li>
+              <li><a href="#!regaddevent"><i class="fa fa-plus"></i><span>Add Event</span></a></li>
+              <li><a href="#!regstandings"><i class="fa fa-bar-chart"></i><span>Standings</span></a></li>
+              <li><a href="#!regeventresults"><i class="fa fa-list"></i><span>Results</span></a></li>
+              <li><a href="#!regimportjpad"><i class="fa fa-download"></i><span>Import Jpad</span></a></li>
+            </ul>
+          </li> -->
+          <li class="sub-menu"><a><i class="fas fa-dna"></i><span>DNA Section</span></a>
+            <ul class="sub">
+              <li class="smen active"><a href="#!dnatesting"><span>DNA Testing</span></a></li>
+              <li><a href="#!dnaverify"><span>DNA Verify</span></a></li>
+              <li><a href="#!importlabresult"><span>Import Lab Results</span></a></li>
+              <li><a href="#!genoresearch"><span>Geno Research</span></a></li>
+            </ul>
+          </li>
+          <li class="sub-menu"><a><i class="fa fa-gift"></i><span>Incentives Section</span></a>
+            <ul class="sub">
+              <li class="smen active"><a href="#!breederscertificate"><span>Breeders Certificate</span></a></li>
+              <li><a href="#!superstakes"><span>Super Stakes</span></a></li>
+            </ul>
+          </li>
+          <li class="sub-menu"><a><i class="fa fa-barcode"></i><span>Products Section</span></a>
+            <ul class="sub">
+              <li class="smen active"><a href="#!onlinestore"><span>Online
+              Store</span></a></li>
+              <li><a href="#!discountmanager"><span>Discount Manager</span></a></li>
+            </ul>
+          </li>
+          <li class="sub-menu"><a><i class="fa fa-tag"></i><span>EID Section</span></a>
+            <ul class="sub">
+              <li><a href="#!eidorderexport"><span>EID Order Export</span></a></li>
+              <li><a href="#!eidorderimport"><span>EID Order Import</span></a></li>
+              <li><a href="#!eventwithouteid"><span>EID Missing Event Report</span></a></li>
+            </ul>
+          </li>
+          <li class="sub-menu"><a><i class="fa fa-user-secret"></i><span>Admin Section</span></a>
+            <ul class="sub">
+              <li class="smen active"><a href="#!bulkemail"><span>Bulk
+              Email</span></a></li>
+              <li><a href="#!membershipdue"><span>Membership Due</span></a></li>
+              <li><a href="#!membershipprices"><span>Membership Prices</span></a></li>
+              <li><a href="#!registrationprices"><span>Registration Prices</span></a></li>
+              <li><a href="#!workorderprice"><span>WorkOrder Prices</span></a></li>
+              <li><a href="#!utilities"><span>Utilities</span></a></li>
+              <li><a href="#!animalearning"><span>Animal Earnings</span></a></li>
+              <li><a href="#!approval"><span>Animal Approvals</span></a></li>
+              <li><a href="#!memberapproval"><span>Member Approvals</span></a></li>
+              <li><a href="#!databasebackup"><span>Database Backup</span></a></li>
+              <li><a href="#!bulkemailoutbox"><span>Bulk Email Outbox</span></a></li>
+              <li><a href="#!emailoutbox"><span>Email Outbox</span></a></li>
+            </ul>
+          </li>
+          <li class="sub-menu"><a><i class="fa fa-file-word-o"></i><span>Reports</span></a>
+            <ul class="sub">
+              <li ng-if="security1=='3'" class="active"><a href="#!adhoc">Ad Hoc Report</a></li>
+              <li><a href="#!memberInventoryReport">Member Inventory Report</a></li>
+              <li><a href="#!memberDueDateReport">Member Due Date Report</a></li>
+              <li><a href="#!membersStartdateReport">Members Start Date
+              Report</a></li>
+              <li><a href="#!animalBirthDateReport">Animal Birth Date Report</a></li>
+              <li><a href="#!animalRegReports">Animal Registration Reports</a></li>
+              <li><a href="#!membershipbyMonthReport">Membership By Month Report</a></li>
+              <li><a href="#!membershipreports">Membership Report</a></li>
+              <li><a href="#!labelReportcert">Label Reports - Certificate</a></li>
+              <li><a href="#!labelreportfailedtesting">Label Reports - Failed Testing</a></li>
+              <li><a href="#!labelrepoprtnonmatch">Label Reports - Non Match</a></li>
+              <li><a href="#!labelreportmembership">Label Reports - Membership</a></li>
+              <li><a href="#!membershipcards">Membership Cards</a></li>
+              <li><a href="#!letteroffilledtesting">Letter Of Failed Testing</a></li>
+              <li><a href="#!reportcert">Certificates</a></li>
+              <li><a href="#!membershiprenewalnotification">Renewal Notification</a></li>
+              <li><a href="#!membershiprenewalreport">Renewal Report</a></li>
+              <li><a href="#!memberprofdet">Membership Profile Updates</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- sidebar menu end-->
+      <!-- sidebar end-->
+      <!-- main content start-->
+      <section id="main-content">
+        <section class="wrapper site-min-height">
+          <div class="row mt">
+            <div class="row">
+              <div class="col-md-12">
+                <div ng-view></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </section>
+    <!-- MAIN CONTENT-->
+    <!-- main content end-->
+    <!-- js placed at the end of the document so the pages load faster-->
+    <script src="../angular/js/jquery.js"></script>
+    <script src="../angular/js/jquery.min.js"></script>
+    <script src="../angular/js/bootstrap.min.js"></script>
+    <script src="../angular/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="../angular/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="../angular/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="../angular/js/jquery.scrollTo.min.js"></script>
+    <script src="../angular/js/jquery.nicescroll.js"></script>
+    <!--datatables-->
+    <script src="../angular/js/angular.min.js"></script>
+    <script src="../angular/js/angular-ui.min.js"></script>
+    <script src="../angular/js/angular-datatables.buttons.min.js"></script>
+    <script src="../angular/js/angular-datatables.min.js"></script>
+    <script src="../angular/js/jquery.dataTables.min.js"></script>
+    <script src="../angular/js/dataTables.buttons.min.js"></script>
+    <script src="../angular/js/buttons.colVis.min.js"></script>
+    <script src="../angular/js/buttons.flash.min.js"></script>
+    <script src="../angular/js/buttons.print.min.js"></script>
+    <script src="../angular/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.5.3/full/ckeditor.js"></script>
+    <script src="https://rawgit.com/lemonde/angular-ckeditor/master/angular-ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
+    <!-- common script and datatables for all pages-->
+    <script src="../angular/js/common-scripts.js"></script>
+    <!-- <script src="../angular/js/kit.js"></script> -->
+    <!--angular scripts-->
+    <script src="../angular/js/angular-route.js"></script>
+    <!-- <script src="../admin/printworkorder.ejs"></script> -->
+    <script src="../admin/admin.js"></script>
+    <!-- JSPDF -->
+    <script type="text/javascript" src="../angular/js/jspdf.debug.js"></script>
+    <script type="text/javascript" src="../angular/js/jspdf.min.js"></script>
+    <script type="text/javascript" src="../angular/js/jspdf.plugin.autotable.js"></script>
+    <!-- PDF Table -->
+    <script type="text/javascript" src="../angular/js/pdfmake.min.js"></script>
+    <script type="text/javascript" src="../angular/js/html2canvas.min.js"></script>
+    <!-- datepicker links -->
+    <script src="../angular/js/bootstrap-datepicker.js"></script>
+    <script src="../angular/js/angularprint.js"></script>
+    <script src="../angular/js/ng-file-upload.min.js"></script>
+    <script src="../angular/js/xlsx.full.min.js"></script>
+    <script src="../angular/js/jszip.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+    <script>
+    $(function() {
+      $(".preload").fadeOut(2000, function() {
+        $(".content").fadeIn(1000);        
+      });
+    });
+    </script>
+    <script>
+      $(document).ready(function() {
+        $('.table').DataTable({
+          "language": {
+            "processing": '<i class="fa fa-spinner fa-spin" style="font-size:24px;color:rgb(75, 183, 245);"></i>'
+                       }
+         });
+       });
+    </script>
+  </body>
+  </html>

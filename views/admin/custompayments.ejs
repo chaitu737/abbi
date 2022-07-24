@@ -1,0 +1,45 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Custom Payments</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <form ng-init="updatemember()">
+    <label>Member :</label>
+          <input class="form-control" type="text" ng-model="cpay.member" list="names">
+            <datalist id="names" ng-model="MemberNumber">
+              <option ng-repeat="member in members | filter:cpay.member | limitTo:8" value="{{member.MemberNumber}} - {{member.MemberName}}"></option>
+            </datalist>
+            <label>Description :</label>
+            <textarea class="form-control" ng-model="cpay.desc"></textarea>
+    <button class="btn btn-color" ng-click="PaymentLink(cpay)">Send Payment Link</button>
+  </form>
+  <br>
+  <br>
+  <!-- <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="mainwo in mainwos">
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div> -->
+</div>

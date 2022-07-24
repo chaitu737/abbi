@@ -1,0 +1,57 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Label Reports - Non Match</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-init="LabelNoMatchReport()">
+    <button class="btn btn-color" ng-click="PrintLabelNoMatchReport(); hidentable=true;" type="button">Print</button>
+    <div class="panel panel-default" ng-hide="hidentable">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th> Member Name </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="nml in nmls">
+                <td><span ng-bind="nml.MemberName"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default" ng-show="hidentable">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name </th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Country</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="pnm in pnms">
+                <td><span ng-bind="pnm.FirstName"></span></td>
+                <td><span ng-bind="pnm.LastName"></span></td>
+                <td><span ng-bind="pnm.Address"></span></td>
+                <td><span ng-bind="pnm.City"></span></td>
+                <td><span ng-bind="pnm.State"></span></td>
+                <td><span ng-bind="pnm.Zip"></span></td>
+                <td><span ng-bind="pnm.Country"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <button class="btn btn-color" ng-click="hidentable=false">Exit</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,320 @@
+<style>
+  a:hover {
+    color: darkred !important;
+    text-decoration: none;
+  }
+  body {
+    font-size: 1.5em;
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: "Work Sans", sans-serif;
+    color: #111111;
+    word-wrap: break-word;
+    margin: 0;
+    background-color: whitesmoke;
+  }
+  .sadbrown {
+    background-color: #c2b4af;
+  }
+  .smallerline {
+    font-size: 90%;
+  }
+  .strongline {
+    font-weight: bold;
+  }
+  .u-full-width-bbc {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid slategrey;
+    padding: 10px;
+  }
+  .sadbrown {
+    background-color: #c2b4af;
+  }
+  .six.columns {
+    width: 48%;
+  }
+  .columns:first-child {
+    margin-left: 0;
+  }
+  label,
+  legend {
+    display: block;
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: 100%;
+  }
+  input[type="text"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="password"],
+  textarea,
+  select {
+    height: 35px;
+    padding: 6px 10px;
+    background-color: #fff;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    box-shadow: none;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    appearance: none;
+  }
+  .button-primary {
+    color: ghostwhite;
+    background-color: #1EAEDB;
+    border-color: #1EAEDB;
+}
+.button, button, input[type="submit"], input[type="reset"], input[type="button"] {
+    display: inline-block;
+    height: 35px;
+    padding: 0 20px;
+    color: #333333;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 35px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: #decbc8;
+    border-radius: 4px;
+    border: 1px solid slategrey;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.button-primary:hover {
+    color: #FFF;
+    background-color: #188aae;
+    border-color: #188aae;
+}
+</style>
+
+<div class="container"  style="background-color: #dedede !important;box-sizing: border-box;border: 1px solid slategrey;padding: 10px;margin-bottom: 1rem;margin-top: 1rem;height: 100%;width: 90%;padding: 10px;height: 90px;" ng-init="getInfo()">
+  <p class="medline menucolor" id="blankbar">
+    <span class="fancyline biggerline" style="font-size: 150%"
+      >ABBI Competition Admin</span
+    ><br />
+    <a
+      style="
+        color: darkblue;
+        text-decoration: none;
+        background-color: transparent !important;
+        font-size: 17px;
+      "
+      href="http://localhost/admin/home#!/eventhome"
+      >home</a
+    >
+    |
+    <a
+      style="
+        color: darkblue;
+        text-decoration: none;
+        background-color: transparent !important;
+        font-size: 17px;
+      "
+      href="http://localhost/admin/home#!/pastevent"
+      >past events</a
+    >
+    |
+    <a
+      style="
+        color: darkblue;
+        text-decoration: none;
+        background-color: transparent !important;
+        font-size: 17px;
+      "
+      href="http://localhost/admin/home#!/addevent"
+      >add event</a
+    >
+    |
+    <a
+      style="
+        color: darkblue;
+        text-decoration: none;
+        background-color: transparent !important;
+        font-size: 17px;
+      "
+      href="http://localhost/admin/home#!/classlink"
+      >Link 2 Classes</a
+    >
+    |
+    <a
+      style="
+        color: darkblue;
+        text-decoration: none;
+        background-color: transparent !important;
+        font-size: 17px;
+      "
+      href="http://localhost/admin/home#!/bullboss"
+      >animals</a
+    >
+    |
+    <a
+      style="
+        color: darkblue;
+        text-decoration: none;
+        background-color: transparent !important;
+        font-size: 17px;
+      "
+      href="http://localhost/admin/home#!/handlerlist"
+      >handlers</a
+    >
+    |
+    <a
+      style="
+        color: darkblue;
+        text-decoration: none;
+        background-color: transparent !important;
+        font-size: 17px;
+      "
+      href="http://localhost/admin/home#!/program"
+      >programs</a
+    >
+  </p>
+</div>
+
+<div class="container" style="background-color: #d8ceb9 !important;height: 100%;width: 90%;padding: 0;margin-top: 11px;" ng-init="getClassDetails()">
+  <p class="u-full-width-bbc bigline strongline sadbrown" style="margin: 0; border-radius: 0">Add Class (New)<br />
+    <span class="smallerline"> Event: {{addclass.pevid}} ({{eventInfo.city}}, {{eventInfo.state}} - {{eventInfo.title}}) </span>
+  </p>
+</div>
+<div
+  class="container"
+  style="
+    background-color: #d8ceb9 !important;
+    height: 100%;
+    width: 90%;
+    padding: 0;
+    margin-top: 11px;
+  ">
+  <div class="u-full-width-bbc sadbrown">
+    <form method="POST">
+      <div class="row">
+        <div class="six columns col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <label for="pevid">Parent Event</label>
+          <input type="text" name="pevid"  ng-model=addclass.pevid
+          placeholder="EventId">
+
+          <label for="startdate">Class Date/Time YYYY-MM-DD HH:MM:SS</label>
+          <input
+            type="text"
+            name="startdate"
+            id="startdate"
+            ng-model="addclass.startdate"
+            placeholder="Example: 2016-07-04 18:00:00"
+          />
+          <label for="sanction">Sanction (ABBI or ABBI/UBBI, etc.)</label>
+          <input
+            type="text"
+            name="sanction"
+            id="sanction"
+            ng-model="addclass.sanction"
+            placeholder="Example: ABBI/EG"
+          />
+          <label for="fees">Entry Fees</label>
+          <input
+            type="text"
+            name="fees"
+            id="fees"
+            ng-model="addclass.fees"
+            placeholder="Example: 300.00"
+          />
+          <label for="added">Added $</label>
+          <input
+            type="text"
+            name="added"
+            id="added"
+            ng-model="addclass.added"
+            placeholder="Added money if applicable"
+          />
+        </div>
+        <div class="six columns col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <label for="status">Status</label>
+          <select id="status" name="status" ng-model="addclass.status">
+            <option value="">--- Choose one ---</option>
+            <option value="On">On</option>
+            <option value="Off">Off</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <label for="evtype">Comp. Type</label>
+          <select id="evtype" name="evtype" ng-model="addclass.evtype">
+            <option value="">--- Choose one ---</option>
+            <option value="Yearling">Yearling</option>
+            <option value="Futurity">Futurity</option>
+            <option value="Derby">Derby</option>
+            <option value="Classic">Classic</option>
+            <option value="Maturity">Maturity</option>
+            <option value="All In">All In</option>
+            <option value="Fee Only">Fee Only</option>
+            <option value="AU-Heifer">AU-Heifer</option>
+            <option value="AU-Yearling-2">AU-Yearling-2</option>
+            <option value="AU-Futurity-3">AU-Futurity-3</option>
+            <option value="AU-Ladies-2-3">AU-Ladies-2-3</option>
+            <option value="AU-Derby-4">AU-Derby-4</option>
+            <option value="Fee Only">Fee Only</option>
+            <option value="Slot">Slot</option>
+            </select>
+            <label for="evclass">Comp. Class</label>
+          <select id="evclass" name="evclass" ng-model="addclass.evclass">
+            <option value="">--- Choose one ---</option>
+            <option value="Open">Open</option>
+            <option value="Open Tiered">Open Tiered</option>
+            <option value="Cowgirl">Cowgirl</option>
+            <option value="Junior">Junior</option>
+            <option value="ABBI Junior Points">ABBI Junior Points</option>
+            <option value="Limited">Limited</option>
+            <option value="3D">3D</option>
+            <option value="4D">4D</option>
+            <option value="Featured">Featured</option>
+            <option value="Elite">Elite</option>
+            <option value="Heritage">Heritage</option>
+            <option value="Incentive">Incentive</option>
+            <option value="Lifetime">Lifetime</option>
+            <option value="Heifer">Heifer</option>
+            <option value="Side Pot">Side Pot</option>
+            <option value="Non-Winner Side Pot">Non-Winner Side Pot</option>
+            <option value="Limited Side Pot">Limited Side Pot</option>
+            <option value="Wild Card">Wild Card</option>
+            <option value="Exhibition">Exhibition</option>
+            <option value="ABBI Points">ABBI Points</option>
+            <option value="ABBI Cowgirl Points">ABBI Cowgirl Points</option>
+            <option value="BFTS">BFTS</option>
+            <option value="PBR Premier Series">PBR Premier Series</option>
+            <option value="Canada">Canada</option>
+            <option value="Second Chance">Second Chance</option>
+            <option value="Maiden">Maiden</option>
+            <option value="Reservation">Reservation</option>
+            <option value="World Finals">World Finals</option>
+            <option value="2022 Series">2022 Series</option>
+            <option value="2022 NBLB">2022 NBLB</option>
+            <option value="Revolution">Revolution</option>
+            <option value="TwoBulls">TwoBulls</option>
+            <option value="Legacy">Legacy</option>
+            <option value="80 Slide">80 Slide</option>
+            <option value="85 Slide">85 Slide</option>
+            <option value="87 Slide">87 Slide</option>
+            <option value="88 Slide">88 Slide</option>
+            <option value="Conditional">Conditional</option>
+            <option value="Team 2">Team 2</option>
+            <option value="Team S">Team S</option>
+            <option value="Video">Video</option>
+            <option value="Video Jr">Video Jr</option>
+            <option value="Video Cowgirl">Video Cowgirl</option>
+            </select>
+            <label for="evlabel">Label (Ex. Round 2)</label>
+          <input type="text" name="evlabel" id="evlabel" ng-model="addclass.evlabel" placeholder="Round 1, Round 2, Perf 1, etc..."/>
+            <label for="schedfees">Scheduled Fee Payments?</label>
+          <select id="schedfees" name="schedfees" ng-model="addclass.schedfees">
+            <option value="0" selected="">No</option>
+            <option value="1">Yes</option>
+          </select>
+          <button type="button" class="button-primary" style="margin-top: 1rem" ng-click="submitForm(addclass)" ng-if="!editClassBtn">add Class</button>
+          <button type="button" class="button-primary" style="margin-top: 1rem" ng-click="updateClass()" ng-if="editClassBtn">Update Class</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

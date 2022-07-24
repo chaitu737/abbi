@@ -1,0 +1,376 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Search Animal</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-init="animalData()">
+  <form>
+    <div class="row">
+      <div class="col-sm-6 form-group">
+        <div class="col-sm-12 form-group" ng-init="updatemember()">
+          <label>Member</label>
+          <input class="form-control" type="text" ng-model="animallist.MemberName" list="names">
+            <datalist id="names" ng-model="MemberNumber">
+              <option ng-repeat="member in members | filter:animallist.MemberName | limitTo:8" value="{{member.MemberNumber}} - {{member.MemberName}}"></option>
+            </datalist>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Member Number</label>
+          <input type="text" ng-model="animallist.MemberNumber" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Registration Number</label>
+          <input type="text" ng-model="animallist.RegNo" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Name</label>
+          <input type="text" ng-model="animallist.AnimalName" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Sex</label>
+          <select class="form-control" ng-model="animallist.Sex">
+            <option value="">All</option>
+            <option value="B">All Bulls</option>
+            <option value="C">All Cows</option>
+            <option value="NB">NB</option>
+            <option value="NC">NC</option>
+            <option value="AB">AB</option>
+            <option value="AC">AC</option>
+            <option value="EB">EB</option>
+            <option value="EC">EC</option>
+            <option value="NS">NS - Natural Stallion</option>
+            <option value="NM">NM - Natural Mare</option>
+            <option value="NG">NG - Natural Gelding</option>
+            <option value="AS">AS - AI Stallion</option>
+            <option value="AM">AM - AI Mare</option>
+            <option value="AG">AG - AI Gelding</option>
+            <option value="ES">ES - Embryo Stallion</option>
+            <option value="EM">EM - Embryo Mare</option>
+            <option value="EG">EG - Embryo Gelding</option>
+            <option value="M">All Mares</option>
+            <option value="G">All Geldings</option>
+            <option value="H">All Horses</option>
+            <option value="S">All Stallions</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Private Herd #</label>
+          <input type="text" ng-model="animallist.Herd" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Birth Year</label>
+          <input type="number" ng-model="animallist.Birthyear" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Birth Date</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" ng-model="animallist.Birthdate" class="form-control">
+        </div>
+      </div>
+      <div class="col-sm-6 form-group">
+        <div class="col-sm-12 form-group">
+          <label>DNA Number</label>
+          <input type="text" ng-model="animallist.DNA" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Description</label>
+          <input type="text" ng-model="animallist.Description" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>EID Tag</label>
+          <input type="text" ng-model="animallist.EID" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Original Breeder</label>
+          <input type="text" ng-model="animallist.Breeder" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label class="inline-checkbox">DNA'd
+            <input type="checkbox" ng-model="animallist.DNAD">
+          </label>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>DNA Status</label>
+          <select class="form-control" ng-model="animallist.Status" multiple="">
+            <option value="">All</option>
+            <option value="Complete">Complete</option>
+            <option value="Waiting For Samples">Waiting For Samples</option>
+            <option value="Waiting For Samples - Overdue">Waiting For Samples - Overdue</option>
+            <option value="Waiting For Samples and Dam Auth.">Waiting For Samples and Dam Auth.</option>
+            <option value="Waiting For Dam Auth.">Waiting For Dam Auth.</option>
+            <option value="Cataloged">Cataloged</option>
+            <option value="Pending">Pending</option>
+            <option value="Complete-DNA Sire">Complete-DNA Sire</option>
+            <option value="Complete-DNA Dam">Complete-DNA Dam</option>
+            <option value="Complete-No Match">Complete-No Match</option>
+            <option value="Multiple">Multiple</option>
+            <option value="Failed Testing">Failed Testing</option>
+            <option value="Failed Testing-Waiting For Dam Auth.">Failed Testing-Waiting For Dam Auth.</option>
+            <option value="Resubmit">Resubmit</option>
+            <option value="Deceased">Deceased</option>
+            <option value="Research">Research</option>
+            <option value="Pending-BR">Pending-BR</option>
+          </select>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Date Registered</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" ng-model="animallist.RegisteredDate" name="" class="form-control">
+        </div>
+        <div class="col-sm-12 form-group" style="white-space: nowrap;">
+          <button class="btn btn-color" ng-click="AnimalSearch(1)" data-dismiss="modal">Search</button>
+          <button class="btn btn-color" ng-click="ResetSearchAni(animallist)">Reset</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+          <input type="text" class="form-control" placeholder="Search" ng-model="vm.Search" ng-change="searchAnimalInput(vm)"/>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Reg No#</th>
+              <th>Name</th>
+              <th>Herd#</th>
+              <th>Birth Date</th>
+              <th>Sex</th>
+              <th>Sire #</th>
+              <th>Dam #</th>
+              <th>Member Name</th>
+              <th>DNA Status</th>
+              <th>Sold</th>
+              <th>Last Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="animal in animalfulldata">
+              <td><a href="#!editanimals/{{animal.RegNo}}" target="_blank"><span ng-bind="animal.RegNo"></span></a></td>
+              <td><span ng-bind="animal.Animal"></span></td>
+              <td><span ng-bind="animal.PrivateHerd"></span></td>
+              <td><span ng-bind="animal.Birthdate | date:'MM/dd/yyyy'"></span></td>
+              <td><span ng-bind="animal.TypeService"></span></td>
+              <td><span ng-bind="animal.SireRegNo"></span></td>
+              <td><span ng-bind="animal.DamRegNo"></span></td>
+              <td><span ng-bind="animal.MemberName"></span></td>
+              <td><span ng-bind="animal.Status"></span></td>
+              <td><span ng-bind="animal.sold"></span></td>
+              <td><span ng-bind="animal.LastUpdated | date:'MM/dd/yyyy'"></span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="dataTables_wrapper no-footer" ng-if="animalfulldata.length > 0">
+          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="pagination pagination-centered" ng-show="animalfulldata[0].xCount" style="margin: 0;">
+          <ul class="pagination-controle pagination">
+           <li>
+            <button type="button" class="btn btn-primary" ng-disabled="curPage == 1"
+           ng-click="AnimalSearch(curPage - 1);" style="float: left;"> &lt; PREV</button>
+           </li>
+           <li>
+           <span>Page {{curPage}} of {{ numberOfPages() }}</span>
+           </li>
+           <li>
+           <button type="button" class="btn btn-primary"
+           ng-disabled="curPage >= animalfulldata[0].xCount/pageSize - 1"
+           ng-click="AnimalSearch(curPage + 1);" >NEXT &gt;</button>
+           </li>
+          </ul>
+          </div>
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tab-pane fade" id="searchanimal" ng-if="security1==2">
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;"ng-controller="SearchAnimalController" ng-init="animalData()">
+    <form>
+      <div class="row">
+        <div class="col-sm-6 form-group">
+          <div class="col-sm-12 form-group">
+            <label>Member</label>
+            <select ng-model="animallist.MemberName" ng-click="updatemember()" class="form-control">
+              <option value="">--Select One</option>
+              <option ng-repeat="member in members" value="{{member.MemberNumber}}">{{member.MemberNumber}} - {{member.MemberName}}</option>
+            </select>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Member Number</label>
+            <input type="text" ng-model="animallist.MemberNumber" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Registration Number</label>
+            <input type="text" ng-model="animallist.RegNo" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Name</label>
+            <input type="text" ng-model="animallist.AnimalName" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Sex</label>
+            <select class="form-control" ng-model="animallist.Sex">
+              <option value="">All</option>
+              <option value="B">All Bulls</option>
+              <option value="C">All Cows</option>
+              <option value="NB">NB</option>
+              <option value="NC">NC</option>
+              <option value="AB">AB</option>
+              <option value="AC">AC</option>
+              <option value="EB">EB</option>
+              <option value="EC">EC</option>
+            </select>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Private Herd #</label>
+            <input type="text" ng-model="animallist.Herd" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Birth Date</label>
+            <input type="date" ng-model-options="{timezone: 'UTC'}" ng-model="animallist.Birthdate" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>DNA Number</label>
+            <input type="text" ng-model="animallist.DNA" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Description</label>
+            <input type="text" ng-model="animallist.Description" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Horns</label>
+            <select class="form-control" ng-model="animallist.Horns">
+              <option value="H">H</option>
+              <option value="D">D</option>
+              <option value="P">P</option>
+            </select>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Notes</label>
+            <input type="text" ng-model="animallist.Notes" class="form-control" name="">
+          </div>
+        </div>
+        <div class="col-sm-6 form-group">
+          <div class="col-sm-12 form-group">
+            <label>EID Tag</label>
+            <input type="text" ng-model="animallist.EID" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>MISC</label>
+            <input type="text" ng-model="animallist.MISC" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Original Breeder</label>
+            <input type="text" class="form-control" ng-model="animallist.Breeder" ng-change="SearchBreeder(animallist.Breeder)">
+            <div class="items" ng-show="isSelected1">
+              <p ng-click="selectItem1(item.MemberNumber)" ng-repeat='item in items'>{{item.Membername}}</p>
+            </div>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label class="inline-checkbox">DNA'd
+              <input type="checkbox" ng-model="animallist.DNAD">
+            </label>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Verified</label>
+            <select class="form-control" ng-model="animallist.Verified">
+              <option value="">--Select One--</option>
+              <option>Reference</option>
+              <option>Verification</option>
+            </select>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>DNA Status</label>
+            <select class="form-control" ng-model="animallist.Status">
+              <option value="">All</option>
+              <option value="Complete">Complete</option>
+              <option value="Waiting For Samples">Waiting For Samples</option>
+              <option value="Waiting For Samples - Overdue">Waiting For Samples - Overdue</option>
+              <option value="Waiting For Samples and Dam Auth.">Waiting For Samples and Dam Auth.</option>
+              <option value="Waiting For Dam Auth.">Waiting For Dam Auth.</option>
+              <option value="Cataloged">Cataloged</option>
+              <option value="Pending">Pending</option>
+              <option value="Complete-DNA Sire">Complete-DNA Sire</option>
+              <option value="Complete-DNA Dam">Complete-DNA Dam</option>
+              <option value="Complete-No Match">Complete-No Match</option>
+              <option value="Multiple">Multiple</option>
+              <option value="Failed Testing">Failed Testing</option>
+              <option value="Failed Testing-Waiting For Dam Auth.">Failed Testing-Waiting For Dam Auth.</option>
+              <option value="Resubmit">Resubmit</option>
+              <option value="Deceased">Deceased</option>
+              <option value="Research">Research</option>
+              <option value="Pending-BR">Pending-BR</option>
+            </select>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label class="inline-checkbox">Send to DNA
+              <input type="checkbox" ng-model="animallist.SDNA">
+            </label>
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Submitted Date</label>
+            <input type="date" ng-model-options="{timezone: 'UTC'}" ng-model="animallist.SubmittedDate" name="" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Date Registered</label>
+            <input type="date" ng-model-options="{timezone: 'UTC'}" ng-model="animallist.RegisteredDate" name="" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Last Updated</label>
+            <input type="date" ng-model-options="{timezone: 'UTC'}" ng-model="animallist.LastUpdated" name="" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group">
+            <label>Updated By</label>
+            <input type="text" ng-model="animallist.UpdatedBy" name="" class="form-control">
+          </div>
+          <div class="col-sm-12 form-group" style="white-space: nowrap;">
+            <button class="btn btn-color" ng-click="AnimalSearch(animallist)" data-dismiss="modal">Search</button>
+            <button class="btn btn-color" ng-click="ResetSearchAni(animallist)">Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Reg No#</th>
+                <th>Name</th>
+                <th>Herd#</th>
+                <th>Birth Date</th>
+                <th>Sex</th>
+                <th>Sire #</th>
+                <th>Dam #</th>
+                <th>Member Name</th>
+                <th>DNA Status</th>
+                <th>Sold</th>
+                <th>Last Updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="animal in animalfulldata">
+                <td><span ng-bind="animal.RegNo"></span></td>
+                <td><span ng-bind="animal.Animal"></span></td>
+                <td><span ng-bind="animal.PrivateHerd"></span></td>
+                <td><span ng-bind="animal.Birthdate | date:'MM/dd/yyyy'"></span></td>
+                <td><span ng-bind="animal.TypeService"></span></td>
+                <td><span ng-bind="animal.SireRegNo"></span></td>
+                <td><span ng-bind="animal.DamRegNo"></span></td>
+                <td><span ng-bind="animal.MemberName"></span></td>
+                <td><span ng-bind="animal.Status"></span></td>
+                <td><span ng-bind="animal.sold"></span></td>
+                <td><span ng-bind="animal.LastUpdated | date:'MM/dd/yyyy'"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

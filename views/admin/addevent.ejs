@@ -1,0 +1,161 @@
+<style>
+    a:hover{
+      color: darkred!important;
+      text-decoration: none;
+    }
+    .six.columns {
+    width: 48%;
+}
+.six-columns  label {
+        display: block;
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: 100%;
+    }
+    input[type='text']{
+        height: 35px;
+    padding: 6px 10px;
+    background-color: #FFF;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    box-shadow: none;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    }
+    .columns:first-child {
+    margin-left: 0;
+}
+div {
+    display: block;
+}
+.u-full-width-bbc {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    /* border: 1px solid slategrey; */
+    padding: 10px;
+    margin-bottom: 1rem;
+    /* margin-top: 1rem; */
+}
+select{
+    height: 35px;
+    padding: 6px 10px;
+    background-color: #FFF;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    box-shadow: none;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+button{
+    display: inline-block;
+    height: 35px;
+    padding: 0 20px;
+    color: #333333;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 35px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: #decbc8;
+    border-radius: 4px;
+    border: 1px solid slategrey;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.button-primary {
+    color: ghostwhite;
+    background-color: #1EAEDB;
+    border-color: #1EAEDB;
+    margin-top: 1rem;
+}
+.button-primary:hover {
+    color: #FFF;
+    background-color: #188aae;
+    border-color: #188aae;
+}
+body {
+    font-size: 1.5em;
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: 'Work Sans', sans-serif;
+    color: #111111;
+    word-wrap: break-word;
+    margin: 0;
+    background-color: whitesmoke;
+}
+  </style>
+  <div class="container" style="background-color: #dedede!important;box-sizing: border-box;border: 1px solid slategrey;padding: 10px;margin-bottom: 1rem;margin-top: 1rem;
+  height:100%;width:90%;padding: 10px;height: 90px;" ng-init="checkURL()">
+    <p class="medline menucolor" id="blankbar">
+      <span class="fancyline biggerline" style="font-size: 150%;">ABBI Competition Admin</span><br>
+      <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/eventhome">home</a> |
+       <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/pastevent">past events</a> | 
+  <a  style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px;"  href="http://localhost/admin/home#!/addevent">add event</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/classlink">Link 2 Classes</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/bullboss">animals</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/handlerlist">handlers</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/program">programs</a></p>
+  </div>
+  <div  class="container" style="background-color: #c2b4af;height:100%;width:90%;padding: 0;margin-top: 0;margin-bottom: 10px;">
+  <h5 class="fancyline headerbar" style="background-color: #c2b4af;color: black;padding: 2px 5px 2px 8px;margin: 0;height: 24px;padding-top: 10px;padding-bottom: 10px;height: 46px;font-size: 2.4rem;">Add Event</h5>
+  </div>
+  <div class="container" style="height:100%;width:90%;padding: 0;margin-top: 0;">
+    <div class="u-full-width-bbc greycolor" style="background-color:#decbc8;">
+	          
+        <div class="row">
+          <form method="POST">					
+        <div class="six columns col-lg-6 col-md-6 col-sm-6 col-xs-6">
+              
+           <label for="city">City</label>
+           <input type="text" name="city" id="city" ng-model="addevent.city" placeholder="City">
+           <label for="state">State (or Province)</label>
+           <input type="text" maxlength="2" name="state" id="state" ng-model="addevent.state" placeholder="Example: TX">
+           <label for="startday">Event Start Date</label>
+           <!-- <input type="text" name="startday" id="startday" ng-model="addevent.startday" placeholder="Example: 2016-07-04">				 -->
+           <input type="date" name="startday" ng-model="addevent.startday" value="addevent.startday" ng-bind="addevent.startday | date:'dd-MM-yyyy'" class="form-control">
+           <label for="startday">Event End Date</label>
+           <input type="date" name="enddate" ng-model="addevent.enddate" ng-bind="addevent.enddate"  ng-bind="addevent.enddate | date:'dd-MM-yyyy'"  class="form-control">
+           <label for="season">Season (year)</label>
+           <input type="text" name="season" id="season" ng-model="addevent.season" placeholder="Example: 2016">
+           <label for="status">Status</label>
+                 <select id="status" name="status" ng-model="addevent.status">
+                 <option value="">--- Choose one ---</option>
+                 <option value="On">On</option>
+                  <option value="Off">Off</option>
+                  <option value="Cancelled">Cancelled</option>
+                  </select>
+                  <label>Location</label>
+                  <input type="text" name="location" ng-model="addevent.location" placeholder="Location"/>
+                  <label>Host Hotel</label>
+                  <input type="text" name="hosthotel" ng-model="addevent.hosthotel" placeholder="Host Hotel"/>
+</div>				   
+       <div class="six columns col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <label>Check In Time</label>
+        <input type="text" name="checkintime" ng-model="addevent.checkintime" placeholder="Check In Time"/>
+        <label>Event Venue</label>
+        <input type="text" ng-model="addevent.venue" placeholder="Event Venue"/>
+           <label for="title">Event Title (label)</label>
+           <input type="text" name="title" id="title" ng-model="addevent.title" placeholder="Example: ABBI World Championship">
+           <label for="sanction">Sanction (ABBI or ABBI/UBBI, etc.)</label>
+             <input type="text" name="sanction" id="sanction" ng-model="addevent.sanction" placeholder="Example: ABBI/EG">
+           <label for="eoo">Entries Open YYYY-MM-DD HH:MM:SS</label>
+           <input type="text" name="eoo" id="eoo" ng-model="addevent.eoo" placeholder="Example: 2016-07-04 18:00:00">
+           <label for="ec">Entries Close YYYY-MM-DD HH:MM:SS</label>
+           <input type="text" name="ec" id="ec" ng-model="addevent.ec" placeholder="Example: 2016-07-04 18:00:00">  
+           <label>Notes</label>
+           <textarea id="notes" name="notes" rows="3" cols="50" ng-model="addevent.notes" class="form-control">
+            </textarea>
+             <button type="submit" name="submit" class="button-primary" style="margin-top: 1rem;" ng-click="eventView()" ng-if="!updateBtn">add event</button>
+             <button type="button" class="button-primary" style="margin-top: 1rem;" ng-click="updateEvent()" ng-if="updateBtn">Update event</button>
+
+           </div>				   
+           </form>
+           </div>
+           </div>
+  </div>

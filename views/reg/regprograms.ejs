@@ -1,0 +1,157 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Programs</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-hide="tab1">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="TBL1()">TwoBulls Legacy 2020</h4>
+    <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="TBL2()">TwoBulls Legacy 2021</h4>
+    <h4 class="well well-sm" style="background-color: #503219; color: white;" ng-click="MYS()">Maiden Yearling Slots 2021</h4>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="subtab1">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%" ng-init="handlerdata()">
+            <thead>
+              <tr>
+                <th>Memberno </th>
+                <th>Firstname</th>
+                <th>Lastname </th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Regno</th>
+                <th>Brand</th>
+                <th>Animal</th>
+                <th>Paid</th>
+                <th>Paylog</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="tb1 in tbl1">
+                <td><span ng-bind="tb1.memberno"></span></td>
+                <td><span ng-bind="tb1.firstname"></span></td>
+                <td><span ng-bind="tb1.lastname"></span></td>
+                <td><span ng-bind="tb1.phone"></span></td>
+                <td><span ng-bind="tb1.email"></span></td>
+                <td><span ng-bind="tb1.regno"></span></td>
+                <td><span ng-bind="tb1.brand"></span></td>
+                <td><span ng-bind="tb1.animal"></span></td>
+                <td><span ng-bind="tb1.paid"></span></td>
+                <td><span ng-bind="tb1.paylog_id"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="btn btn-color" ng-click="ExitTBL()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="subtab2">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%" ng-init="handlerdata()">
+            <thead>
+              <tr>
+                <th>Memberno </th>
+                <th>Firstname</th>
+                <th>Lastname </th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Regno</th>
+                <th>Brand</th>
+                <th>Animal</th>
+                <th>Paid</th>
+                <th>Paylog</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="tb2 in tbl2">
+                <td><span ng-bind="tb2.memberno"></span></td>
+                <td><span ng-bind="tb2.firstname"></span></td>
+                <td><span ng-bind="tb2.lastname"></span></td>
+                <td><span ng-bind="tb2.phone"></span></td>
+                <td><span ng-bind="tb2.email"></span></td>
+                <td><span ng-bind="tb2.regno"></span></td>
+                <td><span ng-bind="tb2.brand"></span></td>
+                <td><span ng-bind="tb2.animal"></span></td>
+                <td><span ng-bind="tb2.paid"></span></td>
+                <td><span ng-bind="tb2.paylog_id"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="btn btn-color" ng-click="ExitTBL()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="subtab3">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%" ng-init="handlerdata()">
+            <thead>
+              <tr>
+                <th>Member </th>
+                <th>Added By</th>
+                <th>Name </th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Regno</th>
+                <th>Price</th>
+                <th>Paid</th>
+                <th>Paylog</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="my in mys">
+                <td><span ng-bind="my.memberno"></span></td>
+                <td><span ng-bind="my.added_by"></span></td>
+                <td>{{my.firstname}} {{my.lastname}}</td>
+                <td><span ng-bind="my.phone"></span></td>
+                <td><span ng-bind="my.email"></span></td>
+                <td><span ng-bind="my.regno"></span></td>
+                <td><span ng-bind="my.totalfee"></span></td>
+                <td><span ng-bind="my.paid"></span></td>
+                <td><span ng-bind="my.paylog_id"></span></td>
+                <td>
+                  <i ng-if="my.paylog_id==null" class="btn btn-danger fa fa-trash" ng-click="DeleteMY(my)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%" ng-init="handlerdata()">
+            <thead>
+              <tr>
+                <th>Memberno</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Slots</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat = "my1 in mys1">
+                <td><span ng-bind="my1.memberno"></span></td>
+                <td><span ng-bind="my1.firstname"></span></td>
+                <td><span ng-bind="my1.lastname"></span></td>
+                <td><span ng-bind="my1.slots"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="btn btn-color" ng-click="ExitTBL()">Back</button>
+  </div>
+</div>

@@ -1,0 +1,888 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Register Animal</h2>
+</div>
+<div class="container" style="height:100%;width:90%;padding: 10px;" >
+  <form name="RegisterAnimal" enctype="multipart/form-data" ng-submit="tempAnimalRegister(reganimal)" ng-show="first">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+          <label class="profile_details_text">Member Name :</label>
+          <b><span ng-bind="memname"></span></b>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+          <label class="profile_details_text">Member Number :</label>
+          <b><span ng-bind="memnumber"></span></b>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="form-group">
+          <label class="profile_details_text">Animal Name</label>
+          <input type="text" ng-keyup="CheckAnimal(reganimal)" ng-model="reganimal.AnimalName" class="form-control" value=""  ng-required="true" autocomplete="new-name">
+        </div>
+        <b ng-if="animalname>0 || animalname1>0 && reganimal.sex=='NB' || reganimal.sex=='EB' || reganimal.sex=='AB'" ng-style="{color: 'red'}" ng-bind="message"></b>
+        <b ng-if="animalname==0 && animalname1==0 && reganimal.sex=='NB' || reganimal.sex=='EB' || reganimal.sex=='AB'" ng-style="{color: 'green'}" ng-bind="message"></b>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+        <div class="form-group">
+          <label class="profile_details_text">Birthdate</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" ng-model="reganimal.Birthdate" class="form-control txtDate" value=""  ng-required="true" autocomplete="new-name">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+        <div class="form-group">
+          <label class="profile_details_text">Sex</label>
+          <select class="form-control" ng-model="reganimal.sex" ng-init="reganimal.sex='NB'" ng-required="true">
+            <option ng-option value="NB">NB - Natural Bull</option>
+            <option ng-option value="NC">NC - Natural Cow</option>
+            <option ng-option value="AB">AB - AI Bull</option>
+            <option ng-option value="AC">AC - AI Cow</option>
+            <option ng-option value="EB">EB - Embryo Bull</option>
+            <option ng-option value="EC">EC - Embryo Cow</option>
+            <option ng-option value="NS">NS - Natural Stallion</option>
+            <option ng-option value="NM">NM - Natural Mare</option>
+            <option ng-option value="NG">NG - Natural Gelding</option>
+            <option ng-option value="AS">AS - AI Stallion</option>
+            <option ng-option value="AM">AM - AI Mare</option>
+            <option ng-option value="AG">AG - AI Gelding</option>
+            <option ng-option value="ES">ES - Embryo Stallion</option>
+            <option ng-option value="EM">EM - Embryo Mare</option>
+            <option ng-option value="EG">EG - Embryo Gelding</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+        <div class="form-group">
+          <label class="profile_details_text">Animal Identification No.(Brand No.).</label>
+          <input type="text" ng-keyup="CheckHerd(reganimal)" name="herd" ng-model="reganimal.animalidentification" class="form-control" value="" ng-required="true" autocomplete="new-name" maxlength="6">
+        </div>
+        <b ng-if="herd>0 || herd1>0" ng-style="{color: 'red'}" ng-bind="hmessage"></b>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 " ng-if="reganimal.sex=='NB' || reganimal.sex=='NC' || reganimal.sex=='AB' || reganimal.sex=='AC' || reganimal.sex=='EB'|| reganimal.sex=='EC'">
+        <div class="form-group">
+          <label class="profile_details_text">Horns</label>
+          <select class="form-control" ng-model="reganimal.horns" ng-required="true">
+            <option value="">--Select Horns--</option>
+            <option value="H">Horned</option>
+            <option value="D">Dehorned</option>
+            <option value="P">Polled</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <label>Main Color</label>
+        <select class="form-control" ng-model="reganimal.main" ng-required="true">
+          <option value="">--Select One--</option>
+          <option value="black">black</option>
+          <option value="white">white</option>
+          <option value="grey">grey</option>
+          <option value="yellow">yellow</option>
+          <option value="cream">cream</option>
+          <option value="orange">orange</option>
+          <option value="blue">blue</option>
+          <option value="red">red</option>
+          <option value="brown">brown</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <label>Secondary Color</label>
+        <select class="form-control" ng-model="reganimal.second">
+          <option value="">--Select One--</option>
+          <option value="black">black</option>
+          <option value="white">white</option>
+          <option value="grey">grey</option>
+          <option value="yellow">yellow</option>
+          <option value="cream">cream</option>
+          <option value="orange">orange</option>
+          <option value="blue">blue</option>
+          <option value="red">red</option>
+          <option value="brown">brown</option>
+        </select>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <label>Pattern</label>
+        <select class="form-control"  ng-model="reganimal.pattern">
+          <option value="">--Select One--</option>
+          <option value="spotted">spotted</option>
+          <option value="paint">paint</option>
+          <option value="brindle">brindle</option>
+          <option value="roan">roan</option>
+          <option value="speckled">speckled</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <label>Additional Markings</label>
+        <select class="form-control" ng-model="reganimal.markings">
+          <option value="">--Select One--</option>
+          <option value="blaze on face">blaze on face</option>
+          <option value="diamond on face">diamond on face</option>
+          <option value="rings around eyes">rings around eyes</option>
+          <option value="sock">sock</option>
+          <option value="socks">socks</option>
+          <option value="white tail tip">white tail tip</option>
+          <option value="black ears">black ears</option>
+        </select>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <label>Additional Description</label>
+        <input type="text" class="form-control" ng-model="reganimal.others">
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <label>Animal Picture</label>
+        <div class="imageWrapper">
+          <img class="image" src="https://kubalubra.is/wp-content/uploads/2017/11/default-thumbnail.jpg" width="200" height="200">
+        </div>
+        <div style="padding-top: 20px;" ng-if="posterTitle">
+          <label>{{posterTitle}}</label><span style="font-size: 18px;font-weight: bold;color: red;border: 1px solid black;padding: 0px 2px;margin-left: 10px;border-radius: 4px;cursor: pointer;" ng-click="removeImage()">x</span>
+        </div>  
+        <br>
+        <input type="file" class="form-control file-input" file-model="reganimal.image" onchange="angular.element(this).scope().fileName(this)">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-group">
+          <input type="radio" ng-model="reganimal.regincludingdna" checked="" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+          <label class="profile_details_text">Registration-Including DNA Testing</label>
+        </div>
+      </div>
+    </div>
+    <div class="row col-md-12">
+      <span style="color:black"><b style="color:red">Note : </b> Cataloging animals must now be done by sending in the form and samples to the office. 
+      The form can be found in the Registration menu under Download Forms..</span>
+    </div>
+    <div class=" row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="form-group">
+        <input type="checkbox" ng-model="reganimal.clones" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+        <label class="profile_details_text">This animal is not a clone,  clones must be registered through paper application</label>
+      </div>
+    </div>
+    <button ng-if="!reganimal.clones" type="button" class="btn btn-color" ng-disabled="disabledBtn">Next</button>
+    <button ng-if="reganimal.clones" type="submit" class="btn btn-color" ng-disabled="disabledBtn">Next</button>
+    <button class="btn btn-color" ng-click="ResetAddAnimal(reganimal)">Reset</button>
+  </form>
+  <div class="row col-md-12" ng-show="second">
+    <div class="row">
+      <div class="row">
+        <h3 class="text-center text-primary">Sire Details</h3>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <input type="radio" name="sire" checked="checked" ng-click="option='sregno'" ng-init="option='sregno'">
+        <label >Enter the registration number for each sire</label><br>
+        <input type="radio"  name="sire" ng-click="option='ssire';currentSireClick()">
+        <label >Select sires from your herd</label><br>
+        <input type="radio"  name="sire" ng-click="option='ssomeone'">
+        <label >Select sires from someone else's herd</label>
+      </div>
+    </div>
+    <div ng-show="option ==='sregno'">
+      <div class="col-md-12 row">
+        <div class="col-md-6">
+          <input type="number" class="form-control" placeholder="Enter Registration Number" ng-model="reganimal.txtreg">
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-color" ng-click="addRegNoSire(reganimal)">Add</button>
+        </div>
+      </div>
+    </div>
+    <div ng-show="option ==='ssire'">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 20px;">
+          <ul class="nav nav-tabs">
+            <li class="s" ng-class="{'active': activeTab =='a'}" ng-click="activeTab = 'a';currentSireClick()"><a >Currrent</a></li>
+            <li class="s" ng-class="{'active': activeTab =='b'}" ng-click="activeTab = 'b';previousSireClick()"><a >Previous </a></li>
+            <li class="s" ng-class="{'active': activeTab =='c'}" ng-click="activeTab = 'c';deceasedSireClick()"><a >Deceased </a></li>
+            <li class="s" ng-class="{'active': activeTab =='d'}" ng-click="activeTab = 'd';currentbreedingSireClick()"><a >Current Breeding </a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="currentsire" class="tab-pane fade in" ng-class="{'active': activeTab =='a'}">
+              <div class="container edge col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <!-- <button class="btn btn-color"  ng-click="currentSireClick()">View Animal</button> -->
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Add To Current Breeding List</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="cs in css">
+                            <td><span ng-bind="cs.RegNo"></span></td>
+                            <td><span ng-bind="cs.Animal"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="AddCurrentSireToBreeding(cs,reganimal)"></i>
+                            </td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="AddCurrentSireToList(cs,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="previoussire" class="tab-pane fade in" ng-class="{'active': activeTab =='b'}">
+              <div class="container col-md-12"  style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <!-- <button class="btn btn-color"  ng-click="previousSireClick()">View Sire</button> -->
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Owner</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="ps in pss">
+                            <td><span ng-bind="ps.RegNo"></span></td>
+                            <td><span ng-bind="ps.Animal"></span></td>
+                            <td><span ng-bind="ps.MemberName"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="AddPreviousSireToList(ps,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="deceasedsire" class="tab-pane fade in" ng-class="{'active': activeTab =='c'}">
+              <div class="container col-md-12"  style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <!-- <button class="btn btn-color"  ng-click="deceasedSireClick()">View Sire</button> -->
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="ds in dss">
+                            <td><span ng-bind="ds.RegNo"></span></td>
+                            <td><span ng-bind="ds.Animal"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="AddDeceasedSireToList(ds,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="currentbreedingsire" class="tab-pane fade in" ng-class="{'active': activeTab =='d'}">
+              <div class="container col-md-12"  style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <!-- <button class="btn btn-color"  ng-click="currentbreedingSireClick()">View Sire</button> -->
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <h4><b>This list will show up to 10 breeding sires. Animals can be added from the other tabs.</b></h4>
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="cb in cbs">
+                            <td><span ng-bind="cb.RegNo"></span></td>
+                            <td><span ng-bind="cb.Animal"></span></td>
+                            <td>
+                              <i class="fa fa-trash btn btn-danger" ng-click="RemoveSireFromBreedingList(cb,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-show="option ==='ssomeone'">
+      <div class="row">
+        <div class="col-md-12 row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Search for a member" ng-model="reganimal.name">
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-color" ng-click="addmemberSiere(reganimal); showtable3=false">Search</button>
+          </div>
+        </div>  
+      </div>
+      <br>
+      <div class="container col-md-12" ng-init="showtable2=false" ng-show="showtable2" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0;">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                <thead>
+                  <tr>
+                    <th>Last Name </th>
+                    <th>City</th>
+                    <th>Ranch</th>
+                    <th>State</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="someone in someonelist">
+                    <td><span ng-bind="someone.Lastname"></span></td>
+                    <td><span ng-bind="someone.city"></span></td>
+                    <td><span ng-bind="someone.RanchName"></span></td>
+                    <td><span ng-bind="someone.State"></span></td>
+                    <td>
+                      <i class="btn btn-success fa fa-plus" ng-click="AddSomeoneSiere(someone)"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-init="showtable3=false" ng-show="showtable3">
+        <ul class="nav nav-tabs">
+          <li class="s" ng-class="{'active': searchSire1 =='e'}" ng-click="searchSire1 = 'e'"><a>Currrent</a></li>
+          <li class="s" ng-class="{'active': searchSire1 =='f'}" ng-click="searchSire1 = 'f'"><a>Previous </a></li>
+          <li class="s" ng-class="{'active': searchSire1 =='g'}" ng-click="searchSire1 = 'g'"><a>Deceased </a></li>
+          <li class="s" ng-class="{'active': searchSire1 =='h'}" ng-click="searchSire1 = 'h'"><a>Current Breeding </a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="currentsireSearch" class="tab-pane fade in"  ng-class="{'active': searchSire1 =='e'}">
+            <div class="container edge col-md-12" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th ng-show="dontshow">MemberNumber</th>
+                          <th>RegNo</th>
+                          <th>Animal</th>
+                          <th>Add To Current Breeding List</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="scurrent in currentsomeone">
+                          <td ng-show="dontshow">{{scurrent.MemberNumber}}</td>
+                          <td>{{scurrent.RegNo}}</td>
+                          <td>{{scurrent.Animal}}</td>
+                          <td>
+                            <i class="btn btn-success fa fa-plus" ng-click="SomeoneAddCurrentSireToBreeding(scurrent,reganimal)"></i>
+                          </td>
+                          <td>
+                            <i class="btn btn-success fa fa-plus" ng-click="SomeoneAddCurrentSireToList(scurrent,reganimal)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="previoussireSearch" class="tab-pane fade in" ng-class="{'active': searchSire1 =='f'}">
+            <div class="container col-md-12" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th ng-show="dontshow">MemberNumber</th>
+                          <th>RegNo</th>
+                          <th>Animal</th>
+                          <th>Owner</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="sprevious in previoussomeone">
+                          <td ng-show="dontshow">{{sprevious.MemberNumber}}</td>
+                          <td><span ng-bind="sprevious.RegNo"></span></td>
+                          <td><span ng-bind="sprevious.Animal"></span></td>
+                          <td><span ng-bind="sprevious.MemberName"></span></td>
+                          <td>
+                            <i class="fa fa-plus btn btn-success" ng-click="SomeoneAddPreviousSireToList(sprevious,reganimal)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="deceasedsireSearch" class="tab-pane fade in" ng-class="{'active': searchSire1 =='g'}">
+            <div class="container col-md-12" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th ng-show="dontshow">MemberNumber</th>
+                          <th>RegNo</th>
+                          <th>Animal</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="sdeceased in deceasedsomeone">
+                          <td ng-show="dontshow">{{sdeceased.MemberNumber}}</td>
+                          <td><span ng-bind="sdeceased.RegNo"></span></td>
+                          <td><span ng-bind="sdeceased.Animal"></span></td>
+                          <td>
+                            <i class="fa fa-plus btn btn-success" ng-click="SomeoneAddDeceasedSireToList(sdeceased,reganimal)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="currentbreedingsireSearch" class="tab-pane fade in" ng-class="{'active': searchSire1 =='h'}">
+            <div class="container col-md-12" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <h4><b>This list will show up to 10 breeding sires. Animals can be added from
+                    the other tabs.</b></h4>
+                    <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th ng-show="dontshow">MemberNumber</th>
+                          <th>RegNo</th>
+                          <th>Animal</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="sbreeding in breedingsomeone">
+                          <td ng-show="dontshow"><span ng-bind="sbreeding.MemberNumber"></span></td>
+                          <td><span ng-bind="sbreeding.RegNo"></span></td>
+                          <td><span ng-bind="sbreeding.Animal"></span></td>
+                          <td>
+                            <i class="fa fa-trash btn btn-danger" ng-click="SomeoneRemoveSireFromBreedingList(sbreeding,reganimal)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding-top: 17px;">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding-left: 0;padding-right: 0;">
+          <button type="button" class="btn btn-color" ng-click="enableFirst()">Back</button>
+        </div> -->
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding-left: 0;">
+          <button type="button" class="btn btn-color" ng-click="enableThird()">Next</button>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding-left: 0;">
+          <!-- <button type="button" class="btn btn-color">Unknown Sire</button> -->
+        </div>
+      </div>
+  </div>
+  <div class="row col-md-12" ng-show="third">
+    <div class="row">
+      <div class="row">
+        <h3 class="text-center text-primary">Dam Details</h3>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <input type="radio" name="DAM" id="entertheregnumDAM" ng-click="option='dregno'">
+        <label>Enter the registration number for each Dam</label><br>
+        <input type="radio" name="DAM" id="selectsireformherdDAM" ng-click="option='dsire';currentDamClick()">
+        <label>Select dams from your herd</label><br>
+        <input type="radio" name="DAM" id="selectsireformsomeherdDAM" ng-click="option='dsomeone'">
+        <label>Select Dams from someone else's herd</label>
+      </div>
+    </div>
+    <div ng-show="option ==='dregno'">
+      <div class="row">
+        <div class="col-md-12 row">
+          <div class="col-md-6">
+            <input type="number" class="form-control" placeholder="Enter Registration Number" ng-model="reganimal.txtreg">
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-color" ng-click="showtable1();addRegNoDam(reganimal);AlertBox(reganimal)">Add</button>
+          </div>
+        </div>  
+      </div>
+      <div class="alert alert-danger alert-dismissible" ng-if="counter>0 && alertEnabled">
+        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <p>You have entered a cow from <span ng-bind="ranch1"></span>. You must submit an authorization letter with your samples.</p>
+        <br>
+        <a class="text-center" target="_blank" href="http://34.66.91.118/uploads/AUTHORIZATION-TO-REGISTER-OFFSPRING.pdf">Download Dam Authorization Form</a>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="container col-md-12" ng-show="tablehide1" style="height:100%;padding: 10px; width: 100%;">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                    <thead>
+                      <tr>
+                        <th>RegNo</th>
+                        <th>Animal</th>
+                        <th>Sex</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <i class="fa fa-trash btn btn-danger"></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-6">
+          <button type="button" class="btn btn-color" ng-click="showtable1();addRegNoDam(reganimal);AlertBox(reganimal)">Add</button>
+        </div> -->
+      </div>
+    </div>
+    <div ng-show="option ==='dsire'">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 20px;">
+          <ul class="nav nav-tabs">
+            <li class="s" ng-class="{'active': activeDam ==1}" ng-click="activeDam = 1;currentDamClick()"><a >Currrent</a></li>
+            <li class="s" ng-class="{'active': activeDam ==2}" ng-click="activeDam = 2;previousDamClick()"><a >Previous </a></li>
+            <li class="s" ng-class="{'active': activeDam ==3}" ng-click="activeDam = 3;deceasedDamClick()"><a >Deceased </a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="currentsireDAM" class="tab-pane fade in" ng-class="{'active': activeDam ==1}">
+              <div class="container edge col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <!-- <button class="btn btn-color"  ng-click="currentDamClick()">View Dam</button> -->
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="cd in cds">
+                            <td><span ng-bind="cd.RegNo"></span></td>
+                            <td><span ng-bind="cd.Animal"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="AddCurrentDamToList(cd,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="previoussireDAM" class="tab-pane fade in" ng-class="{'active': activeDam ==2}">
+              <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <!-- <button class="btn btn-color"  ng-click="previousDamClick()">View Dam</button> -->
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Owner</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="pd in pds">
+                            <td><span ng-bind="pd.RegNo"></span></td>
+                            <td><span ng-bind="pd.Animal"></span></td>
+                            <td><span ng-bind="pd.MemberName"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="AddPreviousDamToList(pd,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="deceasedsireDAM" class="tab-pane fade in" ng-class="{'active': activeDam ==3}">
+              <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <!-- <button class="btn btn-color"  ng-click="deceasedDamClick()">View Dam</button> -->
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="dd in dds">
+                            <td><span ng-bind="dd.RegNo"></span></td>
+                            <td><span ng-bind="dd.Animal"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="AddDeceasedDamToList(dd,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-show="option ==='dsomeone'">
+      <div class="row">
+        <div class="col-md-12 row">
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Search for a member" ng-model="reganimal.damname">
+          </div>
+          <div class="col-md-6">
+            <button type="button" class="btn btn-color" ng-click="addmemberDam(reganimal); showtable4=false">Search</button>
+          </div>
+        </div>  
+      </div>
+      <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 10;padding: 0;margin-top: 20px;" ng-init="showtable2=false" ng-show="showtable5">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                <thead>
+                  <tr>
+                    <th>Last Name </th>
+                    <th>City</th>
+                    <th>Ranch</th>
+                    <th>State</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="dsomeone in dsomeonelist">
+                    <td><span ng-bind="dsomeone.Lastname"></span></td>
+                    <td><span ng-bind="dsomeone.city"></span></td>
+                    <td><span ng-bind="dsomeone.RanchName"></span></td>
+                    <td><span ng-bind="dsomeone.State"></span></td>
+                    <td>
+                      <i class="btn btn-success fa fa-plus" ng-click="AddSomeoneDam(dsomeone)"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div ng-init="showtable4=false" ng-show="showtable4">
+        <ul class="nav nav-tabs">
+          <li class="s" ng-class="{'active': activeDam1 ==4}" ng-click="activeDam1 = 4"><a >Currrent</a></li>
+          <li class="s" ng-class="{'active': activeDam1 ==5}" ng-click="activeDam1 = 5"><a >Previous </a></li>
+          <li class="s" ng-class="{'active': activeDam1 ==6}" ng-click="activeDam1 = 6"><a >Deceased </a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="currentsireSearchDAM" class="tab-pane fade in" ng-class="{'active': activeDam1 ==4}">
+            <div class="container edge col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th ng-show="dontshow">MemberNumber</th>
+                          <th>RegNo</th>
+                          <th>Animal</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="dcurrent in dcurrentsomeone">
+                          <td ng-show="dontshow"><span ng-bind="scurrent.MemberNumber"></span></td>
+                          <td><span ng-bind="dcurrent.RegNo"></span></td>
+                          <td><span ng-bind="dcurrent.Animal"></span></td>
+                          <td>
+                            <i class="btn btn-success fa fa-plus" ng-click="SomeoneAddCurrentDamToList(dcurrent,reganimal);AlertBox1()"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="previoussireSearchDAM" class="tab-pane fade in" ng-class="{'active': activeDam1 ==5}">
+            <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th ng-show="dontshow">MemberNumber</th>
+                          <th>RegNo</th>
+                          <th>Animal</th>
+                          <th>Owner</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="dprevious in dprevioussomeone">
+                          <td ng-show="dontshow"><span ng-bind="dprevious.MemberNumber"></span></td>
+                          <td><span ng-bind="dprevious.RegNo"></span></td>
+                          <td><span ng-bind="dprevious.Animal"></span></td>
+                          <td><span ng-bind="dprevious.MemberName"></span></td>
+                          <td>
+                            <i class="fa fa-plus btn btn-success" ng-click="SomeoneAddPreviousDamToList(dprevious,reganimal)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="deceasedsireSearchDAM" class="tab-pane fade in" ng-class="{'active': activeDam1 ==6}">
+            <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th ng-show="dontshow">MemberNumber</th>
+                          <th>RegNo</th>
+                          <th>Animal</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="ddeceased in ddeceasedsomeone">
+                          <td ng-show="dontshow"><span ng-bind="ddeceased.MemberNumber"></span></td>
+                          <td><span ng-bind="ddeceased.RegNo"></span></td>
+                          <td><span ng-bind="ddeceased.Animal"></span></td>
+                          <td>
+                            <i class="fa fa-plus btn btn-success" ng-click="SomeoneAddDeceasedDamToList(ddeceased,reganimal)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-danger alert-dismissible" ng-if="cou==true;">
+      <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <p>You have entered a cow from <span ng-bind="ranch1"></span>. You must submit an authorization letter with your samples.</p>
+      <br>
+      <a class="text-center" target="_blank" href="http://members.americanbuckingbull.com/Authorization%20to%20Register%20Offspring.pdf">Download Dam Authorization Form</a>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding-top: 17px;">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding-left: 0;padding-right: 0;">
+        <button type="button" class="btn btn-color" ng-click="enableSecond()">Back</button>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="padding-left: 0;">
+        <button type="button" class="btn btn-color" ng-click="redirect()">Next</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="row col-md-12" ng-show="second || third">
+    <hr>
+    <div class="container col-md-12" style="height:100%;padding: 10px; width: 100%;">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>RegNo</th>
+                  <th>Animal</th>
+                  <th>Sex</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-if="ssrs" ng-repeat="ssr in ssrs">
+                  <td><span ng-bind="ssr.RegNo"></span></td>
+                  <td><span ng-bind="ssr.Animal"></span></td>
+                  <td><span ng-bind="ssr.sex"></span></td>
+                  <td>
+                    <i class="fa fa-trash btn btn-danger" ng-click="RemoveSSR(ssr,reganimal)"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

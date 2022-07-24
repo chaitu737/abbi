@@ -1,0 +1,54 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Group Payments</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <form class="form-group">
+    <div>
+      <label>Name</label>
+      <label>Member Name</label>
+      <select class="form-control" ng-model="gcpay.number" ng-init="updatemember()">
+        <option ng-repeat="member in members" value="{{member.MemberNumber}}">{{member.MemberNumber}}- {{member.MemberName}}</option>
+      </select>
+      <label>Description</label>
+      <textarea class="form-control" ng-model="gcpay.description"></textarea>
+      <label>Open Date</label>
+      <input type="date" class="form-control" ng-model="gcpay.odate">
+      <label>Close Date</label>
+      <input type="date" class="form-control" ng-model="gcpay.cdate">
+      <label>Adobe Link</label>
+      <input type="link" class="form-control" ng-model="gcpay.link">
+      <br>
+      <button class="btn btn-color" ng-click="PaymentGCLink(gcpay)">Send Payment Link</button>
+    </div>
+  </form>
+  <br>
+  <br>
+  <!-- <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="">
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+              <td><span></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div> -->
+</div>

@@ -1,0 +1,135 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Add Members</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 20px;">
+  <form ng-submit="AddMemberData(newmember)">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center" style="color:#2f2fdc;">Personal Details</h3>
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Inactive<input type="checkbox" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}" ng-model="newmember.active"></label>
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Alternate Account<input type="checkbox" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}" ng-model="newmember.alternate"></label>
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>First Name</label>
+        <input type="text" class="form-control" placeholder="Enter your first name." ng-model="newmember.fname" ng-required="true">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Last Name</label>
+        <input type="text" class="form-control" placeholder="Enter your last name." ng-model="newmember.lname" ng-required="true">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Ranch</label>
+        <input type="text" class="form-control" placeholder="Enter your last name." ng-model="newmember.ranch">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" placeholder="Enter your email." ng-model="newmember.email">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Birth Date</label>
+        <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" placeholder="Enter your last name." ng-model="newmember.bdate">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Type</label>
+        <select class="form-control" ng-model="newmember.type" ng-change="ChangeType()" required="">
+          <option value="">--Select one--</option>
+          <option value="Lifetime">Lifetime</option>
+          <option value="Standard">Standard</option>
+          <option value="Junior">Junior</option>
+          <option value="ABHR">American Bucking Horse(ABHR)</option>
+          <option value="Media">Media</option>
+          <option value="Premium">Premium</option>
+          <option value="USBBA Member">USBBA Member</option>
+          <option value="Inactive">Inactive</option>
+          <option value="Non Member">Non Member</option>
+          <option value="Veterinarian">Veterinarian</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center" style="color:#2f2fdc;">Contact Information</h3>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Address</label>
+          <input type="text" placeholder="Address" class="form-control" ng-model="newmember.address" ng-required="true">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>City</label>
+          <input type="text" placeholder="City" class="form-control" ng-model="newmember.city" ng-required="true">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>State</label>
+          <input type="text" placeholder="State" class="form-control" ng-model="newmember.state" ng-required="true">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Zip Code</label>
+          <input type="text" placeholder="Zip Code" class="form-control" ng-model="newmember.zip" ng-required="true">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Country</label>
+          <select class="form-control" ng-model="newmember.country" required="">
+            <option value="">--Select Country--</option>
+            <option value="US">UNITED STATES</option>
+            <option value="AU">AUSTRALIA</option>
+            <option value="BR">BRAZIL</option>
+            <option value="CA">CANADA</option>
+            <option value="MX">MEXICO</option>
+            <option value="NZ">NEW ZEALAND</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Phone</label>
+          <input type="tel" placeholder="Phone" class="form-control" ng-model="newmember.phone">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Alt Phone</label>
+          <input type="tel" placeholder="Alt phone" class="form-control" ng-model="newmember.altphone">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Office</label>
+          <input type="tel" placeholder="Office Phone" class="form-control" ng-model="newmember.office">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Fax</label>
+          <input type="tel" placeholder="FAX" class="form-control" ng-model="newmember.fax">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Website</label>
+          <input type="url" placeholder="Website" class="form-control" ng-model="newmember.website">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group" ng-if="isEnabled">
+          <label>Join Date</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="newmember.jdate">
+        </div>
+        <div ng-if="newmember.type!='Lifetime' && newmember.type!='Veterinarian'" class="col-sm-12 form-group">
+          <label>Due Date</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="newmember.ddate">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Paid Date</label>
+          <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="newmember.pdate"> 
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>USDA Premise ID(PIN)</label>
+          <input type="text" class="form-control" ng-model="newmember.pin">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Notes</label>
+          <textarea class="form-control" ng-model="newmember.note"></textarea>
+        </div>
+      </div>
+    </div style="white-space: nowrap;">
+    <button class="btn btn-color">Save</button>
+    <input class="btn btn-color" ng-click="ResetAddMember(newmember)" type="reset" value="Reset">
+  </form>
+</div>

@@ -1,0 +1,369 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Online Store</h2>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-init="OnlineStore();shipDetails=false;emptyCart()"
+  ng-show="onlineproducts">
+  <div class="table-responsive">
+    <table class="table table-bordered" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"
+      width="100%">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th ng-show="false">Extra</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="item in items">
+          <td class="text-center">
+            <img src="http://members.americanbuckingbull.com/Members/OnlineStore_Images/{{item.Picture}}" alt="Item"
+              style="height:100px; width:100px">
+            <br>
+            <a href="http://members.americanbuckingbull.com/Members/OnlineStore_Images/{{item.Picture}}" ,
+              target="_blank">View</a>
+          </td>
+          <td><span ng-bind="item.ProductDescription"></span></td>
+          <td><span ng-bind="item.Price | currency"></span></td>
+          <td ng-show="false">
+            <input type="text"  ng-model="item.Quantity">
+          </td>
+          <td class="text-center">
+            <input type="number" style="width: 30%;padding: 5px;border-radius: 4px;" ng-model="item.Quantity"/>
+            <button class="btn btn-color" ng-click="AddToCart(item,items);">Add to Cart</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-center">
+    <button title="Shopping Cart" type="submit"
+      ng-click="ShowCartTable();carttable1=true;carttable=true;onlineproducts=false;"
+      class="fa fa-shopping-cart fa-lg btn btn-warning" style="background-color: #503219 !important;border-color: #503219 !important;
+      padding: 10px;"><span style="font-size: 19px;padding-left: 6px;">Proceed to pay</span>
+    
+    </button>
+  </div>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-show="carttable1">
+  <table class="table table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"
+    width="100%">
+    <thead>
+      <tr>
+        <th>Product Code</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Item Price</th>
+        <th>Total Price</th>
+        <th>Remove / Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="product in products">
+        <td><span ng-bind="product.ProductCode"></span></td>
+        <td><span ng-bind="product.Product"></span></td>
+        <td>
+          <input type="text" class="form-control" 
+            ng-model="product.Qty">
+            
+        </td>
+        <td><span ng-bind="product.Price | currency"></span></td>
+        <td ng-bind="product.Qty * product.Price | currency"></td>
+        <td>
+          <i class="fa fa-trash btn btn-danger" ng-click="RemoveFromCart(product)"></i>
+          <button ng-click="UpdateCart(product);ShowCartTable(product)" style="background-color: #503219;color: white;border-radius: 4px;">Update</button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="text-right" colspan="4">Handling</td>
+        <td><span ng-bind="handling | currency"></span></td>
+      </tr>
+      <tr>
+        <td class="text-right" colspan="4">Total</td>
+        <td><span ng-bind="amount | currency"></span></td>
+      </tr>
+    </tfoot>
+  </table>
+  <br>
+  <div class="col-md-8">
+  </div>
+  <div class="text-right" style="white-spacing:nowrap">
+    <button title="Back" class="btn btn-color" ng-click="carttable1=false;carttable=false;address=false;onlineproducts=true;">Back</button>
+    <button title="Next" type="submit" class="btn btn-color"
+      ng-click="HidePayment();BillDetails();getParcels(products)">Next</button>
+  </div>
+</div>
+<div ng-show="address" class="container border" style="height:100%;width:90%;padding: 10px;">
+  <form class="form-group row col-md-12" name="BillingInfo" value="bill"
+    ng-submit="saveBillingInfo(bills);ShowCartPayment()">
+    <div>
+      <h3 class="text-primary">Billing Information</h3>
+      <span>This must be the same address as used on the credit card statement</span>
+      <div class="col-md-6">
+        <label>First Name</label>
+        <input type="text" class="form-control" ng-model="bills.FirstName" ng-required="true" autocomplete="new-name">
+        <label>Last Name</label>
+        <input type="text" class="form-control" ng-model="bills.LastName" ng-required="true" autocomplete="new-name">
+        <label>Email</label>
+        <input type="text" class="form-control" ng-model="bills.Email" ng-required="true" autocomplete="new-name">
+        <label>Phone</label>
+        <input type="text" class="form-control" name="phone" ng-model="bills.Phone" ng-required="true"
+          autocomplete="new-name">
+        <span style="color:red" ng-show="BillingInfo.phone.$error.minlength">Enter Valid Phone Number</span>
+        <span style="color:red" ng-show="BillingInfo.phone.$error.maxlength">Enter Valid Phone Number</span>
+        <label>Address</label>
+        <textarea class="form-control" ng-model="bills.Address" ng-required="true" autocomplete="new-name"></textarea>
+      </div>
+      <div class="col-md-6">
+        <label>City</label>
+        <input type="text" class="form-control" ng-model="bills.City" ng-required="true" autocomplete="new-name">
+        <label>State</label>
+        <input type="text" class="form-control" ng-model="bills.State" ng-required="true" autocomplete="new-name">
+        <label>Zip Code</label>
+        <input type="text" class="form-control" ng-model="bills.Zip" ng-required="true" autocomplete="new-name">
+        <label>Country</label>
+        <input type="text" class="form-control" ng-model="bills.Country" ng-required="true" autocomplete="new-name">
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-3">
+          <h3 class="text-primary">Shipping Information</h3>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <label><input type="checkbox" ng-model="sameasabove" ng-change="SameAddress()">Same as billing address</label>
+        </div>
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-6">
+          <label>First Name</label>
+          <input type="text" class="form-control" ng-model="bills.FirstName1" ng-required="true"
+            autocomplete="new-name">
+          <label>Last Name</label>
+          <input type="text" class="form-control" ng-model="bills.LastName1" ng-required="true" autocomplete="new-name">
+          <label>Address</label>
+          <textarea class="form-control" ng-model="bills.Address1" ng-required="true"
+            autocomplete="new-name"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label>City</label>
+          <input type="text" class="form-control" ng-model="bills.City1" ng-required="true" autocomplete="new-name">
+          <label>State</label>
+          <input type="text" class="form-control" ng-model="bills.State1" ng-required="true" autocomplete="new-name">
+          <label>Zip Code</label>
+          <input type="text" class="form-control" ng-model="bills.Zip1" ng-required="true" autocomplete="new-name">
+          <label>Country</label>
+          <input type="text" class="form-control" ng-model="bills.Country1" ng-required="true" autocomplete="new-name">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <br>
+      <button type="button" class="btn btn-color"
+        ng-click="carttable=true;carttable1=true;address=false;shipDetails=false;sameasabove=false;">Back</button>
+      <input class="btn btn-color" type="submit" value="Next">
+    </div>
+  </form>
+</div>
+<div ng-show="payment" class="container" style="height:100%;width:90%;padding: 50px;">
+  <div class="row">
+    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+      <div class="row">
+        <label>Select Carrier</label><br />
+        <input type="radio" id="usps" ng-model="bills.carrier" value="usps" ng-click="getValues('usps',bills)">
+        <label for="usps" >USPS</label><br>
+        <input type="radio" id="fedex" ng-model="bills.carrier" value="fedex" ng-click="getValues('fedex',bills)">
+        <label for="fedex">FEDEX</label><br>
+
+      </div>
+      <div class="row">
+        <label>Shipping Type</label>
+        <select name="type" class="form-control" ng-model="shippingValue"
+          ng-change="CalulateWithShipping(shippingValue)">
+          <option ng-repeat="shipobj in shippingValues" value="{{shipobj.amount}}">{{shipobj.servicelevel.name}} days -
+            ${{shipobj.amount}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+      <label>Payment Type</label>
+      <select name="type" ng-model="PaymentType.Payment" ng-change="CardDetails(PaymentType);ShowCartTable()"
+        class="form-control">
+        <option ng-option selected="selected" value="">-Select One-</option>
+        <option ng-option value="VI">Visa</option>
+        <option ng-option value="MC">Master Card</option>
+        <option ng-option value="AMEX">American Express</option>
+        <option ng-option value="Discover">Discover</option>
+        <option ng-option value="eCheck">e-Check</option>
+      </select>
+    </div>
+
+    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+      <div class="row">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="padding-left:0">
+          <label>Store Total :</label>
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+          <label ng-bind="amount1 | currency"></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="padding-left:0">
+          <label>Shipping :</label>
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+          <label ng-bind="shipping | currency"></label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="padding-left:0">
+          <label>Handling :</label>
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+          <label ng-bind="handling | currency"></label>
+        </div>
+      </div>
+      <div class="row" ng-if="bills.carrier == 'usps'">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="padding-left:0">
+          <label>Packaging :</label>
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+          <label ng-bind="envelope | currency"></label>
+        </div>
+      </div>
+      
+      <div class="row" ng-if="PaymentType.Payment == 'eCheck'">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="padding-left:0">
+          <label>Discount :</label>
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+          <label ng-bind="handling | currency"></label>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7" style="
+        padding: 0;
+    ">
+          <hr style="
+        margin-top: 6px;
+        margin-bottom: 6px;
+        width: 100%;
+    ">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" style="padding-left:0">
+          <label>Total :</label>
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+          <label ng-bind="amount | currency"></label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2"></div>
+    <div
+      ng-if="PaymentType.Payment == 'undefined' ||PaymentType.Payment == '-1' || PaymentType.Payment == 'VI' || PaymentType.Payment == 'MC' || PaymentType.Payment == 'AMEX' || PaymentType.Payment == 'Discover' || PaymentType.Payment == 'Check' ||  PaymentType.Payment == 'Money Order' || PaymentType.Payment == 'Cashier Check'">
+      <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Credit Card No</label>
+          <input type="number" ng-model="PaymentType.cc" required placeholder="Credit Card No." class="form-control">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Exp. (MM/YY)</label>
+          <input type="text" ng-model="PaymentType.expire" required placeholder="Exp. (MM/YY)" class="form-control">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Sec Code</label>
+          <input type="number" ng-model="PaymentType.cvv" required placeholder="Sec Code" class="form-control">
+        </div>
+        <div ng-if="PaymentType.cc!=null" class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="
+        position: relative;
+        top: 23px;
+    ">
+          <i class="fa fa-trash btn btn-danger" ng-click="DeleteCard()"></i>
+        </div>
+      </div>
+    </div>
+    <div ng-if="PaymentType.Payment == 'Auth.Net'">
+      <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Credit Card No</label>
+          <input type="number" ng-model="PaymentType.cc" required placeholder="Credit Card No." class="form-control">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Exp. (MM/YY)</label>
+          <input type="text" ng-model="PaymentType.expire" required placeholder="Exp. (MM/YY)" class="form-control">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Sec Code</label>
+          <input type="number" ng-model="PaymentType.cvv" required placeholder="Sec Code" class="form-control">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Auth No.</label>
+          <input type="number" ng-model="PaymentType.auth" required placeholder="Auth No." class="form-control">
+        </div>
+      </div>
+    </div>
+    <div ng-if="PaymentType.Payment == 'eCheck'">
+      <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label> Account No</label>
+          <input type="number" ng-model="PaymentType.acno" required placeholder="Account No." class="form-control">
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label>Account Holder's Name</label>
+          <input type="text" ng-model="PaymentType.acname" required placeholder="Account Holder's Name.."
+            class="form-control">
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label>Account Type</label>
+          <select ng-model="PaymentType.actype" required class="form-control">
+            <option value="checking"> Checking</option>
+            <option value="savings"> Savings</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10" style="float: right;">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label>ABA Routing No.</label>
+          <input type="number" ng-model="PaymentType.aba" required placeholder="ABA Routing No." class="form-control">
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label>Bank Name</label>
+          <input type="text" ng-model="PaymentType.bank" required placeholder="Bank Name.." class="form-control">
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div>
+    <button class="btn btn-color" ng-click="CartPayment(PaymentType,amount,bills,tempid,products,handling)">Pay</button>
+    <button class="btn btn-color"
+      ng-click="carttable=false;carttable1=false;address=false;payment=false;shipDetails=false;onlineproducts=true">Exit</button>
+  </div>
+</div>
+<div ng-show="shipDetails" class="container" style="height:100%;width:90%;padding: 50px;">
+  <h3 style="text-align:center;color: black;font-weight: 600;">Your Order had been shipped!</h3>
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <h5 style="color: black;font-weight: 600;">Download your label here :</h5><br />
+      <a href="{{shippingTrack.label_url}}" target="_blank" style="
+  background-color: #d8ceb9!important;
+"><button class="btn btn-success">Download Label</button></a><br /><br /><br />
+      <h5 style="color: black;font-weight: 600;">Tracking URL :</h5><br />
+      <a href="{{shippingTrack.tracking_url_provider}}" target="_blank" style="background-color: #d8ceb9!important;
+"><button class="btn btn-success">Track URL</button></a>
+    </div>
+
+  </div>
+</div>

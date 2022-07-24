@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sandeep Siva">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta name="keywords" content="bull,futurity, classic, American,bucking,events,schedule,calendar,line-up,lineup" />
+  <meta name="description" content="American Bucking Bull, Inc. is the leading bucking cattle DNA registry in the world. ABBI holds and sanctions competitive events for Classic (3 and 4-year-old) and Futurity (2-year-old) bucking bulls, along with other competition formats.  ABBI paid out over $1.7 million dollars in 2010. Over $800,000 was paid out in prize money to ABBI bulls at the 2010 Las Vegas ABBI Finals alone." />
+  <title>
+    American Bucking Bull, Inc. | Register
+  </title>
+  <!-- Favicons -->
+  <link href="images/about/icon.jpg" rel="icon">
+  <link rel="stylesheet" type="text/css" href="angular/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/reg.css">
+  <link href="angular/css/font.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="angular/css/font-awesome.min.css">
+</head>
+<body>
+  <!-- MultiStep Form -->
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <form id="msform">
+        <!-- progressbar -->
+        <ul id="progressbar">
+          <li class="active">Register Animal</li>
+          <li>Super Stakes/Revolution</li>
+          <li>Payment</li>
+        </ul>
+        <!-- fieldsets -->
+        <fieldset>
+          <h2 class="fs-title">Personal Details</h2>
+          <input type="text" name="birthday" placeholder="Birthday"/>
+          <input type="text" name="parentage" placeholder="Parentage"/>
+          <input type="text" name="brand" placeholder="Brand/Herd No."/>
+          <textarea name="description" placeholder="Description"></textarea>
+          <select name="parentage" onchange="yesnoCheck(this);">
+            <option>--Parentage--</option>
+            <option value="dam">Dam</option>
+            <option value="sire">Sire</option>
+          </select>
+          <input id="ifYes" style="display: none;" type="text" name="id" placeholder="Input Voucher Number" /><br />
+          <input type="text" name="name" placeholder="Name"/>
+          <input type="text" name="eid" placeholder="EID Tag"/>
+          <input type="text" name="sex" placeholder="Sex"/>
+          <input type="button" name="next" class="next action-button" value="Next"/>
+        </fieldset>
+        <fieldset>
+          <h2 class="fs-title">Super Stakes/Revolution</h2>
+          <label><input type="checkbox" name="stack" value="super_stakes"/>Super Stakes</label>
+          <label><input type="checkbox" name="stack" value="revolution"> Revolution</label>
+          <br>
+          <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+          <input type="button" name="next" class="next action-button" value="Next"/>
+        </fieldset>
+        <fieldset>
+          <div id="Checkout" class="inline">
+            <h1>Pay Invoice</h1>
+            <div class="card-row">
+              <span class="visa"></span>
+              <span class="mastercard"></span>
+              <span class="amex"></span>
+              <span class="discover"></span>
+            </div>
+            <form>
+              <div class="form-group">
+                <label for="PaymentAmount">Payment amount</label>
+                <div class="amount-placeholder">
+                  <span>$</span>
+                  <span>500.00</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label or="NameOnCard">Name on card</label>
+                <input id="NameOnCard" class="form-control" type="text" maxlength="255"></input>
+              </div>
+              <div class="form-group">
+                <label for="CreditCardNumber">Card number</label>
+                <input id="CreditCardNumber" class="null card-image form-control" type="text"></input>
+              </div>
+              <div class="expiry-date-group form-group">
+                <label for="ExpiryDate">Expiry date</label>
+                <input id="ExpiryDate" class="form-control" type="text" placeholder="MM / YY" maxlength="7"></input>
+              </div>
+              <div class="security-code-group form-group">
+                <label for="SecurityCode">Security code</label>
+                <div class="input-container" >
+                  <input id="SecurityCode" class="form-control" type="text" ></input>
+                  <i id="cvc" class="fa fa-question-circle"></i>
+                </div>
+                <div class="cvc-preview-container two-card hide">
+                  <div class="amex-cvc-preview"></div>
+                  <div class="visa-mc-dis-cvc-preview"></div>
+                </div>
+              </div>
+              <div class="zip-code-group form-group">
+                <label for="ZIPCode">ZIP/Postal code</label>
+                <div class="input-container">
+                  <input id="ZIPCode" class="form-control" type="text" maxlength="10"></input>
+                  <a tabindex="0" role="button" data-toggle="popover" data-trigger="focus" data-placement="left" data-content="Enter the ZIP/Postal code for your credit card billing address."><i class="fa fa-question-circle"></i></a>
+                </div>
+              </div>
+              <button id="PayButton" class="btn btn-block btn-success submit-button" type="submit">
+                <span class="submit-button-lock"></span>
+                <span class="align-middle">Pay</span>
+              </button>
+            </form>
+          </div>
+          <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+          <input type="submit" name="submit" class="submit action-button" value="Submit"/>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <!-- /.MultiStep Form -->
+</body>
+<script type="text/javascript" src="angular/js/jquery.min.js"></script>
+<script type="text/javascript" src="angular/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="angular/js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="javascripts/reg.js"></script>
+<script>
+function yesnoCheck(that) {
+  if (that.value == "dam") {
+    document.getElementById("ifYes").style.display = "block";
+  }
+  else if (that.value == "sire") {
+    document.getElementById("ifYes").style.display = "block";
+  } else {
+    document.getElementById("ifYes").style.display = "none";
+  }
+}
+</script>
+</html>

@@ -1,0 +1,1287 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Holding Pen</h2>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-init="ShowRegAnimalData()">
+  <!-- default screen in holding pen -->
+  <div ng-hide="showcheckout">
+    <button type="button" class="btn btn-color" ng-click="redirectTo()">Add Animal</button>
+    <button type="button" class="btn btn-color" ng-click="ShowCheckOut();EidInfo();ShowNextPanel()">Checkout</button>
+    <br>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th ng-show="false">RegNo</th>
+                <th>Checkout</th>
+                <th>Animal</th>
+                <th>Birthdate</th>
+                <th>Herd#</th>
+                <th>Sex</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="anidetails in animdetails">
+                <td ng-show="false"><span ng-bind="anidetails.RegNoID"></span></td>
+                <td>
+                  <input type="checkbox" ng-model="anidetails.Completed" ng-true-value="{{ 0 | json }}" ng-false-value="{{ 2 | json }}" ng-change="CheckHoldingPen(anidetails)">
+                </td>
+                <td><span ng-bind="anidetails.Animal"></span></td>
+                <td><span ng-bind="anidetails.Birthdate | date : 'MM/dd/yyyy'"></span></td>
+                <td><span ng-bind="anidetails.PrivateHerd"></span></td>
+                <td><span ng-bind="anidetails.TypeService"></span></td>
+                <td style="white-space: nowrap;">
+                  <i title="Edit" class="btn btn-warning fa fa-edit" ng-click="editHoldingPen(anidetails); ShowListInNextPage(anidetails);showpenClick()"></i>
+                  <i title="Delete" class="btn btn-danger fa fa-trash" ng-click="RemoveHoldingPen(anidetails)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- edit animal screen -->
+  <div class="container" style="height:100%;width:90%;padding: 10px;" ng-show="showpen">
+    <div class="row col-md-12" ng-show="onee">
+      <form name="UpdateAnimal" ng-submit="UpdateAnimalDetails(reganimal)">
+        <div class="row">
+          <div class="row">
+            <h3 class="text-center text-primary">Animal Details</h3>
+          </div> 
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <label class="profile_details_text"> Animal Photo</label><br/>
+              <img src ="../../../uploads/animals/{{reganimal.picture}}" style="width:161px;">
+              <div style="padding-top: 20px;" ng-if="posterTitle">
+                <label>{{posterTitle}}</label><span style="font-size: 18px;font-weight: bold;color: red;border: 1px solid black;padding: 0px 2px;margin-left: 10px;border-radius: 4px;cursor: pointer;" ng-click="removeImage1()">x</span>
+              </div>
+              <br/>
+              <input type="file" class="form-control file-input" file-model="reganimal.image" style="background-color: #d8ceb9;">
+            </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label class="profile_details_text"> Animal Name</label>
+              <input type="text" ng-keyup="CheckAnimal(reganimal)" ng-model="reganimal.ANIMAL" class="form-control" value="" ng-required="true" autocomplete="new-name">
+            </div>
+            <b ng-if="animalname>0" ng-style="{color: 'red'}" ng-bind="message"></b>
+            <b ng-if="animalname==0" ng-style="{color: 'green'}" ng-bind="message"></b>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+            <div class="form-group">
+              <label class="profile_details_text">Birthdate</label>
+              <b><span ng-bind="reganimal.unBd" ng-hide="showdate" ng-click="showdate=true" class="form-control"></span></b>
+              <input type="text"  ng-model="reganimal.unBd" ng-show="showdate" class="form-control" valueAsDate="{{reganimal.unBd}}">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+            <div class="form-group">
+              <label class="profile_details_text">Sex</label>
+              <select class="form-control" ng-model="reganimal.TypeService" ng-required="true" autocomplete="new-name">
+                <option value="">--Select Sex--</option>
+                <option value="NB">NB - Natural Bull</option>
+                <option value="NC">NC - Natural Cow</option>
+                <option value="AB">AB - AI Bull</option>
+                <option value="AC">AC - AI Cow</option> 
+                <option value="EB">EB - Embryo Bull</option>
+                <option value="EC">EC - Embryo Cow</option>
+                <option value="NS">NS - Natural Stallion</option>
+                <option value="NM">NM - Natural Mare</option>
+                <option value="NG">NG - Natural Gelding</option>
+                <option value="AS">AS - AI Stallion</option>
+                <option value="AM">AM - AI Mare</option>
+                <option value="AG">AG - AI Gelding</option>
+                <option value="ES">ES - Embryo Stallion</option>
+                <option value="EM">EM - Embryo Mare</option>
+                <option value="EG">EG - Embryo Gelding</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+            <div class="form-group">
+              <label class="profile_details_text">Animal Identification No.(Brand No.).</label>
+              <input type="text" ng-blur="CheckHerd(reganimal)" ng-model="reganimal.PrivateHerd" class="form-control" name="herdno" value="" ng-required="true" autocomplete="new-name" maxlength="6">
+            </div>
+            <b ng-if="herd>0" ng-style="{color: 'red'}" ng-bind="hmessage"></b>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+            <div class="form-group">
+              <label class="profile_details_text">Horns</label>
+              <select class="form-control" ng-model="reganimal.Horns" ng-required="true" autocomplete="new-name">
+                <option value="">--Select Horns--</option>
+                <option value="H">Horned</option>
+                <option value="D">Dehorned</option>
+                <option value="P">Polled</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <label>Main Color</label>
+            <select class="form-control" ng-model="reganimal.Main_colour" ng-required="true">
+              <option value="">--Select One--</option>
+              <option value="black">black</option>
+              <option value="white">white</option>
+              <option value="grey">grey</option>
+              <option value="yellow">yellow</option>
+              <option value="cream">cream</option>
+              <option value="orange">orange</option>
+              <option value="blue">blue</option>
+              <option value="red">red</option>
+              <option value="brown">brown</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <label>Secondary Color</label>
+            <select class="form-control" ng-model="reganimal.Secondary_colour">
+              <option value="">--Select One--</option>
+              <option value="black">black</option>
+              <option value="white">white</option>
+              <option value="grey">grey</option>
+              <option value="yellow">yellow</option>
+              <option value="cream">cream</option>
+              <option value="orange">orange</option>
+              <option value="blue">blue</option>
+              <option value="red">red</option>
+              <option value="brown">brown</option>
+            </select>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <label>Pattern</label>
+            <select class="form-control"  ng-model="reganimal.pattern">
+              <option value="">--Select One--</option>
+              <option value="spotted">spotted</option>
+              <option value="paint">paint</option>
+              <option value="brindle">brindle</option>
+              <option value="roan">roan</option>
+              <option value="speckled">speckled</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <label>Additional Markings</label>
+            <select class="form-control" ng-model="reganimal.markings">
+              <option value="">--Select One--</option>
+              <option value="blaze on face">blaze on face</option>
+              <option value="diamond on face">diamond on face</option>
+              <option value="rings around eyes">rings around eyes</option>
+              <option value="sock">sock</option>
+              <option value="socks">socks</option>
+              <option value="white tail tip">white tail tip</option>
+              <option value="black ears">black ears</option>
+            </select>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label class="profile_details_text">Description</label>
+              <textarea class="form-control" ng-model="reganimal.Description" ng-readonly="true"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <input type="radio" ng-model="reganimal.regincludingdna" checked="" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+              <label class="profile_details_text">Registration-Including DNA Testing</label>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-color">Next</button>
+      </form>
+    </div>
+    <div class="row col-md-12" ng-show="two">
+      <!-- <hr> -->
+      <div class="row">
+        <div class="row">
+          <h3 class="text-center text-primary">Sire Details</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <input type="radio" name="sire"  ng-click="option='sregno'">
+          <label >Enter the registration number for each sire</label><br>
+          <input type="radio"  name="sire" ng-click="option='ssire';currentSireClick()">
+          <label >Select sires from your herd</label><br>
+          <input type="radio"  name="sire" ng-click="option='ssomeone'">
+          <label >Select sires from someone else's herd</label>
+        </div>
+      </div>
+      <div ng-show="option ==='sregno'">
+        <div class="col-md-12 row">
+          <div class="col-md-6" style="padding-top: 10px;">
+            <input type="number" class="form-control" placeholder="Enter Registration Number" ng-model="reganimal.txtreg">
+          </div>
+          <div class="col-md-6" style="padding-top: 11px;">
+            <button type="button" class="btn btn-color" ng-click="addRegNoSire(reganimal)">Add</button>
+          </div>
+        </div>
+      </div>
+      <div ng-show="option ==='ssire'">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 20px;">
+            <ul class="nav nav-tabs">
+              <li  class="s" ng-class="{'active': editsire =='a'}" ng-click="editsire = 'a';currentSireClick()"><a >Currrent</a></li>
+              <li  class="s" ng-class="{'active': editsire =='b'}" ng-click="editsire = 'b';previousSireClick()"><a >Previous </a></li>
+              <li  class="s" ng-class="{'active': editsire =='c'}" ng-click="editsire = 'c';deceasedSireClick()"><a >Deceased </a></li>
+              <li  class="s" ng-class="{'active': editsire =='d'}" ng-click="editsire = 'd';currentbreedingSireClick()"><a >Current Breeding </a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="currentsire" class="tab-pane fade in" ng-class="{'active': editsire =='a'}">
+                <div class="container edge col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                  <!-- <button class="btn btn-color"  ng-click="currentSireClick()">View Animal</button> -->
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                          <thead>
+                            <tr>
+                              <th>RegNo</th>
+                              <th>Animal</th>
+                              <th>Add To Current Breeding List</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="cs in css">
+                              <td><span ng-bind="cs.RegNo"></span></td>
+                              <td><span ng-bind="cs.Animal"></span></td>
+                              <td>
+                                <i class="fa fa-plus btn btn-success" ng-click="AddCurrentSireToBreeding(cs,reganimal)"></i>
+                              </td>
+                              <td>
+                                <i class="fa fa-plus btn btn-success" ng-click="AddCurrentSireToList(cs,reganimal)"></i>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="previoussire" class="tab-pane fade in" ng-class="{'active': editsire =='b'}">
+                <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                  <!-- <button class="btn btn-color"  ng-click="previousSireClick()">View Sire</button> -->
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                          <thead>
+                            <tr>
+                              <th>RegNo</th>
+                              <th>Animal</th>
+                              <th>Owner</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="ps in pss">
+                              <td><span ng-bind="ps.RegNo"></span></td>
+                              <td><span ng-bind="ps.Animal"></span></td>
+                              <td><span ng-bind="ps.MemberName"></span></td>
+                              <td>
+                                <i class="fa fa-plus btn btn-success" ng-click="AddPreviousSireToList(ps,reganimal)"></i>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="deceasedsire" class="tab-pane fade in" ng-class="{'active': editsire =='c'}">
+                <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                  <!-- <button class="btn btn-color"  ng-click="deceasedSireClick()">View Sire</button> -->
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                          <thead>
+                            <tr>
+                              <th>RegNo</th>
+                              <th>Animal</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="ds in dss">
+                              <td><span ng-bind="ds.RegNo"></span></td>
+                              <td><span ng-bind="ds.Animal"></span></td>
+                              <td>
+                                <i class="fa fa-plus btn btn-success" ng-click="AddDeceasedSireToList(ds,reganimal)"></i>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="currentbreedingsire" class="tab-pane fade in" ng-class="{'active': editsire =='d'}">
+                <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                  <!-- <button class="btn btn-color"  ng-click="currentbreedingSireClick()">View Sire</button> -->
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="table-responsive">
+                        <h4><b>This list will show up to 10 breeding sires. Animals can be added from the other tabs.</b></h4>
+                        <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                          <thead>
+                            <tr>
+                              <th>RegNo</th>
+                              <th>Animal</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="cb in cbs">
+                              <td><span ng-bind="cb.RegNo"></span></td>
+                              <td><span ng-bind="cb.Animal"></span></td>
+                              <td>
+                                <i class="fa fa-trash btn btn-danger" ng-click="RemoveSireFromBreedingList(cb,reganimal)"></i>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-show="option ==='ssomeone'">
+        <div class="row">
+          <div class="col-md-12 row">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Search for a member" ng-model="reganimal.name">
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-color" ng-click="addmemberSiere(reganimal); showtable3=false">Search</button>
+            </div>
+          </div>  
+        </div>
+        <br>
+        <div class="container col-md-12" ng-init="showtable2=false" ng-show="showtable2" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0;">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                  <thead>
+                    <tr>
+                      <th>Last Name </th>
+                      <th>City</th>
+                      <th>Ranch</th>
+                      <th>State</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="someone in someonelist">
+                      <td><span ng-bind="someone.Lastname"></span></td>
+                      <td><span ng-bind="someone.city"></span></td>
+                      <td><span ng-bind="someone.RanchName"></span></td>
+                      <td><span ng-bind="someone.State"></span></td>
+                      <td>
+                        <i class="btn btn-success fa fa-plus" ng-click="AddSomeoneSiere(someone)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-init="showtable3=false" ng-show="showtable3">
+          <ul class="nav nav-tabs">
+            <li class="s" ng-class="{'active': editSearchSire =='e'}" ng-click="editSearchSire = 'e'"><a >Currrent</a></li>
+            <li class="s" ng-class="{'active': editSearchSire =='f'}" ng-click="editSearchSire = 'f'"><a >Previous </a></li>
+            <li class="s" ng-class="{'active': editSearchSire =='g'}" ng-click="editSearchSire = 'g'"><a >Deceased </a></li>
+            <li class="s" ng-class="{'active': editSearchSire =='h'}" ng-click="editSearchSire = 'h'"><a >Current Breeding </a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="currentsireSearch" class="tab-pane fade in" ng-class="{'active': editSearchSire =='e'}">
+              <div class="container edge col-md-12" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th ng-show="dontshow">MemberNumber</th>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Add To Current Breeding List</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="scurrent in currentsomeone">
+                            <td ng-show="dontshow">{{scurrent.MemberNumber}}</td>
+                            <td>{{scurrent.RegNo}}</td>
+                            <td>{{scurrent.Animal}}</td>
+                            <td>
+                              <i class="btn btn-success fa fa-plus" ng-click="SomeoneAddCurrentSireToBreeding(scurrent,reganimal)"></i>
+                            </td>
+                            <td>
+                              <i class="btn btn-success fa fa-plus" ng-click="SomeoneAddCurrentSireToList(scurrent,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="previoussireSearch" class="tab-pane fade in" ng-class="{'active': editSearchSire =='f'}">
+              <div class="container col-md-12" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th ng-show="dontshow">MemberNumber</th>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Owner</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="sprevious in previoussomeone">
+                            <td ng-show="dontshow">{{sprevious.MemberNumber}}</td>
+                            <td><span ng-bind="sprevious.RegNo"></span></td>
+                            <td><span ng-bind="sprevious.Animal"></span></td>
+                            <td><span ng-bind="sprevious.MemberName"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="SomeoneAddPreviousSireToList(sprevious,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="deceasedsireSearch" class="tab-pane fade in" ng-class="{'active': editSearchSire =='g'}">
+              <div class="container col-md-12" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th ng-show="dontshow">MemberNumber</th>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="sdeceased in deceasedsomeone">
+                            <td ng-show="dontshow">{{sdeceased.MemberNumber}}</td>
+                            <td><span ng-bind="sdeceased.RegNo"></span></td>
+                            <td><span ng-bind="sdeceased.Animal"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="SomeoneAddDeceasedSireToList(sdeceased,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="currentbreedingsireSearch" class="tab-pane fade in" ng-class="{'active': editSearchSire =='h'}">
+              <div class="container col-md-12" style="height:100%;padding: 10px;width: 100%;margin-top: 0;padding: 0;border-radius: 0">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <h4><b>This list will show up to 10 breeding sires. Animals can be added from
+                      the other tabs.</b></h4>
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th ng-show="dontshow">MemberNumber</th>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="sbreeding in breedingsomeone">
+                            <td ng-show="dontshow"><span ng-bind="sbreeding.MemberNumber"></span></td>
+                            <td><span ng-bind="sbreeding.RegNo"></span></td>
+                            <td><span ng-bind="sbreeding.Animal"></span></td>
+                            <td>
+                              <i class="fa fa-trash btn btn-danger" ng-click="SomeoneRemoveSireFromBreedingList(sbreeding,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-color" ng-click="enableThree()" style="margin-top: 20px;">Next</button>
+    </div>
+    <div class="row col-md-12" ng-show="three">
+      <!-- <hr> -->
+      <div class="row">
+        <div class="row">
+          <h3 class="text-center text-primary">Dam Details</h3>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <input type="radio" name="DAM" id="entertheregnumDAM" ng-click="option='dregno'">
+          <label>Enter the registration number for each Dam</label><br>
+          <input type="radio" name="DAM" id="selectsireformherdDAM" ng-click="option='dsire';currentDamClick()">
+          <label>Select dams from your herd</label><br>
+          <input type="radio" name="DAM" id="selectsireformsomeherdDAM" ng-click="option='dsomeone'">
+          <label>Select Dams from someone else's herd</label>
+        </div>
+      </div>
+      <div ng-show="option ==='dregno'">
+        <div class="row">
+          <div class="col-md-12 row">
+            <div class="col-md-6" style="padding-top: 10px;">
+              <input type="number" class="form-control" placeholder="Enter Registration Number" ng-model="reganimal.txtreg">
+            </div>
+            <div class="col-md-6" style="padding-top: 11px;">
+              <button type="button" class="btn btn-color" ng-click="showtable1();addRegNoDam(reganimal);AlertBox(reganimal)">Add</button>
+            </div>
+          </div>  
+        </div>
+        <div class="alert alert-danger alert-dismissible" ng-if="counter>0 && alertEnabled">
+          <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <p>You have entered a cow from <span ng-bind="ranch1"></span>. You must submit an authorization letter with your samples.</p>
+          <br>
+          <a class="text-center" target="_blank" href="http://34.66.91.118/uploads/AUTHORIZATION-TO-REGISTER-OFFSPRING.pdf">Download Dam Authorization Form</a>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="container col-md-12" ng-show="tablehide1" style="height:100%;padding: 10px; width: 100%;">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th>RegNo</th>
+                          <th>Animal</th>
+                          <th>Sex</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>
+                            <i class="fa fa-trash btn btn-danger"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-show="option ==='dsire'">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 20px;">
+            <ul class="nav nav-tabs">
+              <li class="s" ng-class="{'active': editDam ==1}" ng-click="editDam = 1;currentDamClick()"><a >Currrent</a></li>
+              <li class="s" ng-class="{'active': editDam ==2}" ng-click="editDam = 2;previousDamClick()"><a>Previous </a></li>
+              <li class="s" ng-class="{'active': editDam ==3}" ng-click="editDam = 3;deceasedDamClick()"><a >Deceased </a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="currentsireDAM" class="tab-pane fade in" ng-class="{'active': editDam ==1}">
+                <div class="container edge col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                  <!-- <button class="btn btn-color"  ng-click="currentDamClick()">View Dam</button> -->
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                          <thead>
+                            <tr>
+                              <th>RegNo</th>
+                              <th>Animal</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="cd in cds">
+                              <td><span ng-bind="cd.RegNo"></span></td>
+                              <td><span ng-bind="cd.Animal"></span></td>
+                              <td>
+                                <i class="fa fa-plus btn btn-success" ng-click="AddCurrentDamToList(cd,reganimal)"></i>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="previoussireDAM" class="tab-pane fade in" ng-class="{'active': editDam ==2}">
+                <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                  <!-- <button class="btn btn-color"  ng-click="previousDamClick()">View Dam</button> -->
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                          <thead>
+                            <tr>
+                              <th>RegNo</th>
+                              <th>Animal</th>
+                              <th>Owner</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="pd in pds">
+                              <td><span ng-bind="pd.RegNo"></span></td>
+                              <td><span ng-bind="pd.Animal"></span></td>
+                              <td><span ng-bind="pd.MemberName"></span></td>
+                              <td>
+                                <i class="fa fa-plus btn btn-success" ng-click="AddPreviousDamToList(pd,reganimal)"></i>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="deceasedsireDAM" class="tab-pane fade in" ng-class="{'active': editDam ==3}">
+                <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                  <!-- <button class="btn btn-color"  ng-click="deceasedDamClick()">View Dam</button> -->
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                          <thead>
+                            <tr>
+                              <th>RegNo</th>
+                              <th>Animal</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="dd in dds">
+                              <td><span ng-bind="dd.RegNo"></span></td>
+                              <td><span ng-bind="dd.Animal"></span></td>
+                              <td>
+                                <i class="fa fa-plus btn btn-success" ng-click="AddDeceasedDamToList(dd,reganimal)"></i>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-show="option ==='dsomeone'">
+        <div class="row">
+          <div class="col-md-12 row">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Search for a member" ng-model="reganimal.damname">
+            </div>
+            <div class="col-md-6">
+              <button type="button" class="btn btn-color" ng-click="addmemberDam(reganimal); showtable4=false">Search</button>
+            </div>
+          </div>  
+        </div>
+        <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 10;padding: 0;margin-top: 20px;" ng-init="showtable2=false" ng-show="showtable5">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                  <thead>
+                    <tr>
+                      <th>Last Name </th>
+                      <th>City</th>
+                      <th>Ranch</th>
+                      <th>State</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="dsomeone in dsomeonelist">
+                      <td><span ng-bind="dsomeone.Lastname"></span></td>
+                      <td><span ng-bind="dsomeone.city"></span></td>
+                      <td><span ng-bind="dsomeone.RanchName"></span></td>
+                      <td><span ng-bind="dsomeone.State"></span></td>
+                      <td>
+                        <i class="btn btn-success fa fa-plus" ng-click="AddSomeoneDam(dsomeone)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <div ng-init="showtable4=false" ng-show="showtable4">
+          <ul class="nav nav-tabs">
+            <li class="s" ng-class="{'active': editDam2 == 5}" ng-click="editDam2 = 5"><a >Currrent</a></li>
+            <li class="s" ng-class="{'active': editDam2 == 6}" ng-click="editDam2 = 6"><a >Previous </a></li>
+            <li class="s" ng-class="{'active': editDam2 == 7}" ng-click="editDam2 = 7"><a >Deceased </a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="currentsireSearchDAM" class="tab-pane fade in" ng-class="{'active': editDam2 == 5}">
+              <div class="container edge col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th ng-show="dontshow">MemberNumber</th>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="dcurrent in dcurrentsomeone">
+                            <td ng-show="dontshow"><span ng-bind="scurrent.MemberNumber"></span></td>
+                            <td><span ng-bind="dcurrent.RegNo"></span></td>
+                            <td><span ng-bind="dcurrent.Animal"></span></td>
+                            <td>
+                              <i class="btn btn-success fa fa-plus" ng-click="SomeoneAddCurrentDamToList(dcurrent,reganimal);AlertBox1()"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="previoussireSearchDAM" class="tab-pane fade in" ng-class="{'active': editDam2 == 6}">
+              <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th ng-show="dontshow">MemberNumber</th>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Owner</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="dprevious in dprevioussomeone">
+                            <td ng-show="dontshow"><span ng-bind="dprevious.MemberNumber"></span></td>
+                            <td><span ng-bind="dprevious.RegNo"></span></td>
+                            <td><span ng-bind="dprevious.Animal"></span></td>
+                            <td><span ng-bind="dprevious.MemberName"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="SomeoneAddPreviousDamToList(dprevious,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="deceasedsireSearchDAM" class="tab-pane fade in" ng-class="{'active': editDam2 == 7}">
+              <div class="container col-md-12" style="height:100%;width: 100%;margin-top: 0;padding: 0;">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-striped table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th ng-show="dontshow">MemberNumber</th>
+                            <th>RegNo</th>
+                            <th>Animal</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="ddeceased in ddeceasedsomeone">
+                            <td ng-show="dontshow"><span ng-bind="ddeceased.MemberNumber"></span></td>
+                            <td><span ng-bind="ddeceased.RegNo"></span></td>
+                            <td><span ng-bind="ddeceased.Animal"></span></td>
+                            <td>
+                              <i class="fa fa-plus btn btn-success" ng-click="SomeoneAddDeceasedDamToList(ddeceased,reganimal)"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-danger alert-dismissible" ng-if="cou==true;">
+          <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <p>You have entered a cow from <span ng-bind="ranch1"></span>. You must submit an authorization letter with your samples.</p>
+          <br>
+          <a class="text-center" target="_blank" href="http://members.americanbuckingbull.com/Authorization%20to%20Register%20Offspring.pdf">Download Dam Authorization Form</a>
+        </div>
+        <button type="button" class="btn btn-color" ng-click="lastsec();ShowRegAnimalData()"  style="margin-top: 20px;">Update</button>
+    </div>
+    <div class="row col-md-12" ng-show="two || three">
+      <hr>
+      <div class="container col-md-12" style="height:100%;padding: 10px; width: 100%;">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>RegNo</th>
+                    <th>Animal</th>
+                    <th>Sex</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="ssrs" ng-repeat="ssr in ssrs">
+                    <td><span ng-bind="ssr.RegNo"></span></td>
+                    <td><span ng-bind="ssr.Animal"></span></td>
+                    <td><span ng-bind="ssr.sex"></span></td>
+                    <td>
+                      <i class="fa fa-trash btn btn-danger" ng-click="RemoveSSR(ssr,reganimal)"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <button type="button" class="btn btn-color" ng-click="showpen = false;showcheckout=false">Exit</button> -->
+  </div>
+  <!-- if user clicks on checkout in holding pen  -->
+  <div ng-show="showcheckout1">
+    <div>
+      <h3 class="text-primary">EID Tag Order</h3>
+      <br>
+      <b>EID Tags are <span ng-bind="cost1.Price | currency"></span> per animal (plus Shipping and Handling)</b>
+      <br>
+      <br>
+      <label><input type="checkbox" ng-model="hold_check.hold_check" ng-change="HoldCheck(hold_check)" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">Click the checkbox to include the Destron Fearing ProGrip Universal Applicator <span ng-bind="cost.Price | currency"></span> with your order.Select animals below and click order at the bottom of the page to place your order.</label>
+    </div>
+    <br>
+    <br>
+    <div class="panel panel-default" >
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th ng-show="false">RegNo</th>
+                <th>Checkout</th>
+                <th>Animal</th>
+                <th>Birthdate</th>
+                <th>Herd#</th>
+                <th>Sex</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="andetail in andetails">
+                <td ng-show="false"><span ng-bind="andetail.RegNoID"></span></td>
+                <td ng-if="andetail.status>=1">
+                  <input type="checkbox" ng-model="andetail.eartag" ng-change="CheckHoldingPen1(andetail)" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+                </td>
+                <td ng-if="andetail.status==0"><span style="color:red">Year of Animal Not Matched with Current Year</span></td>
+                <td><span ng-bind="andetail.Animal"></span></td>
+                <td><span ng-bind="andetail.birthdate | date : 'MM/dd/yyyy'"></span></td>
+                <td><span ng-bind="andetail.PrivateHerd"></span></td>
+                <td><span ng-bind="andetail.TypeService"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-color" ng-click="showcheckout=false;showcheckout1=false;ShowRegAnimalData()">Back</button>
+    <button type="button" class="btn btn-color" ng-click="SuperStackData();SSAmount();checkCondition()">Next</button>
+  </div>
+  <div ng-show="shownext">
+    <div>
+      <h3 class="text-primary">Super Stakes Program</h3>
+      <br>
+      <span>View the Super Stakes Entry Information page for further explanation of the Super Stakes incentive program and payout information.</span>
+      <br>
+      <b>Super Stakes Entries are <span ng-bind="ssas.Price | currency"></span> per animal.</b>
+      <br>
+      <br>
+      <span>Select animals below and click order at the bottom of the page to enter the Super Stakes incentive program</span>
+    </div>
+    <br>
+    <br>
+    <div class="panel panel-default" >
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th ng-show="false">RegNo</th>
+                <th>Checkout</th>
+                <th>Animal</th>
+                <th>Birthdate</th>
+                <th>Herd#</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="ssd in ssds">
+                <td ng-show="false"><span ng-bind="ssd.RegNoID"></span></td>
+                <td style="width:150px;" ng-if="ssd.Status>=1">
+                  <input type="checkbox" ng-model="ssd.incentive" ng-change="CheckHoldingStacksPen(ssd)" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}">
+                </td>
+                <td style="width:150px;" ng-if="ssd.Status==0"><span style="color:red">Either Year of Animal Not Matched with Current Year (or) It's a Cow</span></td>
+                <td><span ng-bind="ssd.Animal"></span></td>
+                <td><span ng-bind="ssd.birthdate | date : 'MM/dd/yyyy'"></span></td>
+                <td><span ng-bind="ssd.PrivateHerd"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-color" ng-click="shownext=false;showcheckout=true;showcheckout1=true">Back</button>
+    <button type="button" class="btn btn-color" ng-click="BillDetails();shownext=false;showcheckout=true;showcheckout1=false;showpay=true;showfulldata=false">Next</button>
+  </div>
+  <div ng-show="showpay">
+    <div class="form-group row col-md-12">
+      <h3 class="text-primary">Billing Information</h3>
+      <span>This must be the same address as used on the credit card statement</span>
+      <div class="col-md-6">
+        <label>First Name</label>
+        <input type="text" class="form-control" ng-model="bills.FirstName" ng-required="true" autocomplete="new-name">
+        <label>Last Name</label>
+        <input type="text" class="form-control" ng-model="bills.LastName" ng-required="true" autocomplete="new-name">
+        <label>Email</label>
+        <input type="text" class="form-control" ng-model="bills.Email" ng-required="true" autocomplete="new-name">
+        <label>Phone</label>
+        <input type="text" class="form-control" name="phone" ng-model="bills.Phone" ng-required="true" autocomplete="new-name">
+        <span style="color:red" ng-show="BillingInfo.phone.$error.minlength">Enter Valid Phone Number</span>
+        <span style="color:red" ng-show="BillingInfo.phone.$error.maxlength">Enter Valid Phone Number</span>
+        <label>Address</label>
+        <textarea class="form-control" ng-model="bills.Address" ng-required="true" autocomplete="new-name"></textarea>
+      </div>
+      <div class="col-md-6">
+        <label>City</label>
+        <input type="text" class="form-control" ng-model="bills.City" ng-required="true" autocomplete="new-name">
+        <label>State</label>
+        <input type="text" class="form-control" ng-model="bills.State" ng-required="true" autocomplete="new-name">
+        <label>Zip Code</label>
+        <input type="text"   class="form-control" ng-model="bills.Zip" ng-required="true" autocomplete="new-name">
+        <label>Country</label>
+        <input type="text" class="form-control" ng-model="bills.Country" ng-required="true" autocomplete="new-name">
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-3">
+          <h3 class="text-primary">Shipping Information</h3>
+        </div>
+        <div class="col-md-3">
+          <br>
+          <label><input type="checkbox" ng-model="sameasabove" ng-change="SameAddress()">Same as billing address</label>
+        </div>
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-6">
+          <label>First Name</label>
+          <input type="text" class="form-control" ng-model="bills.FirstName1" ng-required="true" autocomplete="new-name">
+          <label>Last Name</label>
+          <input type="text" class="form-control" ng-model="bills.LastName1" ng-required="true" autocomplete="new-name">
+          <label>Address</label>
+          <textarea class="form-control" ng-model="bills.Address1" ng-required="true" autocomplete="new-name"></textarea>
+        </div>
+        <div class="col-md-6">
+          <label>City</label>
+          <input type="text" class="form-control" ng-model="bills.City1" ng-required="true" autocomplete="new-name">
+          <label>State</label>
+          <input type="text" class="form-control" ng-model="bills.State1" ng-required="true" autocomplete="new-name">
+          <label>Zip Code</label>
+          <input type="text" class="form-control" ng-model="bills.Zip1" ng-required="true" autocomplete="new-name">
+          <label>Country</label>
+          <input type="text" class="form-control" ng-model="bills.Country1" ng-required="true" autocomplete="new-name">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <br>
+      <button type="button" class="btn btn-color" ng-click="checksecCon()">Back</button>
+      <button class="btn btn-color" ng-click="saveBillingInfo(bills);ShowTableDataPen()">Next</button>
+    </div>
+  </div>
+  <div ng-show="showfulldata">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat = "bu in bull">
+            <td>
+              <span>Registrations : (<span ng-bind="bu.regcount"></span>)</span>
+            </td>
+            <td>
+              <span ng-bind="bu.totalregprice | currency"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>EID Tags :(<span ng-bind="eid.EidCount"></span>)</span>
+            </td>
+            <td>
+              <span ng-bind="eid.TotEidPrice | currency"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Super Stakes Entry :(<span ng-bind="ss.SSCount"></span>)</span>
+            </td>
+            <td>
+              <span ng-bind="ss.TotSSPrice | currency"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Destron Fearing ProGrip Universal Applicator :</span>
+            </td>
+            <td>
+              <span ng-bind="eid.DestronPrice | currency"></span>
+            </td>
+          </tr>
+          <tr ng-if="eid.EidCount > 0">
+            <td>
+              <span>Shipping :</span>
+            </td>
+            <td>
+              <span ng-bind="shipAmount | currency"></span>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <span>Handling Fee :</span>
+            </td>
+            <td>
+              <span ng-bind="handling | currency"></span>
+            </td>
+          </tr>
+          <tr ng-if="bills.carrier == 'usps'">
+            <td>
+              <span>Packaging :</span>
+            </td>
+            <td>
+              <span ng-bind="envelope | currency"></span>
+            </td>
+          </tr>
+          <tr ng-if="PaymentType.Payment == 'eCheck'">
+            <td>
+              <span>Discount for e-Check payment:</span>
+            </td>
+            <td>
+              <span ng-bind="handling | currency"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td>{{amount | currency}}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <br>
+    <div class="col-md-12">
+      <label><input type="checkbox">You are required to submit the DNA card for the animal that you registered online within 2 weeks. Your animal will not be registered without the DNA card being received in the office. Please write the animal's registration number, herd number, and sex on the DNA card. The sample must be on an ABBI sample card.</label>
+    </div>
+    <br>
+    <h3 class="text-primary">Payment Information</h3><span class="text-success">2.0% discount for e-Check payment</span>
+    <br>
+    <br>
+    <div class="container" >
+      <!-- <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+        <label>Payment Type</label>
+        <select name="type" ng-model="PaymentType.Payment" ng-change="CardDetails(PaymentType);ShowTableDataPen()" class="form-control">
+          <option ng-option selected="selected" value="">-Select One-</option>
+          <option ng-option value="VI">Visa</option>
+          <option ng-option value="MC">Master Card</option>
+          <option ng-option value="AMEX">American Express</option>
+          <option ng-option value="Discover">Discover</option>
+          <option ng-option value="eCheck">e-Check</option>
+        </select>
+      </div> -->
+      <div class="row" style="height:100%;width:100%;padding: 5px;">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4" ng-if="eid.EidCount > 0">
+          <div class="row">
+            <label>Select Carrier</label><br />
+            <input type="radio" id="usps" ng-model="bills.carrier" value="usps" ng-click="getSvalues('usps',bills)">
+            <label for="usps">USPS</label><br>
+            <input type="radio" id="fedex" ng-model="bills.carrier" value="fedex" ng-click="getSvalues('fedex',bills)">
+            <label for="fedex">FEDEX</label><br>
+    
+          </div>
+          <div class="row">
+            <label>Shipping Type</label>
+            <select name="type" class="form-control" ng-model="shippingValue"
+            ng-change="CalulateWithShipping(shippingValue)">
+            <option ng-repeat="shipobj in fedexRates" value="{{shipobj.amount}}">{{shipobj.servicelevel.name}} days -
+              ${{shipobj.amount}}</option>
+          </select>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label>Payment Type</label>
+          <select name="type" ng-model="PaymentType.Payment" ng-change="CardDetails(PaymentType);ShowTableDataPen()" class="form-control">
+            <option ng-option selected="selected" value="">-Select One-</option>
+            <option ng-option value="VI">Visa</option>
+            <option ng-option value="MC">Master Card</option>
+            <option ng-option value="AMEX">American Express</option>
+            <option ng-option value="Discover">Discover</option>
+            <option ng-option value="eCheck">e-Check</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2"></div>
+        <div
+          ng-if="PaymentType.Payment == 'undefined' ||PaymentType.Payment == '-1' || PaymentType.Payment == 'VI' || PaymentType.Payment == 'MC' || PaymentType.Payment == 'AMEX' || PaymentType.Payment == 'Discover' || PaymentType.Payment == 'Check' ||  PaymentType.Payment == 'Money Order' || PaymentType.Payment == 'Cashier Check'">
+          <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+              <label>Credit Card No</label>
+              <input type="number" ng-model="PaymentType.cc" required placeholder="Credit Card No." class="form-control">
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+              <label>Exp. (MM/YY)</label>
+              <input type="text" ng-model="PaymentType.expire" required placeholder="Exp. (MM/YY)" class="form-control">
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+              <label>Sec Code</label>
+              <input type="number" ng-model="PaymentType.cvv" required placeholder="Sec Code" class="form-control">
+            </div>
+            <div ng-if="PaymentType.cc!=null" class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="
+            position: relative;
+            top: 23px;
+        ">
+              <i class="fa fa-trash btn btn-danger" ng-click="DeleteCard()"></i>
+            </div>
+          </div>
+        </div>
+        <div ng-if="PaymentType.Payment == 'Auth.Net'">
+          <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+              <label>Credit Card No</label>
+              <input type="number" ng-model="PaymentType.cc" required placeholder="Credit Card No." class="form-control">
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+              <label>Exp. (MM/YY)</label>
+              <input type="text" ng-model="PaymentType.expire" required placeholder="Exp. (MM/YY)" class="form-control">
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+              <label>Sec Code</label>
+              <input type="number" ng-model="PaymentType.cvv" required placeholder="Sec Code" class="form-control">
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+              <label>Auth No.</label>
+              <input type="number" ng-model="PaymentType.auth" required placeholder="Auth No." class="form-control">
+            </div>
+          </div>
+        </div>
+        <div ng-if="PaymentType.Payment == 'eCheck'">
+          <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+    
+            <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+              <label> Account No</label>
+              <input type="number" ng-model="PaymentType.acno" required placeholder="Account No." class="form-control">
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+              <label>Account Holder's Name</label>
+              <input type="text" ng-model="PaymentType.acname" required placeholder="Account Holder's Name.."
+                class="form-control">
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+              <label>Account Type</label>
+              <select ng-model="PaymentType.actype" required class="form-control">
+                <option value="checking"> Checking</option>
+                <option value="savings"> Savings</option>
+              </select>
+            </div>
+          </div>
+          <br>
+          <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10" style="float: right;">
+            <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+              <label>ABA Routing No.</label>
+              <input type="number" ng-model="PaymentType.aba" required placeholder="ABA Routing No." class="form-control">
+            </div>
+            <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+              <label>Bank Name</label>
+              <input type="text" ng-model="PaymentType.bank" required placeholder="Bank Name.." class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="col-md-12">
+      <button class="btn btn-color" ng-click="AnimalPayment(PaymentType,amount,handling,bull,bills,shipAmount)">Pay</button>
+      <button type="button" class="btn btn-color" ng-click="shownext=false;showcheckout=false;showcheckout1=false;showfulldata=false;shippingSection=false;sameasabove=false">Exit</button>
+      <button type="button" class="btn btn-color" ng-click="redirectTo()">Add Animal</button>
+    </div>
+  </div>
+  <div ng-show="shippingSection" class="container" style="height:100%;width:90%;padding: 0 20px 20px 20px;">
+    <h3 style="text-align:center;color: black;font-weight: 600;">Your Order had been shipped!</h3>
+    <div class="row">
+      <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+        <h5 style="color: black;font-weight: 600;">Download your label here :</h5><br />
+        <a href="{{shippingTrack.label_url}}" target="_blank" style="background-color: #d8ceb9!important;"><button class="btn btn-success">Download Label</button></a><br /><br /><br />
+        <h5 style="color: black;font-weight: 600;">Tracking URL :</h5><br />
+        <a href="{{shippingTrack.tracking_url_provider}}" target="_blank" style="background-color: #d8ceb9!important;"><button class="btn btn-success">Track URL</button></a>
+      </div>
+  
+    </div>
+  </div>
+</div>

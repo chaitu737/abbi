@@ -1,0 +1,48 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Import Lab Results</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <form class="form-group" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-sm-12 form-group">
+        <label>DNA Test Results data file:</label>
+        <input class="form-control" type="file" file-model="dnares.file">
+      </div>
+      <div class="col-sm-12 form-group">
+        <label class="text-danger">**Note: Must be in csv</label><br/>
+        <a class="abc" href="../uploads/DNA/sample.csv">Download Format</a><br/><br/>
+        <input class="btn btn-color" type="submit" ng-click="DNATestRes(dnares)" value="Upload">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <button class="btn btn-color" ng-click="ReleaseDB()">Release to Database</button>
+  <button class="btn btn-color" ng-click="ClearTemp()">Clear Temp Tables</button>
+  <div class="panel panel-default" ng-init="ShowDNARes()">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Assoc. Code</th>
+                <th>Case </th>
+                <th>Sample Id </th>
+                <th>Marker </th>
+                <th>Results </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="sdr in sdrs">
+                <td><span ng-bind="sdr.AssociationCode"></span></td>
+                <td><span ng-bind="sdr.Case"></span></td>
+                <td><span ng-bind="sdr.SampleID"></span></td>
+                <td><span ng-bind="sdr.Marker"></span></td>
+                <td><span ng-bind="sdr.ResultsAllele"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Pedigree Certificate</title>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script> -->
+  <script src="angular/js/jquery.js"></script>
+  <script src="angular/js/jquery.min.js"></script>
+  <script src="angular/js/bootstrap.min.js"></script>
+  <script src="angular/js/jquery-ui-1.9.2.custom.min.js"></script>
+  <script src="angular/js/jquery.ui.touch-punch.min.js"></script>
+   <script src="angular/js/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="angular/js/jquery.scrollTo.min.js"></script>
+  <script src="angular/js/jquery.nicescroll.js"></script>
+  <script type="text/javascript" src="angular/js/jquery-ui.js"></script>
+  <!--datatables-->
+  <script src="angular/js/angular.min.js"></script>
+  <script src="angular/js/angular-ui.min.js"></script>
+  <script src="angular/js/angular-datatables.buttons.min.js"></script>
+  <script src="angular/js/angular-datatables.min.js"></script>
+  <script src="angular/js/jquery.dataTables.min.js"></script>
+  <script src="angular/js/dataTables.buttons.min.js"></script>
+  <script src="angular/js/buttons.colVis.min.js"></script>
+  <script src="angular/js/buttons.flash.min.js"></script>
+  <script src="angular/js/buttons.print.min.js"></script>
+  <script src="angular/js/buttons.html5.min.js"></script>
+  <!-- common script and datatables for all pages-->
+  <script src="angular/js/common-scripts.js"></script>
+  <!--angular scripts-->
+  <script src="angular/js/angular-route.js"></script>
+  <script src="angular/js/angularprint.js"></script>
+  <!-- Custom JS -->
+  <!-- <script src="javascripts/login.js"></script> -->
+  <script src="angular/pedigree.js"></script>
+  <style>
+    /*Downloaded from https://www.codeseek.co/TheSisb/css-horizontal-family-tree-rCIDG */
+/* -------------------------------------
+* Style
+* ------------------------------------- */
+.root {
+position: relative;
+}
+
+@media print {
+* {
+    -webkit-print-color-adjust: exact !important; /*Chrome, Safari */
+    color-adjust: exact !important;  /*Firefox*/
+  }
+}
+.level {
+margin-left: 340px;
+position: relative;
+}
+.level:before {
+  content: "";
+  width: 18px;
+  /* border-top: 2px solid #000; */
+  position: absolute;
+  left: 2px;
+  top: 54%;
+  margin-top: 1px;
+}
+.level:before {
+  content: "";
+  width: 18px;
+  /* border-top: 2px solid #000; */
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  margin-top: 1px;
+}
+
+.item {
+min-height: 112px;
+position: relative;
+}
+.item:before {
+  content: "";
+  height: 100%;
+  /* border-left: 2px solid #000; */
+  position: absolute;
+  left: 20px;
+}
+.item:after {
+  content: "";
+  width: 49px;
+  /* border-top: 2px solid #000; */
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  margin-top: 1px;
+}
+.item:first-child:before {
+width: 10px;
+height: 50%;
+top: 50%;
+margin-top: 2px;
+/* border-top-left-radius: 10px; */
+}
+.item:first-child:after {
+height: 10px;
+/* border-top-left-radius: 10px; */
+}
+
+.item:last-child:before {
+  width: 10px;
+  height: 50%;
+  /* border-bottom-left-radius: 10px; */
+}
+.item:last-child:after {
+height: 10px;
+border-top: none;
+/* border-bottom: 2px solid #000; */
+/* border-bottom-left-radius: 10px; */
+margin-top: -11px;
+}
+.title {
+  min-width: 174px;
+  padding: 3px 10px;
+  line-height: 13px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  display: block;
+  position: absolute;
+  left: -151px;
+  top: 40%;
+  margin-top: -15px;
+  font-size:12px;
+}
+.title1 {
+    min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 51%;
+    margin-top: 7px;
+    font-size:12px;
+}
+.title3{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 16%;
+    top: 35%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: -5px;
+}
+.title4 {
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 16%;
+    top: 70%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: -5px;
+}
+.title5 {
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 35%;
+    top: 27%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: -5px;
+}
+.title6 {
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 35%;
+    top: 43%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: -5px;
+}
+.title7 {
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 35%;
+    top: 62%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: -5px;
+}
+.title8 {
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 35%;
+    top: 78%;
+    margin-top: 9px;
+    font-size: 12px;
+    margin-left: -5px;
+}
+.title9{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 58%;
+    top: 23%;
+    margin-top: 5px;
+    font-size: 12px;
+    margin-left: -10px;
+}
+.title10{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 58%;
+    top: 33%;
+    margin-top: 1px;
+    font-size: 12px;
+    margin-left: -10px;
+}
+.title11{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 58%;
+    top: 40%;
+    margin-top: 0px;
+    font-size: 12px;
+    margin-left: -10px;
+}
+.title12{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 58%;
+    top: 50%;
+    margin-top: 5px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title13{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 58%;
+    top: 57%;
+    margin-top: 4px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title14{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 58%;
+    top: 67%;
+    margin-top: 7px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title15{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 58%;
+    top: 75%;
+    margin-top: 1px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title16{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 58%;
+    top: 85%;
+    margin-top: 6px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title17{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 31%;
+    top: 51%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: -5px;
+}
+.title18{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 10px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 38%;
+    top: 35%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: -5px;
+}
+.title19{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 39%;
+    top: 70%;
+    margin-top: 7px;
+    font-size: 12px;
+    margin-left: -5px;
+}
+.title20{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 67%;
+    top: 27%;
+    margin-top: 8px;
+    font-size: 12px;
+    margin-left: -10px;
+}
+.title21{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 65%;
+    top: 45%;
+    margin-top: 0px;
+    font-size: 12px;
+    margin-left: -10px;
+}
+.title22{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 64%;
+    top: 62%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title23{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 63%;
+    top: 80%;
+    margin-top: 6px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title24{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: -161px;
+    top: 213%;
+    margin-top: 0px;
+    font-size: 12px;
+}
+.title25{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 81%;
+    top: 23%;
+    margin-top: 5px;
+    font-size: 12px;
+    margin-left: -10px;
+}
+.title26{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 81%;
+    top: 40%;
+    margin-top: 0px;
+    font-size: 12px;
+    margin-left: -10px;
+}
+.title27{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 81%;
+    top: 57%;
+    margin-top: 4px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title28{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 81%;
+    top: 67%;
+    margin-top: 7px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title29{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 81%;
+    top: 75%;
+    margin-top: 1px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title30{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 81%;
+    top: 85%;
+    margin-top: 6px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title31{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 81%;
+    top: 33%;
+    margin-top: 1px;
+    font-size: 12px;
+    margin-left: -10px;
+}
+.title32{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 9px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 81%;
+    top: 50%;
+    margin-top: 5px;
+    font-size: 12px;
+    margin-left: -6px;
+}
+.title33{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 37%;
+    top: 8%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: 0px;
+}
+.title34{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 39%;
+    top: 11%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: 0px;
+}
+.title35{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 43%;
+    top: 15%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: 0px;
+}
+.title36{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 84%;
+    top: 8%;
+    margin-top: 3px;
+    font-size: 12px;
+    margin-left: 0px;
+}
+.title37{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 83%;
+    top: 12%;
+    margin-top: 4px;
+    font-size: 12px;
+    margin-left: 0px;
+}
+.title38{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 77%;
+    top:  15%;
+    margin-top: 4px;
+    font-size: 12px;
+    margin-left: 0px;
+}
+.title39{
+  min-width: 174px;
+    padding: 3px 10px;
+    line-height: 13px;
+    /* border: 2px solid #000; */
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    left: 59%;
+    top: 4%;
+    margin-top: 5px;
+    font-size: 12px;
+    margin-left: 0px;
+}
+</style>
+</head>
+<body>
+  <!-- background-image: url(../images/cert.jpg) !important -->
+<div class="row" ng-app="pedigreeapp"  print-section ng-init="SearchPedigree()" ng-controller="PedigreeController">
+  <div class="row" style="text-align: center;padding: 10px;">
+    <button class="btn btn-color" style="padding: 10px;background-color: white;border-radius: 4px;" print-remove print-btn ng-hide="!hidePrint" ng-click="hidePrint=false">Print</button>
+  </div>
+<div class='root'>
+ 
+    <div style="background-image: url(../images/cert.jpg) !important;background-size: 100% 100%;min-height: 680px;">
+      <div class="title33">
+        <b style="color:black" ng-bind="pedigree10.Animal"></b>
+      </div>
+      <div class="title34">
+        <b style="color:black" ng-bind="pedigree10.Breeder"></b>
+      </div>
+      <div class="title35">
+        <b style="color:black" ng-bind="pedigree10.Powner"></b>
+      </div>
+      <div class="title36">
+        <b style="color:black" ng-bind="pedigree10.Herd"></b>
+      </div>
+      <div class="title37">
+        <b style="color:black">{{pedigree10.DOB | date:"MM/dd/yyyy" }}</b>
+      </div>
+      <div class="title38">
+        <b style="color:black">{{pedigree10.Colour}}</b>
+      </div>
+      <div class="title39">
+        <b style="color:black">{{pedigree10.Type}}</b>
+      </div>
+      <!-- offspring -->
+    <div class="title1">
+      <b ng-bind="pedigree10.RegNo"></b> &nbsp;&nbsp;
+      <b style="color:black" ng-bind="pedigree10.Animal"></b>
+      <br><br>
+      <b style="color:black" ng-bind="pedigree10.Ranch"></b>
+    </div>
+<!-- sire -->
+    <div class="title3">
+      <b><a ng-bind="pedigree10.Sire"></a></b> &nbsp;&nbsp;
+      <b style="color:black" ng-bind="pedigree10.Sirename"></b>
+      <br><br>
+      <b style="color:black" ng-bind="pedigree10.SireRanch"></b>
+    </div>
+    <!-- sire middle  -->
+    <div class="title17">
+      <b><a ng-bind="pedigree10.Herd"></a></b>
+      <br><br>
+      <b style="color:black" ng-bind="pedigree10.Memname"></b>
+    </div>
+    <!-- dam -->
+    <div class="title4">
+      <b><a  ng-bind="pedigree10.Dam"></a></b> &nbsp;&nbsp;
+      <b style="color:black" ng-bind="pedigree10.Damname"></b>
+      <br><br>
+      <b style="color:black" ng-bind="pedigree10.DamRanch"></b>
+    </div>
+    <!-- grand sire -->
+      <div class="title5">
+              <b><a  ng-bind="pedigree10.GrandSire"></a></b>&nbsp;&nbsp;
+              <b style="color:black" ng-bind="pedigree10.GrandSirename"></b> 
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GrandSireRanch"></b>
+            </div>
+            <!-- grand sire middle -->
+            <div class="title18">
+              <b><a  ng-bind="pedigree10.SireHerd" ></a></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.SireMemname"></b>
+            </div>
+            <!-- grand dam -->
+            <div class="title6">
+              <b><a  ng-bind="pedigree10.GrandDam"></a></b>&nbsp;&nbsp;
+            
+              <b style="color:black" ng-bind="pedigree10.GrandDamname"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GrandDamRanch"></b>
+            </div>
+            <!-- grand sire 2 -->
+            <div class="title7">
+              <b><a  ng-bind="pedigree10.GrandSire2" ng-click="GrandSire2Pedigree(pedigree10)"></a></b>  &nbsp;&nbsp;
+              <b style="color:black" ng-bind="pedigree10.GrandSirename2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GrandSireRanch2"></b>
+            </div>
+            <!-- grand sire 2 middle -->
+            <div class="title19">
+              <b><a  ng-bind="pedigree10.DamHerd" ng-click="GrandSire2Pedigree(pedigree10)"></a></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.DamMemname"></b>
+            </div>
+            <!-- great dam 2 -->
+            <div class="title8">
+              <b><a  ng-bind="pedigree10.GrandDam2" ng-click="GrandDam2Pedigree(pedigree10)"></a></b>&nbsp;&nbsp;
+              <b style="color:black" ng-bind="pedigree10.GrandDamname2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GrandDamRanch2"></b>
+            </div>
+            <!-- great grand sire 1 -->
+            <div class="title9">
+              <b><a  ng-bind="pedigree10.GreatGrandSires" ng-click="GreateGrandSire1Pedigree(pedigree10)"></a></b>&nbsp;&nbsp;
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSirenames"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireRanchs"></b>
+            </div>
+            <!-- great grand sire 1 same line -->
+            <div class="title25">
+              <b><a  ng-bind="pedigree10.GreatGrandSireHerds"></a></b>&nbsp;&nbsp;
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireMemnames"></b>
+            </div>
+            <!-- great grand sire 1 middle -->
+            <div class="title20">
+              <b><a  ng-bind="pedigree10.GrandSireHerd"></a></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GrandSireMemname"></b>
+            </div>
+            <!-- great grand dam 1 -->
+            <div class="title10">
+              <b><a  ng-bind="pedigree10.GreatGrandDams" ng-click="GreatGrandDam1Pedigree(pedigree10)"></a></b>&nbsp;&nbsp;
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamnames"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamRanchs"></b>
+            </div>
+            <!-- great grand dam 1 same line -->
+            <div class="title31">
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamHerds"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamMemnames"></b>
+            </div>
+            <!-- great grand sire 2 -->
+            <div class="title11">
+              <b><a  ng-bind="pedigree10.GreatGrandSired" ng-click="GreateGrandSire2Pedigree(pedigree10)"></a></b>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSirenamed"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireRanchd"></b>
+            </div>
+            <!-- great grand sire 2 same line  -->
+            <div class="title26">
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireHerdd"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireMemnamed"></b>
+            </div>
+            <!-- great grand sire 2 middle -->
+            <div class="title21">
+              <b style="color:black" ng-bind="pedigree10.GrandDamHerd"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GrandDamMemname"></b>
+            </div>
+            <!-- great grand dam 2 -->
+            <div class="title12">
+              <b><a  ng-bind="pedigree10.GreatGrandDamd" ng-click="GreatGrandDam2Pedigree(pedigree10)"></a></b>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamnamed"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamHerdd"></b>
+            </div>
+            <!-- great grand dam 2 same line -->
+            <div class="title32">
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamHerdd"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamMemnamed"></b>
+            </div>
+            <!-- great grand sire 3 -->
+            <div class="title13">
+              <b><a ng-bind="pedigree10.GreatGrandSires2" ng-click="GreateGrandSire3Pedigree(pedigree10)"></a></b>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSirenames2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireRanchs2"></b>
+            </div>
+            <!-- great grand sire 3 same line -->
+            <div class="title27">
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireHerds2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireMemnames2"></b>
+            </div>
+            <!-- great grand sire 3 middle -->
+            <div class="title22">
+              <b style="color:black" ng-bind="pedigree10.GrandSireHerd2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GrandSireMemname2"></b>
+            </div>
+            <!-- great grand dam 3 -->
+            <div class="title14">
+              <b><a  ng-bind="pedigree10.GreatGrandDams2" ng-click="GreatGrandDam3Pedigree(pedigree10)"></a></b>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamnames2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamRanchs2"></b>
+            </div>
+            <!-- great grand dam 3 same line -->
+            <div class="title28">
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamHerds2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamMemnames2"></b>
+            </div>
+            <!-- great grand sire 4 -->
+            <div class="title15">
+              <b><a  ng-bind="pedigree10.GreatGrandSired2" ng-click="GreateGrandSire4Pedigree(pedigree10)"></a></b>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSirenamed2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireRanchd2"></b>
+            </div>
+            <!-- great grand sire 4 same line -->
+            <div class="title29">
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireHerdd2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandSireMemnamed2"></b>
+            </div>
+            <!-- great grand sire 4 middle -->
+            <div class="title23">
+              <b style="color:black" ng-bind="pedigree10.GrandDamHerd2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GrandDamMemname2"></b>
+            </div>
+            <!-- great grand dam 4  -->
+            <div class="title16">
+              <b><a  ng-bind="pedigree10.GreatGrandDamd2" ng-click="GreatGrandDam4Pedigree(pedigree10)"></a></b>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamnamed2"></b>
+              <br><br>
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamRanchd2"></b>
+            </div>
+            <!-- great grand dam 4 same line -->
+            <div class="title30">
+              <!-- <h4 class="text-center"><b style="color:red">Great Grand Dam</b></h4> -->
+              <!-- <label>Number :</label> -->
+              <!-- <b><a  ng-bind="pedigree10.GreatGrandDamd2" ng-click="GreatGrandDam4Pedigree(pedigree10)"></a></b> -->
+              <!-- <br> -->
+              <!-- <label>Name :</label> -->
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamHerdd2"></b>
+              <br><br>
+              <!-- <label>Herd No. :</label> -->
+              <b style="color:black" ng-bind="pedigree10.GreatGrandDamMemnamed2"></b>
+            </div>
+    
+  </div> 
+  </div>
+</body>
+ 

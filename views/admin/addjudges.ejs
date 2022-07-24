@@ -1,0 +1,145 @@
+<style>
+    a:hover {
+    color: darkred !important;
+    text-decoration: none;
+  }
+  body {
+    font-size: 1.5em;
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: "Work Sans", sans-serif;
+    color: #111111;
+    word-wrap: break-word;
+    margin: 0;
+    background-color: whitesmoke;
+  }
+  .headerbar {
+    background-color: #325d81;
+    color: whitesmoke;
+    margin: 0;
+    border-radius: 0;
+    padding: 3px;
+}
+.fancyline {
+    font-family: Work Sans;
+}
+h5 {
+    font-size: 2.4rem;
+}
+.ABBI {
+    background-color: #ccd9ea;
+}
+.menubar {
+    padding-left: 7px;
+    border-radius: 6px;
+}
+.medline {
+    font-size: 110%;
+}
+.u-full-width-brown {
+    width: 100%;
+    box-sizing: border-box;
+    background: #decbc8;
+    min-width: 320px;
+    padding: 10px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+body {
+    font-size: 1.5em;
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: 'Work Sans', sans-serif;
+    color: #111111;
+    word-wrap: break-word;
+    margin: 0;
+    background-color: whitesmoke;
+}
+input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select {
+    height: 35px;
+    padding: 6px 10px;
+    background-color: #FFF;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    box-shadow: none;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+input {
+    line-height: normal;
+}
+input, optgroup, select, textarea {
+    color: inherit;
+    font: inherit;
+    margin: 0;
+}
+.button-primary {
+    color: ghostwhite;
+    background-color: #1EAEDB;
+    border-color: #1EAEDB;
+}
+.button-primary:hover {
+    color: #FFF;
+    background-color: #188aae;
+    border-color: #188aae;
+    outline: 0;
+}
+.button-primary {
+    color: ghostwhite;
+    background-color: #1EAEDB;
+    border-color: #1EAEDB;
+}
+button, input[type="submit"], input[type="reset"], input[type="button"] {
+    display: inline-block;
+    height: 35px;
+    padding: 0 20px;
+    color: #333333;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 35px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: #decbc8;
+    border-radius: 4px;
+    border: 1px solid slategrey;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+</style>
+<div class="container" style="background-color: #dedede!important;box-sizing: border-box;border: 1px solid slategrey;padding: 10px;margin-bottom: 1rem;margin-top: 1rem;
+height:100%;width:90%;padding: 10px;height: 90px;" ng-init="getJudgesDetails();getInfo()">
+  <p class="u-full-width-bbc medline menucolor" id="blankbar" >
+    <span class="fancyline biggerline" style="font-size: 150%;">ABBI Competition Admin</span><br>
+    <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/eventhome">home</a> |
+     <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/pastevent">past events</a> | 
+<a  style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px;"  href="http://localhost/admin/home#!/addevent">add event</a> |
+ <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/classlink">Link 2 Classes</a> |
+ <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/bullboss">animals</a> |
+ <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/handlerlist">handlers</a> |
+ <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/program">programs</a></p>
+</div>
+<div class="container"  style="background-color: #f5f5f5!important;height:100%;width:90%;padding: 0;margin-top: 0;padding: 0;">
+    <h5 class="fancyline headerbar" style="padding:5px;">Add Judges to Event {{eventId}}</h5>
+</div>
+<div class="container" style="background-color: #f5f5f5!important;height:100%;width:90%;padding: 0;margin-top: 10px;padding: 0;">
+   
+        <li class="ABBI menubar medline" style="list-style: none;border-radius: 0;">{{eventDet.title}} {{eventDet.city}}, {{eventDet.state}} {{eventDet.sanction}} {{eventDet.startday | date: 'yyyy-MM-dd'}}</li>
+  
+</div>
+<div class="container" style="background-color: #f5f5f5!important;height:100%;width:90%;padding: 0;margin-top: 10px;padding:0;">
+    <div class="u-full-width-brown">
+        <form method="POST">
+            <input type="text" name="j1" ng-model="addjudges.j1" placeholder="Judge 1">
+            <input type="text" name="j2" ng-model="addjudges.j2" placeholder="Judge 2">
+            <input type="text" name="j3" ng-model="addjudges.j3" placeholder="Judge 3">
+            <input type="text" name="j4" ng-model="addjudges.j4" placeholder="Judge 4">
+            <input type="text" name="j5" ng-model="addjudges.j5" placeholder="Judge 5">
+            <input type="text" name="j6" ng-model="addjudges.j6" placeholder="Judge 6">
+         <button type="submit" name="submit" class="button-primary" ng-click="addJudges()">Set Judges</button>
+       </form>
+  </div>
+</div>

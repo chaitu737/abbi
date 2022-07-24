@@ -1,0 +1,29 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Bulk Contacts</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-init="BulkContact()">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Member Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="bc in bcs">
+                <td><span ng-bind="bc.membername"></span></td>
+                <td><span ng-bind="bc.Email"></span></td>
+                <td><span ng-bind="bc.Phone"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

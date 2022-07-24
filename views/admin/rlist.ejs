@@ -1,0 +1,122 @@
+<style>
+    a:hover{
+      color: darkred!important;
+      text-decoration: none;
+    }
+    .biggerline {
+    font-size: 150%;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+.menubar {
+    background-color: #dedede;
+    padding-left: 7px;
+    border-radius: 6px;
+    height: 30px;
+    margin-bottom: 10px;
+    width: 300px;
+    padding-top: 4px;
+    color: black;
+}
+.bigline {
+    font-size: 125%;
+}
+a:visited {
+    color: darkblue;
+    text-decoration: none;
+}
+.menubar:hover {
+    background-color: #d0ffff;
+}
+body {
+    font-size: 1.5em;
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: 'Work Sans', sans-serif;
+    color: #111111;
+    word-wrap: break-word;
+    margin: 0;
+    background-color: whitesmoke;
+}
+.datasmall {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 90%;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 0.5em;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+th {
+    padding: 3px 6px;
+    background-color: lightskyblue;
+    border: 1px solid #E1E1E1;
+}
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+.datasmall {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 90%;
+}
+h5 {
+    font-size: 1.8rem;
+    line-height: 1.5;
+    letter-spacing: .05rem;
+}
+h5 {
+    font-size: 2.4rem;
+}
+  </style>
+ 
+  <div class="container" style="background-color: #dedede!important;box-sizing: border-box;border: 1px solid slategrey;padding: 10px;margin-bottom: 1rem;margin-top: 1rem;
+  height:100%;width:90%;padding: 10px;height: 90px;" ng-init="getData()">
+    <p class="u-full-width-bbc medline menucolor" id="blankbar" >
+      <span class="fancyline biggerline" style="font-size: 150%;">ABBI Comp. Results Admin</span><br>
+      <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/eventhome">home</a> |
+       <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/resupxml">Import Jpad Save File</a> | 
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/classlink">Result Table</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="https://www.abbireg.com/competition/boss/bull_boss.php">events</a> |
+   <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/handlerlist">animals</a> |
+  </div>
+  <div  class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 0;margin-top: 0;">
+    <h5 style="margin: 0;padding: 0 10px;">Past Events / Results Lists</h5>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 0;margin-top: 0;margin-top: 10px;padding: 10px;background-color: white!important;">
+    <table class="datasmall">
+        <tbody>
+            <tr>
+        <th>Parent Event</th>
+        <th>Date</th>
+        <th>rslt outs</th>
+        <th>Payout</th>
+        <!-- <th>-</th> -->
+        </tr>
+        <tr ng-repeat="obj in tableData;">
+            <!-- href="/competition/boss/event_view.php?pevid=691" -->
+            <td><a style="cursor:pointer" ng-click="redirect(obj.pevid)">{{obj.pevid}} - {{obj.city}}, {{obj.state}} {{obj.sanction}}</a></td>
+            <td>{{obj.startday | date:'MMM d, y'}}</td>
+            <td align="center">{{obj.rslts_outs}}</td>
+            <td align="left">{{obj.Payout | number : 3}}</td>
+            <!-- <td align="center"></td> -->
+           </tr>
+        </tbody></table>
+  </div>
+  

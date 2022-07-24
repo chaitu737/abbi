@@ -1,0 +1,573 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Edit Member</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-init="SearchEditMemberData1()">
+  <form ng-repeat="searchedit in searchedits">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center" style="color:#2f2fdc;">Personal Details</h3>
+      </div>
+      <!-- <div class="col-sm-6 form-group">
+        <label>Payment Id</label>
+        <input type="text" class="form-control" ng-model="searchedit.PaymentId">
+      </div> -->
+      <div class="col-sm-6 form-group">
+        <label>First Name</label>
+        <input type="text" class="form-control" ng-model="searchedit.FirstName">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Last Name</label>
+        <input type="text" class="form-control" ng-model="searchedit.LastName">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Member Number</label>
+        <input type="text" class="form-control" ng-model="searchedit.MemberNumber">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Ranch</label>
+        <input type="text" class="form-control" ng-model="searchedit.RanchName">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" ng-model="searchedit.Email">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label>Type</label>
+        <select class="form-control" ng-model="searchedit.Type">
+          <option value=""> - Select one - </option>
+          <option selected="selected" value="Lifetime">Lifetime</option>
+          <option value="Standard">Standard</option>
+          <option value="Junior">Junior</option>
+          <option value="Media">Media</option>
+          <option value="ABHR">American Bucking Horse(ABHR)</option>
+          <option value="Premium">Premium</option>
+          <option value="USBBA Member">USBBA Member</option>
+          <option value="Inactive">Inactive</option>
+          <option value="Non Member">Non Member</option>
+          <option value="Veterinarian">Veterinarian</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="text-center" style="color:#2f2fdc;">Contact Information</h3>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Address</label>
+          <input type="text" placeholder="Address" class="form-control" ng-model="searchedit.Address">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>City</label>
+          <input type="text" placeholder="City" class="form-control" ng-model="searchedit.City">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>State</label>
+          <input type="text" placeholder="State" class="form-control" ng-model="searchedit.State">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Zip Code</label>
+          <input type="text" placeholder="Zip Code" class="form-control" ng-model="searchedit.Zip">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Country</label>
+          <select class="form-control" ng-model="searchedit.Country">
+            <option value="">- Select a Country -</option>
+            <option selected="selected" value="US">UNITED STATES</option>
+            <option value="AU">AUSTRALIA</option>
+            <option value="BR">BRAZIL</option>
+            <option value="CA">CANADA</option>
+            <option value="MX">MEXICO</option>
+            <option value="NZ">NEW ZEALAND</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Phone</label>
+          <input type="tel" placeholder="Phone" class="form-control" ng-model="searchedit.Phone">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Alt Phone</label>
+          <input type="tel" placeholder="Alt phone" class="form-control" ng-model="searchedit.AltPhone">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Office</label>
+          <input type="tel" placeholder="Office Phone" class="form-control" ng-model="searchedit.Office">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Fax</label>
+          <input type="tel" placeholder="FAX" class="form-control" ng-model="searchedit.Fax">
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Notes</label>
+          <textarea class="form-control" ng-model="searchedit.Notes"></textarea>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="col-sm-12 form-group">
+          <label>Join Date</label>
+          <span class="form-control" ng-bind="searchedit.JoinDate"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Due Date</label>
+          <span class="form-control" ng-bind="searchedit.DueDate"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Paid Date</label>
+          <span class="form-control" ng-bind="searchedit.PaidDate"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label>Updated Date</label>
+          <span class="form-control" ng-bind="searchedit.updated"></span>
+        </div>
+      </div>
+    </div style="white-space: nowrap;">
+    <input class="btn btn-color" type="submit" ng-click="SearchUpdateMemberData(searchedit);SendUpdateMemberData(searchedit)" value="Update">
+    <a href="#!searchmembers" class="btn btn-color">Exit</a>
+
+    <div ng-if="salength == 1" class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" data-target="#inventory1">Inventory</a></li>
+        <li><a data-toggle="tab" data-target=".previous1">Previous</a></li>
+        <li><a data-toggle="tab" data-target=".deceased1">Deceased</a></li>
+        <li><a data-toggle="tab" data-target=".security">Security</a></li>
+        <li><a data-toggle="tab" data-target=".partner">Partners</a></li>
+        <li><a data-toggle="tab" data-target=".emails">Emails</a></li>
+        <li><a data-toggle="tab" data-target=".notifications">Email Notification</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="inventory1">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" data-target="#IABBI">ABBI</a></li>
+            <li><a data-toggle="tab" data-target="#IABHR">ABHR</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade align" id="IABHR">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <h1>No Data Found</h1>
+              </div>
+            </div>
+            <div class="tab-pane fade in active" id="IABBI">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <br>
+                      <div>
+                        <button class="btn btn-color" ng-click="ShowAll(searchedit)">Show All Animals</button>
+                      </div>
+                      <br>
+                      <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>Reg No#</th>
+                            <th>Name</th>
+                            <th>Stats(outs, avg mark)</th>
+                            <th>Herd#</th>
+                            <th>Birth Date</th>
+                            <th>Sex</th>
+                            <th>Sire Name</th>
+                            <th>Dam Name</th>
+                            <th>DNA Status</th>
+                            <th>Last Updated</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="inventory in inventorydata">
+                            <td><a href="#!editanimals/{{inventory.RegNo}}"><span ng-bind="inventory.RegNo"></span></a></td>
+                            <td><span ng-bind="inventory.Animal"></span></td>
+                            <td><span ng-bind="inventory.avgmark"></span></td>
+                            <td><span ng-bind="inventory.PrivateHerd"></span></td>
+                            <td><span ng-bind="inventory.Birthdate | date:'MM/dd/yyyy'"></span></td>
+                            <td><span ng-bind="inventory.TypeService"></span></td>
+                            <td><span ng-bind="inventory.Sire"></span></td>
+                            <td><span ng-bind="inventory.Dam"></span></td>
+                            <td><span ng-bind="inventory.Status"></span></td>
+                            <td><span ng-bind="inventory.Lastupdate | date:'MM/dd/yyyy'"></span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade previous1">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" data-target="#IABBI1">ABBI</a></li>
+            <li><a data-toggle="tab" data-target="#IABHR1">ABHR</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade align" id="IABHR1">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <h1>No Data Found</h1>
+              </div>
+            </div>
+            <div class="tab-pane fade active in" id="IABBI1">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                      <thead>
+                        <tr>
+                          <th>Reg No#</th>
+                          <th>Name</th>
+                          <th>Herd#</th>
+                          <th>Birth Date</th>
+                          <th>Sex</th>
+                          <th>Sire Name</th>
+                          <th>Dam Name</th>
+                          <th>Owner</th>
+                          <th>DNA Status</th>
+                          <th>Last Updated</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="pre in previousdata">
+                          <td><a href="#!editanimals/{{pre.RegNo}}"><span ng-bind="pre.RegNo"></span></a></span></td>
+                          <td><span ng-bind="pre.Animal"></span></td>
+                          <td><span ng-bind="pre.PrivateHerd"></span></td>
+                          <td><span ng-bind="pre.Birthdate | date:'MM/dd/yyyy'"></span></td>
+                          <td><span ng-bind="pre.TypeService"></span></td>
+                          <td><span ng-bind="pre.Sire"></span></td>
+                          <td><span ng-bind="pre.Dam"></span></td>
+                          <td><span ng-bind="pre.MemberName"></span></td>
+                          <td><span ng-bind="pre.Status"></span></td>
+                          <td><span ng-bind="pre.Lastupdate | date:'MM/dd/yyyy'"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade deceased1">
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" data-target="#IABBI2">ABBI</a></li>
+            <li><a data-toggle="tab" data-target="#IABHR2">ABHR</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade align" id="IABHR2">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <h1>No Data Found</h1>
+              </div>
+            </div>
+            
+            <div class="tab-pane fade active in" id="IABBI2">
+              <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                        <thead>
+                          <tr>
+                            <th>Reg No#</th>
+                            <th>Name</th>
+                            <th>Herd#</th>
+                            <th>Birth Date</th>
+                            <th>Sex</th>
+                            <th>Sire Name</th>
+                            <th>Dam Name</th>
+                            <th>DNA Status</th>
+                            <th>Last Updated</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="dec in deceaseddata">
+                            <td><a href="#!editanimals/{{dec.RegNo}}"><span ng-bind="dec.RegNo"></span></a></td>
+                            <td><span ng-bind="dec.Animal"></span></td>
+                            <td><span ng-bind="dec.PrivateHerd"></span></td>
+                            <td><span ng-bind="dec.Birthdate | date:'MM/dd/yyyy'"></span></td>
+                            <td><span ng-bind="dec.TypeService"></span></td>
+                            <td><span ng-bind="dec.Sire"></span></td>
+                            <td><span ng-bind="dec.Dam"></span></td>
+                            <td><span ng-bind="dec.Status"></span></td>
+                            <td><span ng-bind="dec.Lastupdate | date:'MM/dd/yyyy'"></span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade align" id="IABHR2">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                <h1>No Data Found</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade security">
+          <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+            <div class="col-sm-6 form-group">
+              <label>Username</label>
+              <input type="text" ng-model="searchedit.UserName" class="form-control">
+            </div>
+            <div class="col-sm-6 form-group">
+              <label>Password</label>
+              <input type="text" ng-model="searchedit.Password" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade partner">
+          <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+            <input type="button" class="btn btn-color" data-target="#AddPartner1" data-toggle="modal" value="Add Partner">
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-init="ViewPartners(searchedit)">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Phones</th>
+                          <th>Address</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="part in partners">
+                          <td><span ng-bind="part.LastName"></span>,<span ng-bind="part.FirstName"></span></td>
+                          <td><span ng-bind="part.Phone"></span><br><span ng-bind="part.CellPhone"></span></td>
+                          <td><span ng-bind="part.Address"></span>,<br><span ng-bind="part.City"></span>,<span ng-bind="part.State"></span>,<span ng-bind="part.Zip"></span>,<br><span ng-bind="part.Country"></span></td>
+                          <td>
+                            <i title="Edit" class="btn btn-warning fa fa-edit" data-target="#AddPartner2" ng-click="getpartnerdata(part)" data-toggle="modal"></i>
+                            <i title="Delete" class="btn btn-danger fa fa-trash" ng-click="RemovePartners(part)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="AddPartner2" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal">×</button>
+                    <h4 class="modal-title text-center">Edit Partner</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container edge" style="height:100%;width:100%;padding: 10px;">
+                      <form class="form-group">
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>First Name </label>
+                            <input type="text" class="form-control" ng-model="editprt.FirstName">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Last Name  </label>
+                            <input type="text" class="form-control" ng-model="editprt.LastName">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Email   </label>
+                            <input type="email" class="form-control" ng-model="editprt.Email">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Address </label>
+                            <input type="text" class="form-control" ng-model="editprt.Address">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>City    </label>
+                            <input type="text" class="form-control" ng-model="editprt.City">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>State  </label>
+                            <input type="text" class="form-control" ng-model="editprt.State">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Zip     </label>
+                            <input type="text" class="form-control" ng-model="editprt.Zip">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Country  </label>
+                            <select class="form-control" ng-model="editprt.Country">
+                              <option value="-1">- Select a Country -</option>
+                              <option value="US">UNITED STATES</option>
+                              <option value="AU">AUSTRALIA</option>
+                              <option value="BR">BRAZIL</option>
+                              <option value="CA">CANADA</option>
+                              <option value="MX">MEXICO</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Phone (H)     </label>
+                            <input type="tel" class="form-control" ng-model="editprt.Phone">
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                            <label>Phone (C)  </label>
+                            <input type="tel" class="form-control" ng-model="editprt.CellPhone">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <button class="btn btn-color" ng-click="editPartners(editprt)">Update</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="AddPartner1" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button class="close" type="button" data-dismiss="modal">×</button>
+                  <h4 class="modal-title text-center">Add Partner</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="container edge" style="height:100%;width:100%;padding: 10px;">
+                    <form class="form-group">
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>First Name </label>
+                          <input type="text" class="form-control" ng-model="addpartner.fname">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Last Name  </label>
+                          <input type="text" class="form-control" ng-model="addpartner.lname">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Email   </label>
+                          <input type="email" class="form-control" ng-model="addpartner.email">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Address </label>
+                          <input type="text" class="form-control" ng-model="addpartner.address">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>City    </label>
+                          <input type="text" class="form-control" ng-model="addpartner.city">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>State  </label>
+                          <input type="text" class="form-control" ng-model="addpartner.state">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Zip     </label>
+                          <input type="text" class="form-control" ng-model="addpartner.zip">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Country  </label>
+                          <select class="form-control" ng-model="addpartner.country">
+                            <option value="-1">- Select a Country -</option>
+                            <option value="US">UNITED STATES</option>
+                            <option value="AU">AUSTRALIA</option>
+                            <option value="BR">BRAZIL</option>
+                            <option value="CA">CANADA</option>
+                            <option value="MX">MEXICO</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Phone (H)     </label>
+                          <input type="tel" class="form-control" ng-model="addpartner.phoneh">
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                          <label>Phone (C)  </label>
+                          <input type="tel" class="form-control" ng-model="addpartner.phonec">
+                        </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                          <button class="btn btn-color" ng-click="addPartners(addpartner)">Save</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade notifications">
+          <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered nowrap">
+                    <thead>
+                      <tr>
+                        <th>Reg No</th>
+                        <th>Created Date</th>
+                        <th>Sent Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="emailnotification in emailnotifications">
+                        <td><span ng-bind="emailnotification.AnimalID"></span></td>
+                        <td><span ng-bind="emailnotification.DateCreated | date:'MM/dd/yyyy'"></span></td>
+                        <td><span ng-bind="emailnotification.DateSent | date:'MM/dd/yyyy'"></span></td>  
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade emails">
+          <div class="container border" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered nowrap">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Sent By</th>
+                        <th>Sent To</th>
+                        <th>Message</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="email in emails">
+                        <td><span ng-bind="email.SentDate | date:'MM/dd/yyyy'"></span></td>
+                        <td><span ng-bind="email.SentByMember"></span></td>
+                        <td><span ng-bind="email.SentToMember"></span></td>  
+                        <td><span ng-bind="email.Message"></span></td> 
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,1049 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Edit Animal</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-hide="eworkorderform">
+  <div class=" edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 69px;">
+    <form >
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-init="updatemember()">
+          <label>Member: </label>
+          <input class="form-control" type="text" ng-model="searchanimallist.member" list="names">
+            <datalist id="names" ng-model="MemberNumber">
+              <option ng-repeat="member in members | filter:searchanimallist.member | limitTo:8" value="{{member.MemberNumber}} - {{member.MemberName}}"></option>
+            </datalist>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="form-group">
+            <label>Ranch Names </label>
+            <select class="form-control" ng-model="searchanimallist.RanchName" ng-click="updateranch()">
+              <option value="">--Select One--</option>
+              <option ng-repeat="ranch in ranches" value="{{ranch.RanchName}}">{{ranch.RanchName}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="form-group">
+            <label>Status</label>
+            <select class="form-control" ng-model="searchanimallist.Status">
+              <option value="">--Select One--</option>
+              <option value="Complete">Complete</option>
+              <option value="Waiting For Samples">Waiting For Samples</option>
+              <option value="Waiting For Samples - Overdue">Waiting For Samples - Overdue</option>
+              <option value="Waiting For Samples and Dam Auth.">Waiting For Samples and Dam Auth.</option>
+              <option value="Waiting For Dam Auth.">Waiting For Dam Auth.</option>
+              <option value="Cataloged">Cataloged</option>
+              <option value="Pending">Pending</option>
+              <option value="Complete-DNA Sire">Complete-DNA Sire</option>
+              <option value="Complete-DNA Dam">Complete-DNA Dam</option>
+              <option value="Complete-No Match">Complete-No Match</option>
+              <option value="Failed Testing">Failed Testing</option>
+              <option value="Failed Testing-Waiting For Dam Auth.">Failed Testing-Waiting For Dam Auth.</option>
+              <option value="Resubmit">Resubmit</option>
+              <option value="Deceased">Deceased</option>
+              <option value="Research">Research</option>
+              <option value="Pending-BR">Pending-BR</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <button class="btn btn-color" ng-click="searchanimal(searchanimallist)" style="margin-right:20px;">View Animals</button>
+          <button class="btn btn-color" ng-click="resetSearchAnimal(searchanimallist)" style="margin-right:20px;">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+          <input type="text" class="form-control" placeholder="Search" ng-model="vm.Search" ng-change="searchEditAnimal(vm)"/>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Reg No#</th>
+              <th>Name</th>
+              <th>Herd#</th>
+              <th>Birth Date</th>
+              <th>Sex</th>
+              <th>Sire #</th>
+              <th>Dam #</th>
+              <th>Member Name</th>
+              <th>DNA Status</th>
+              <th>Sold</th>
+              <th>Last Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="animal in animallist">
+              <td><a href="#!editanimals/{{animal.RegNo}}"><span ng-bind="animal.RegNo"></span></a></td>
+              <td><span ng-bind="animal.Animal"></span></td>
+              <td><span ng-bind="animal.PrivateHerd"></span></td>
+              <td><span ng-bind="animal.Birthdate | date:'MM/dd/yyyy'"></span></td>
+              <td><span ng-bind="animal.TypeService"></span></td>
+              <td><span ng-bind="animal.SireRegNo"></span></td>
+              <td><span ng-bind="animal.DamRegNo"></span></td>
+              <td><span ng-bind="animal.MemberName"></span></td>
+              <td><span ng-bind="animal.Status"></span></td>
+              <td><span ng-if="animal.sold==true"><img height="50" width="50" src="../images/sold.gif" alt="Sold"></span></td>
+              <td><span ng-bind="animal.LastUpdated | date:'MM/dd/yyyy'"></span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="dataTables_wrapper no-footer" ng-if="animallist.length > 0">
+          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="pagination pagination-centered" ng-show="animallist[0].xCount" style="margin: 0;">
+          <ul class="pagination-controle pagination">
+           <li>
+            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0"
+           ng-click="curPage=curPage-1;searchanimal();" style="float: left;"> &lt; PREV</button>
+           </li>
+           <li>
+           <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+           </li>
+           <li>
+           <button type="button" class="btn btn-primary"
+           ng-disabled="curPage >= animallist[0].xCount/pageSize - 1"
+           ng-click="curPage = curPage+1;searchanimal();" >NEXT &gt;</button>
+           </li>
+          </ul>
+          </div>
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="height:100%;width:100%;padding: 10px;" ng-show="editworkorder" print-remove>
+    <form>
+      <div class="container edge" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+        <h3 class="text-center text-primary">Work Order # : {{ework.WorkOrderNumber}}</h3>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label>Member</label>
+                <div ng-hide="showwork">
+                  <input type="text" class="form-control" ng-model="ework.MemberNumber" ng-focus="showwork=true;">
+                </div>
+                <div ng-show="showwork">
+                  <input type="text" class="form-control" ng-model="ework.MemberNumber" ng-change="SearchBreeder(ework.MemberName)">
+                  <div class="items" ng-show="isSelected">
+                    <p ng-click="selectItem(item.MemberNumber)" ng-repeat='item in items'>{{item.Membername}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="form-group">
+                <label>WO Date</label>
+                <input type="text" ng-model="ework.CreatedDate" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="container edge" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+        <h3 class="text-center text-primary">Billing Information</h3>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" class="form-control" ng-model="ework.FirstName">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" class="form-control" ng-model="ework.LastName">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" class="form-control" ng-model="ework.Email">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" class="form-control" ng-model="ework.Phone">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Membership Type</label>
+              <span class="bg-danger" ng-bind="ework.Type"></span>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Membership Due</label>
+              <input type="text" class="form-control" ng-model="ework.DueDate">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <label>Address</label>
+              <textarea class="form-control" ng-model="ework.BillingAddress"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" class="form-control" ng-model="ework.BillingCity">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>State</label>
+              <input type="text" class="form-control" ng-model="ework.BillingState">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Zip Code</label>
+              <input type="text" class="form-control" ng-model="ework.BillingZip">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Country</label>
+              <input type="text" class="form-control" ng-model="ework.BillingCountry">
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="container edge table-responsive" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped report" ng-repeat="head in heading | unique : 'Header'">
+                <thead>
+                  <tr>
+                    <th width="100px">Complete</th>
+                    <th width="500px"><span>{{head.Header}}</span></th>
+                    <th width="100px">Quantity</th>
+                    <th width="100px">Price ($)</th>
+                    <th width="100px">Postage</th>
+                    <th width="100px">Type</th>
+                    <th width="100px">Subtotal ($)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-if="head.Categoryid==eworks.Categoryid" ng-repeat="eworks in ework1">
+                    <td width="100px" ng-if="eworks.Quantity==null">
+                    </td>
+                    <td width="100px" ng-if="eworks.Quantity > 0">
+                      <input type="checkbox" ng-model="eworks.LineItemComplete">
+                    </td>
+                    <td width="500px">
+                      <span ng-bind="eworks.Description"></span>
+                    </td>
+                    <td ng-if="eworks.NewBreederOnly==true"><input class="form-control" type="number" ng-change="ChangeValue(eworks,ework)" ng-model="eworks.Quantity" disabled=""></td>
+                    <td ng-if="eworks.NewBreederOnly==false"><input class="form-control" type="number" ng-change="ChangeValue(eworks,ework)" ng-model="eworks.Quantity"></td>
+                    <td ng-if="eworks.NewBreederOnly==true"><input class="form-control" type="number" ng-change="ChangeValue(eworks,ework)" ng-model="eworks.Price" disabled=""></td>
+                    <td ng-if="eworks.NewBreederOnly==false"><input class="form-control" type="number" ng-change="ChangeValue(eworks,ework)" ng-model="eworks.Price"></td>
+                    <td ng-if="eworks.ItemPostage">
+                      <span ng-bind="eworks.postage"></span>
+                      <input type="checkbox" ng-model="eworks.ItemPostage" ng-true-value="1" ng-false-value="0">
+                    </td>
+                    <td ng-if="!eworks.ItemPostage">
+                      <span ng-bind="eworks.postage"></span>
+                    </td>
+                    <td><span ng-bind="eworks.ItemPostageType"></span></td>
+                    <td ng-if="eworks.NewBreederOnly==true"><input class="form-control" type="number" ng-model="eworks.SubTotal" disabled=""></td>
+                    <td ng-if="eworks.NewBreederOnly==false"><input class="form-control" type="number" ng-model="eworks.SubTotal"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div ng-if="ework.MRP!= 0" class="table-responsive">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table ng-if="ework.Type!='Premium' && ework.Type!='Veterinarian' && ework.Type!='Lifetime' && ework.Status != 'Open' && ework.Status != 'Open - Problem'" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Membership</th>
+                      <th>Quantity</th>
+                      <th>Price ($)</th>
+                      <th>Postage</th>
+                      <th>Type</th>
+                      <th>Subtotal ($)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <span>Renew Membership</span>
+                      </td>
+                      <td>
+                        <input type="checkbox" checked="" disabled>
+                      </td>
+                      <td ng-bind="ework.MembershipRenewalPrice"></td>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <input class="form-control" type="number" ng-model="ework.MembershipRenewalPrice">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div ng-if="ework.Status=='Open' || ework.Status=='Open - Problem'" class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Membership</th>
+                      <th>Quantity</th>
+                      <th>Price ($)</th>
+                      <th>Postage</th>
+                      <th>Type</th>
+                      <th>Subtotal ($)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <span>Renew Membership</span>
+                      </td>
+                      <td ng-if="MembershipRenewalPrice == ''">
+                        <input type="checkbox">
+                      </td>
+                      <td ng-if="MembershipRenewalPrice != ''">
+                        <input type="checkbox" checked="">
+                      </td>
+                      <td ng-bind="ework.MRP"></td>
+                      <td></td>
+                      <td></td>
+                      <td ng-if="ework.Type=='Standard'">
+                        <input class="form-control" type="number" ng-model="ework.MRP">
+                      </td>
+                      <td ng-if="ework.Type!='Standard'">
+                        <input class="form-control" type="number">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td>
+                        <span>Upgrade Membership</span>
+                      </td>
+                      <td colspan="4" ng-if="ework.Type!='Standard' && ework.Type!='Junior'">
+                        <select ng-model="ework6.Account">
+                          <option value="0">--Select Upgrade--</option>
+                          <option value="1250">Lifetime Membership Premium Member</option>
+                        </select>
+                      </td>
+                      <td colspan="4" ng-if="ework.Type=='Standard' || ework.Type=='Junior'">
+                        <select ng-model="ework6.Account">
+                          <option value="0">Select Upgrade</option>
+                          <option value="175">1 year Premium Membership</option>
+                          <option value="1250">Lifetime Membership Premium Member</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input class="form-control" type="text" ng-init="ework6.SubTotal1=0" ng-model="ework6.SubTotal1">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="text-align:right; margin-right:15px;">
+          <label>Handling Fee ($)</label>
+          <input type="text" ng-model="ework.HandlingAmt">
+        </div>
+        <div class="row" style="text-align:right; margin-right:15px;">
+          <label>Total ($)</label>
+          <input type="text" ng-model="ework.TotalPriceAmt"> 
+        </div>
+      </div>
+      <br>
+      <div class="container edge" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-if="ework.category.indexOf('Products') != -1 || ework.category.indexOf('DNA Kits') != -1">
+        <h3 class="text-center text-primary">Shipping Information</h3>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" class="form-control" ng-model="ework.ShippingFirstName">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" class="form-control" ng-model="ework.ShippingLastName">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" class="form-control" ng-model="ework.ShippingCity">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>State</label>
+              <input type="text" class="form-control" ng-model="ework.ShippingState">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Zip Code</label>
+              <input type="text" class="form-control" ng-model="ework.ShippingZip">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Country</label>
+              <input type="text" class="form-control" ng-model="ework.ShippingCountry">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Address</label>
+              <textarea class="form-control" rows="5" ng-model="ework.ShippingAddress"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="container edge" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-if="ework.category.indexOf('Products') != -1 || ework.category.indexOf('DNA') != -1">
+        <h3 class="text-center text-primary">Calculated Shipping</h3>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Cost ($)</label>
+              <input type="text" ng-model="ework.ShippingAmt" disabled="">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <label>Type</label>
+              <input type="text" ng-model="ework.ShippingType" disabled="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="container edge" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="text-center text-primary">Admin</h3>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Status</label>
+            <div ng-hide="showstatus">
+              <input class="form-control" type="text" ng-model="ework.Status" ng-focus="showstatus=true;StatusDropdown()">
+            </div>
+            <div ng-show="showstatus">
+              <select class="form-control" ng-model="ework.Status">
+                <option ng-repeat="stat in status" ng-value="{{stat.status}}">{{stat.status}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6 form-group" ng-if="ework.Assignto==id">
+            <label>Assigned To</label>
+            <select class="form-control" ng-model="ework.AssignedTo" ng-click="assignedto()">
+              <option ng-repeat="ass in assigned" ng-value="{{ass.userid}}">{{ass.UserName}}</option>
+            </select>
+          </div>
+          <div class="col-sm-6 form-group" ng-if="ework.Assignto!=id">
+            <label>Assigned To</label>
+            {{fname}} {{lname}}
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Payment ID</label>
+            <a class="abc" href="#" ng-bind="ework.PaymentId" ng-click="GetWorkOrder(ework)"></a>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Payment Info</label>
+            <span ng-if="ework.PaymentDate || ework.PaymentRanBy">Processed on {{ework.PaymentDate | date:'MM/dd/yyyy'}}, Payment Ran By {{ework.PaymentRanBy}}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 form-group">
+            <label>Notes</label>
+            <textarea ng-model="ework.Notes" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="row" print-remove>
+          <div class="col-sm-12 form-group">
+            <input type="submit" class="btn btn-color" ng-click="UpdateWorkOrder(ework1);UpdateWorkOrder1(ework);UpdateWorkOrder2(ework1,ework)" value="save">
+            <button class="btn btn-color" print-btn>Print</button>
+            <input type="submit" class="btn btn-color" ng-click="editworkorder=false;showworkorder=false;addworkorder=false" name="" value="Exit">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="container-fluid" style="height:100%;width:80%;padding: 10px;visibility: hidden; position:absolute" print-section>
+    <div class="row col-md-12 text-center">
+      <b><h2>Work Order : {{ework.WorkOrderNumber}}</h2></b>
+    </div>
+    <br>
+    <div class="row col-md-12" style="border:1px solid black">
+      <div class="row col-md-4">
+        <label>W/O Date : {{ework.CreatedDate | date:'MM/dd/yyyy'}}</label>
+        <label>Member : {{ework.FirstName}} {{ework.LastName}}</label>
+      </div>
+      <div class="col-md-4">
+        <u><b>Billing : </b></u>
+        <br>
+        <br>
+        <label>Member Number: {{ework.MemberNumber}}</label>
+        <br>
+        <br>
+        <label>{{ework.FirstName}} {{ework.LastName}}</label>
+        <br>
+        <br>
+        <label>{{ework.BillingAddress}}</label>
+        <br>
+        <br>
+        <label>{{ework.BillingCity}}, {{ework.BillingState}}, {{ework.BillingZip}}</label>
+        <br>
+        <br>
+        <label>{{ework.BillingCountry}}</label>
+        <br>
+        <br>
+        <label>{{ework.Email}}</label>
+        <br>
+        <br>
+        <label>{{ework.Phone}}</label>
+      </div>
+      <div class="col-md-4">
+        <u><b>Shipping : </b></u>
+        <br>
+        <br>
+        <label>{{ework.ShippingAddress}}</label>
+        <br>
+        <br>
+        <label>{{ework.ShippingCity}} {{ework.ShippingState}} {{ework.ShippingZip}}</label>
+        <br>
+        <br>
+        <label>{{ework.ShippingCountry}}</label>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row col-md-12" style="border:1px solid black">
+      <div class="row">
+        <table class="table table-bordered table-striped report" ng-repeat="head in heading | unique : 'Header'">
+          <thead>
+            <tr>
+              <th style="background-color: #fff !important;" width="100px">Complete</th>
+              <th style="background-color: #fff !important;" width="500px"><span>{{head.Header}}</span></th>
+              <th style="background-color: #fff !important;" width="100px">Quantity</th>
+              <th style="background-color: #fff !important;" width="100px">Price ($)</th>
+              <th style="background-color: #fff !important;" width="100px">Postage</th>
+              <th style="background-color: #fff !important;" width="100px">Type</th>
+              <th style="background-color: #fff !important;" width="100px">Subtotal ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-if="head.Categoryid==eworks.Categoryid" ng-repeat="eworks in ework1">
+              <td width="100px" ng-if="eworks.Quantity==null">
+              </td>
+              <td width="100px" ng-if="eworks.Quantity > 0">
+                <input type="checkbox" ng-model="eworks.LineItemComplete">
+              </td>
+              <td width="500px">
+                <span ng-bind="eworks.Description"></span>
+              </td>
+              <td ng-if="eworks.NewBreederOnly==true"><input class="form-control" type="number" ng-change="ChangeValue(eworks,ework,ework6)" ng-model="eworks.Quantity" disabled=""></td>
+              <td ng-if="eworks.NewBreederOnly==false"><input class="form-control" type="number" ng-change="ChangeValue(eworks,ework,ework6)" ng-model="eworks.Quantity"></td>
+              <td ng-if="eworks.NewBreederOnly==true"><input class="form-control" type="number" ng-change="ChangeValue(eworks,ework,ework6)" ng-model="eworks.Price" disabled=""></td>
+              <td ng-if="eworks.NewBreederOnly==false"><input class="form-control" type="number" ng-change="ChangeValue(eworks,ework,ework6)" ng-model="eworks.Price"></td>
+              <td ng-if="eworks.ItemPostage">
+                <span ng-bind="eworks.postage"></span>
+                <input type="checkbox" ng-model="eworks.ItemPostage" ng-true-value="1" ng-false-value="0">
+              </td>
+              <td ng-if="!eworks.ItemPostage">
+                <span ng-bind="eworks.postage"></span>
+              </td>
+              <td><span ng-bind="eworks.ItemPostageType"></span></td>
+              <td ng-if="eworks.NewBreederOnly==true"><input class="form-control" type="number" ng-model="eworks.SubTotal" disabled=""></td>
+              <td ng-if="eworks.NewBreederOnly==false"><input class="form-control" type="number" ng-model="eworks.SubTotal"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div ng-if="ework.MRP != 0" class="table-responsive">
+          <table ng-if="ework.Type!='Premium' && ework.Type!='Veterinarian' && ework.Type!='Lifetime' && ework.Status != 'Open' && ework.Status != 'Open - Problem'" class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="background-color: #fff !important;"></th>
+                <th style="background-color: #fff !important;">Membership</th>
+                <th style="background-color: #fff !important;">Quantity</th>
+                <th style="background-color: #fff !important;">Price ($)</th>
+                <th style="background-color: #fff !important;">Postage</th>
+                <th style="background-color: #fff !important;">Type</th>
+                <th style="background-color: #fff !important;">Subtotal ($)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td>
+                  <span>Renew Membership</span>
+                </td>
+                <td>
+                  <input type="checkbox" checked="" disabled>
+                </td>
+                <td ng-bind="ework.MembershipRenewalPrice | currency"></td>
+                <td></td>
+                <td></td>
+                <td ng-bind="ework.MembershipRenewalPrice | currency"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div ng-if="ework.Status=='Open' || ework.Status=='Open - Problem'" class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="background-color: #fff !important;"></th>
+                <th style="background-color: #fff !important;">Membership</th>
+                <th style="background-color: #fff !important;">Quantity</th>
+                <th style="background-color: #fff !important;">Price ($)</th>
+                <th style="background-color: #fff !important;">Postage</th>
+                <th style="background-color: #fff !important;">Type</th>
+                <th style="background-color: #fff !important;">Subtotal ($)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td>
+                  <span>Renew Membership</span>
+                </td>
+                <td ng-if="MembershipRenewalPrice == ''">
+                  <input type="checkbox">
+                </td>
+                <td ng-if="MembershipRenewalPrice != ''">
+                  <input type="checkbox" checked="">
+                </td>
+                <td ng-bind="ework.MRP"></td>
+                <td></td>
+                <td></td>
+                <td ng-if="ework.Type=='Standard'">
+                  <input class="form-control" type="number" ng-model="ework.MRP" ng-blur="ChangeValue(eworks,ework,ework6)">
+                </td>
+                <td ng-if="ework.Type!='Standard'">
+                  <input class="form-control" type="number" ng-model="ework.MRP" ng-blur="ChangeValue(eworks,ework,ework6)">
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>
+                  <span>Upgrade Membership</span>
+                </td>
+                <td colspan="4" ng-if="ework.Type!='Standard' && ework.Type!='Junior'">
+                  <select ng-model="ework6.Account" ng-change="ChangeValue(eworks,ework,ework6)">
+                    <option value="0">--Select Upgrade--</option>
+                    <option value="1250">Lifetime Membership Premium Member</option>
+                  </select>
+                </td>
+                <td colspan="4" ng-if="ework.Type=='Standard' || ework.Type=='Junior'">
+                  <select ng-model="ework6.Account" ng-change="ChangeValue(eworks,ework,ework6)">
+                    <option value="0">Select Upgrade</option>
+                    <option value="175">1 year Premium Membership</option>
+                    <option value="1250">Lifetime Membership Premium Member</option>
+                  </select>
+                </td>
+                <td>
+                  <input class="form-control" type="text" ng-init="ework6.SubTotal1=0" ng-model="ework6.SubTotal1">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row" style="text-align:right; margin-right:15px;">
+          <label>Handling Fee</label>
+          <span class="bcd" ng-bind="ework.HandlingAmt | currency"></span>
+        </div>
+        <div class="row" style="text-align:right; margin-right:15px;">
+          <label>Total</label>
+          <span class="bcd" ng-bind="ework.TotalPriceAmt | currency"></span>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row col-md-12" style="border:1px solid black">
+      <h3 class="text-center">Admin</h3>
+      <div class="col-md-4">
+        <label>Status: {{ework.Status}}</label>
+        <br>
+        <br>
+        <label>Payment ID: {{ework.PaymentId}}</label>
+        <br>
+        <br>
+        <label>Notes: {{ework.Notes}}</label>
+      </div>
+      <div class="col-md-8">
+        <label>Assigned To: {{fname}} {{lname}}</label>
+        <br>
+        <br>
+        <label>Payment Info: Processed on {{ework.PaymentDate | date:'MM/dd/yyyy'}}, Payment Ran By {{ework.PaymentRanBy}}</label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="isHide1" id="printscreen">
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+      <label>Category : </label>
+      <span style="color:red; font-size:21px;" ng-bind="emps.Category"></span>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+      <label>Date : </label>
+      <span style="color:black" ng-bind="emps.PaymentDate | date : MM/dd/yyyy"></span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+      <label>Member Name : </label>
+      <span style="color:black" ng-bind="emps.MemberName"></span>
+      <br>
+      <span style="color:black" ng-bind="emps.Address"></span>
+      <br>
+      <span style="color:black" ng-bind="emps.City"></span>
+      <br>
+      <span style="color:black" ng-bind="emps.state"></span>,
+      <span style="color:black" ng-bind="emps.Country"></span>,
+      <span style="color:black" ng-bind="emps.Zip"></span>
+      <br>
+      <span style="color:black" ng-bind="emps.Phone"></span>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+      <label>Assigned To : </label>
+      <span style="color:black" ng-bind="wods.AssignTo"></span>
+    </div>
+  </div>
+  <br>
+  <hr>
+  <br>
+  <div>
+    <label>Work Order :</label>
+    <span style="color:black" ng-bind="wods.WorkOrderNumber"></span>
+    <br>
+    <label>Work Order Date :</label>
+    <span style="color:black" ng-bind="wods.WorkOrderDate | date : 'MM/dd/yyyy'"></span>
+  </div>
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" ng-repeat="wotab1 in wotable1 | unique : 'Header'">
+          <thead>
+            <tr>
+              <th><span ng-bind="wotab1.Header"></span></th>
+              <th>Quantity</th>
+              <th>Price ($)</th>
+              <th>Postage</th>
+              <th>Subtotal ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span ng-bind="wotab1.Description"></span></td>
+              <td><span ng-bind="wotab1.Quantity"></span></td>
+              <td><span ng-bind="wotab1.Price | currency"></span></td>
+              <td><span ng-bind="wotab1.postage"></span></td>
+              <td><span ng-bind="wotab1.SubTotal | currency"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap">
+          <thead>
+            <tr>
+              <th width="500px">Membership</th>
+              <th>Quantity</th>
+              <th>Price ($)</th>
+              <th>Postage</th>
+              <th>Subtotal ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="wom1 in wom">
+              <td><span ng-bind="wom1.Description"></span></td>
+              <td><span ng-bind="wom1.type"></span></td>
+              <td><span ng-bind="wom1.Price | currency"></span></td>
+              <td><span ng-bind="wom1.postage"></span></td>
+              <td><span ng-bind="wom1.Subtotal | currency"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <h2>Payment Information</h2>
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-6 col-xs-6">
+      <label> Amount ($)</label>
+      <br>
+      <input type="number" placeholder="Subtotal" ng-model="emps.SubtotalAmt" ng-change="CalculateCount2(emps)">+
+      <input type="number" placeholder="Handling" ng-model="emps.HandlingFeeAmt" ng-change="CalculateCount2(emps)">+
+      <input type="number" placeholder="Discount" ng-model="emps.DiscountAmt" ng-change="CalculateCount2(emps)">=<input type="number" ng-model="emps.PaymentAmount">
+    </div>
+  </div>
+  <br>
+  <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+    <label>Payment Type</label>
+    <select name="type" ng-model="PaymentType.Payment" class="form-control">
+      <option ng-option selected="selected" value="">-Select One-</option>
+      <option ng-option value="VI">Visa</option>
+      <option ng-option value="MC">Master Card</option>
+      <option ng-option value="AMEX">American Express</option>
+      <option ng-option value="Discover">Discover</option>
+      <option ng-option value="Auth.Net">Authorize.Net</option>
+      <option ng-option value="Check">Check</option>
+      <option ng-option value="eCheck">e-Check</option>
+      <option ng-option value="Money Order">Money Order</option>
+      <option ng-option value="Cashier Check">Cashier Check</option>
+    </select>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button type="button" class="btn btn-color" style="float: right;" ng-click="HideAdditional(emps)" print-hide>Add Additional Payment</button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+      <label>Status</label>
+      <select name="type" ng-model="emps.Status" class="form-control">
+        <option ng-option value="Open">Open</option>
+        <option ng-option value="Close">Close</option>
+        <option ng-option value="Declined">Declined</option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+      <label> Order Description <span style="color:black">(in addition to line items)</span> </label>
+      <textarea class="form-control"></textarea>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+      <label>Admin Notes</label>
+      <textarea ng-model="emps.Notes" class="form-control"></textarea>
+    </div>
+  </div>
+  <br>
+  <button class="btn btn-color" ng-click="AddAni(emps)" print-hide>Add Animal</button>
+  <button class="btn btn-color" ng-click="ExitAddPay()">Back</button>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="additional">
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+      <label>Category : </label>
+      <span style="color:red; font-size:21px;" ng-bind="emps.Category"></span>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+      <label>Date : </label>
+      <span style="color:black" ng-bind="emps.PaymentDate | date : MM/dd/yyyy"></span>
+    </div>
+  </div>
+  <br>
+  <div>
+    <h2 style="text-align: center;color: #2c3e50;font-variant: all-petite-caps;">Billing Information</h2>
+    <div class="col-md-12">
+      <div class="col-md-6">
+        <label>Member Name :</label>
+        <input type="text" class="form-control" ng-model="gais.MemberName">
+        <label>Member Id :</label>
+        <input type="text" class="form-control" ng-model="gais.MemberID">
+        <label>Membership Type :</label>
+        <input type="text" class="form-control" ng-model="gais.MembershipType">
+        <label>Membership Due :</label>
+        <span class="form-control" ng-bind="gais.PaymentDate | date : 'MM/dd/yyyy'"></span>
+        <label>Email :</label>
+        <input type="text" class="form-control" ng-model="gais.Email">
+        <label>Phone :</label>
+        <input type="text" class="form-control" ng-model="gais.Phone">
+      </div>
+      <div class="col-md-6">
+        <label>Address :</label>
+        <input type="text" class="form-control" ng-model="gais.Address">
+        <label>City :</label>
+        <input type="text" class="form-control" ng-model="gais.City">
+        <label>State :</label>
+        <input type="text" class="form-control" ng-model="gais.State">
+        <label>Zip Code :</label>
+        <input type="text" class="form-control" ng-model="gais.Zip">
+        <label>Country :</label>
+        <input type="text" class="form-control" ng-model="gais.Country">
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <h2 style="text-align: center;color: #2c3e50;font-variant: all-petite-caps;">Payment Information</h2>
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-6 col-xs-6">
+      <label> Amount ($)</label>
+      <input type="number" placeholder="Subtotal" ng-model="additional.SubtotalAmt" ng-blur="CalculateCount3(additional)">+
+      <input type="number" placeholder="Handling" ng-model="additional.HandlingFeeAmt" ng-blur="CalculateCount3(additional)">+
+      <input type="number" placeholder="Discount" ng-model="additional.DiscountAmt" ng-blur="CalculateCount3(additional)">=<input type="number" ng-model="additional.PaymentAmount">
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+      <label>Payment Type</label>
+      <select name="type" ng-model="PaymentType.Payment" class="form-control">
+        <option ng-option selected="selected" value="">-Select One-</option>
+        <option ng-option value="VI">Visa</option>
+        <option ng-option value="MC">Master Card</option>
+        <option ng-option value="AMEX">American Express</option>
+        <option ng-option value="Discover">Discover</option>
+        <option ng-option value="Auth.Net">Authorize.Net</option>
+        <option ng-option value="Check">Check</option>
+        <option ng-option value="eCheck">e-Check</option>
+        <option ng-option value="Money Order">Money Order</option>
+        <option ng-option value="Cashier Check">Cashier Check</option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2"></div>
+    <div ng-if="PaymentType.Payment == 'undefined' ||PaymentType.Payment == '-1' || PaymentType.Payment == 'VI' || PaymentType.Payment == 'MC' || PaymentType.Payment == 'AMEX' || PaymentType.Payment == 'Discover' || PaymentType.Payment == 'Check' ||  PaymentType.Payment == 'Money Order' || PaymentType.Payment == 'Cashier Check'">
+      <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Credit Card No</label>
+          <input type="number" placeholder="Credit Card No." class="form-control" ng-model="PaymentType.cc">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Exp. (MM/YY)</label>
+          <input type="text" placeholder="Exp. (MM/YY)" class="form-control" ng-model="PaymentType.expire">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Sec Code</label>
+          <input type="number" placeholder="Sec Code" class="form-control" ng-model="PaymentType.cvv">
+        </div>
+      </div>
+    </div>
+    <div ng-if="PaymentType.Payment == 'Auth.Net'">
+      <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Credit Card No</label>
+          <input type="number" placeholder="Credit Card No." class="form-control" ng-model="PaymentType.cc">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Exp. (MM/YY)</label>
+          <input type="text" placeholder="Exp. (MM/YY)" class="form-control" ng-model="PaymentType.expire">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Sec Code</label>
+          <input type="number" placeholder="Sec Code" class="form-control" ng-model="PaymentType.cvv">
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+          <label>Auth No.</label>
+          <input type="number" placeholder="Auth No." class="form-control" ng-model="PaymentType.authno">
+        </div>
+      </div>
+    </div>
+    <div ng-if="PaymentType.Payment == 'eCheck'">
+      <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label> Account No</label>
+          <input type="number" placeholder="Account No." class="form-control" ng-model="PaymentType.accno">
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label>Account Holder's Name</label>
+          <input type="number" placeholder="Account Holder's Name.." class="form-control" ng-model="PaymentType.acname">
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label>Account Type</label>
+          <select class="form-control" ng-model="PaymentType.actype">
+            <option> Checking</option>
+            <option> Savings</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10" style="float: right;">
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label>ABA Routing No.</label>
+          <input type="number" placeholder="ABA Routing No." class="form-control" ng-model="PaymentType.aba">
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+          <label>Bank Name</label>
+          <input type="number" placeholder="Bank Name.." class="form-control" ng-model="PaymentType.bank">
+        </div>
+      </div>
+    </div>
+  </div>
+  <span style="color:red" ng-bind="additional.CCMessage" ng-if="additional.Category=='Online Store'"></span>
+  <br>
+  <div class="row">
+    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+      <label>Status</label>
+      <select name="type" ng-model="additional.Status" class="form-control">
+        <option ng-option value="Open">Open</option>
+        <option ng-option value="Close">Close</option>
+        <option ng-option value="Declined">Declined</option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+      <label> Order Description <span style="color:black">(in addition to line items)</span> </label>
+      <textarea class="form-control"></textarea>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+      <label>Admin Notes</label>
+      <textarea ng-model="additional.Notes" class="form-control"></textarea>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+      <button type="button" class="btn btn-color" ng-click="AdditionalMemberPayments(emps,PaymentType,additional)">Save</button>
+      <button type="button" class="btn btn-color" ng-click="ExitAdditional()">Exit</button>
+    </div>
+  </div>
+</div>

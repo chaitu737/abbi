@@ -1,0 +1,15 @@
+<div class="text-center">
+    <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">EID Order Import</h2>
+  </div>
+  <div class="container edge" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+    <div class="row">
+      <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 form-group">
+        <label>Upload File: </label>
+        <input type="file" class="form-control" ngf-select="SelectFile($file)" />
+        <a class="abc" href="../uploads/OrderImport/sample.xls">Download Format</a> <br/>
+        
+        <p class="text-danger">**Note: Must be in Excel 97-2003 format (*.xls)</p><br/>
+        <input type="button" class="btn btn-color" value="Upload" ng-click="Upload()" />
+      </div>
+    </div>
+  </div>

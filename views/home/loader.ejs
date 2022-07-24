@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="no-js">
+
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv="refresh" content="2;url=home">
+  <title>ABBI - Loader</title>
+  <style>
+    /* This only works with JavaScript, 
+       if it's not present, don't show loader */
+    .no-js #loader { display: none;  }
+    .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+    .centerImage{
+       text-align:center;
+       display:block;
+      }
+  </style>
+  <script>
+    // Wait for window load
+    $(window).load(function() {
+      // Animate loader off screen
+      $("#loader").animate({
+        top: -200
+      }, 1500);
+    });
+  </script> 
+</head>
+
+<body>
+    <img src="https://www.animatedimages.org/data/media/637/animated-bull-image-0001.gif" class="centerImage" alt="ABBI" />
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Contact Us</h2>
+</div>
+<div class="container" style="height:100%;padding: 10px;">
+  <div class="row">
+    <div class="container">
+      <div class="contact-parent">
+        <div class="contact-child child1">
+          <p>
+            <i class="fa fa-map-marker"></i> Address <br />
+            <span> 101 W. Riverwalk</span>
+            <br />
+            <span>Pueblo, Colorado 81003</span>
+          </p>
+          <p>
+            <i class="fa fa-phone"></i> Let's Talk <br />
+            <span> (719) 242-2747</span>
+          </p>
+          <p>
+            <i class="fa fa-envelope"></i> General Support <br />
+            <span>info@americanbuckingbull.com</span>
+          </p>
+        </div>
+        <div class="contact-child child2">
+          <div class="inside-contact">
+            <h2>Contact Us</h2>
+            <h3><span id="confirm"></h3>
+              <form>
+                <p>Name *</p>
+                <input id="txt_name" type="text" ng-model="contact.name">
+                <p>Email *</p>
+                <input id="txt_email" type="text" ng-model="contact.email">
+                <p>Phone *</p>
+                <input id="txt_phone" type="text" ng-model="contact.phone">
+                <p>Subject *</p>
+                <input id="txt_subject" type="text" ng-model="contact.subject">
+                <p>Message *</p>
+                <textarea id="txt_message" rows="4" cols="20" ng-model="contact.message"></textarea>
+                <input type="submit" ng-click="ContactInfo(contact)">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

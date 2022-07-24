@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Print Work Order</title>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script> -->
+  <script src="angular/js/jquery.js"></script>
+  <script src="angular/js/jquery.min.js"></script>
+  <script src="angular/js/bootstrap.min.js"></script>
+  <script src="angular/js/jquery-ui-1.9.2.custom.min.js"></script>
+  <script src="angular/js/jquery.ui.touch-punch.min.js"></script>
+   <script src="angular/js/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="angular/js/jquery.scrollTo.min.js"></script>
+  <script src="angular/js/jquery.nicescroll.js"></script>
+  <script type="text/javascript" src="angular/js/jquery-ui.js"></script>
+  <!--datatables-->
+  <script src="angular/js/angular.min.js"></script>
+  <script src="angular/js/angular-ui.min.js"></script>
+  <script src="angular/js/angular-datatables.buttons.min.js"></script>
+  <script src="angular/js/angular-datatables.min.js"></script>
+  <script src="angular/js/jquery.dataTables.min.js"></script>
+  <script src="angular/js/dataTables.buttons.min.js"></script>
+  <script src="angular/js/buttons.colVis.min.js"></script>
+  <script src="angular/js/buttons.flash.min.js"></script>
+  <script src="angular/js/buttons.print.min.js"></script>
+  <script src="angular/js/buttons.html5.min.js"></script>
+  <!-- common script and datatables for all pages-->
+  <script src="angular/js/common-scripts.js"></script>
+  <!--angular scripts-->
+  <script src="angular/js/angular-route.js"></script>
+  <script src="angular/js/angularprint.js"></script>
+  <!-- Custom JS -->
+  <!-- <script src="javascripts/login.js"></script> -->
+  <script src="angular/printwo.js"></script>
+</head>
+
+<body>
+  <div ng-app="printwoapp" print-section>
+    <div  ng-init="getWorkOrderNo()" ng-controller="PrintWorkOrderController">
+    <span ></span><br>
+    
+    <h1>Work Order: 
+    <span>{{queryDict.number}}</span></h1>
+    Work Order Date:
+    <span>{{printdata.WorkOrderDate | date : 'MM/dd/yyyy'}}</span>
+    <button class="btn btn-color" print-remove print-btn ng-click="hideBtn()" ng-show="printBtn">Print</button>
+    <br>
+    <table width="100%" style="border: solid 1px black;"  >
+    <tbody><tr>
+      <td valign="top">Member:</td>
+      <td valign="top"><span >Member Number: {{printdata.MemberNumber}}<br>{{printdata.BillingAddress}}<br>{{printdata.BillingCity}}<br>{{printdata.BillingState}},{{printdata.BillingZip}}<br>US{{printdata.BillingCountry}}<br>{{printdata.Email}}<br>{{printdata.Phone}}</span></td>
+      <td valign="top">Shipping:</td>
+      <td valign="top"><span > {{printdata.ShippingAddress}}<br>{{printdata.ShippingCity}}<br>{{printdata.ShippingState}},{{printdata.ShippingZip}}<br>US{{printdata.ShippingCountry}}<br>{{printdata.Email}}<br>{{printdata.Phone}}</span></td>
+    </tr>
+    </tbody></table><br><br>
+    <table  width="100%" cellspacing="0" cellpadding="2" style="border-collapse: collapse" style="border: solid 1px black;" class="table table-bordered table-striped report" ng-repeat="head in headingData | unique : 'Category'">
+      <thead>
+        <tr>
+          <td style="border: solid 1px gray; background-color: #D3D3D3;" width="100px">Complete</td>
+          <td style="border: solid 1px gray; background-color: #D3D3D3;" width="500px"><span>{{head.Category}}</span></td>
+          <td style="border: solid 1px gray; background-color: #D3D3D3;" width="100px">Quantity</td>
+          <td style="border: solid 1px gray; background-color: #D3D3D3;" width="100px">Price ($)</td>
+          <td style="border: solid 1px gray; background-color: #D3D3D3;" width="100px">Postage</td>
+          <td style="border: solid 1px gray; background-color: #D3D3D3;" width="100px">Subtotal ($)</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-if="head.CategoryId==eworks.CategoryId" ng-repeat="eworks in columnData">
+          <td width="100px" ng-if="eworks.Quantity==null">
+          </td>
+          <td width="100px" ng-if="eworks.Quantity > 0" style="border: solid 1px gray; text-align:center;">
+            <input type="checkbox" ng-model="eworks.LineItemComplete" style="border: solid 1px gray; text-align:center;">
+          </td>
+          <td width="500px" style="border: solid 1px gray;">
+            <span ng-bind="eworks.Description"></span>
+          </td>
+          <td ng-if="head.CategoryId==eworks.CategoryId" style="border: solid 1px gray; text-align: center; width: 50px;"><span    ng-bind="eworks.Quantity" ></span></td>
+          <td style="border: solid 1px gray; text-align: center; width: 50px;"><span ng-bind="eworks.Price" ></span></td>
+          <td style="border: solid 1px gray; text-align: center; width: 50px;"><span ng-bind="eworks.Postage"></span></td>
+          <td style="border: solid 1px gray; text-align: right; width: 75px;"><span ng-bind="eworks.subtotal"></span></td>
+        </tr>
+      </tbody>
+    </table>
+        <table width="100%" cellspacing="0" cellpadding="2" style="border-collapse: collapse">
+        <tbody>
+    
+        <tr>
+          <td  colspan="5" style="text-align: right; border: solid 1px black; font-weight: bold; padding-right: 4px;width : 385px">
+            Handling
+          </td>
+    
+          <td style="text-align: right; border: solid 1px black; font-weight: bold; ">
+            <span >{{printdata.HandlingFeeAmt}}</span>
+          </td>
+        </tr>
+                  
+        <tr>
+          <td  colspan="3" style="text-align: right; border: solid 2px black; font-size: larger;
+            font-weight: bold; padding-right: 4px;">
+            Total
+          </td>
+    
+          <td colspan="3" style="text-align: right; border: solid 2px black; font-size: larger; font-weight: bold; ">
+            $<span >{{printdata.TotalPrice
+              }}</span>
+          </td>
+        </tr>
+        </tbody></table>
+      
+    <div id="pnlWOAdmin" style="width:100%;">
+    <fieldset>
+    <legend>
+    Admin
+    </legend>
+      <table width="100%" cellpadding="2px">
+        <tbody><tr>
+          <td>
+            Status:
+    
+            <span >{{printdata.Status}}</span>
+          </td>
+          <td>
+            Assigned To:
+    
+            <span >{{printdata.Assignedto}}</span>
+            <span >By: {{printdata.AssignedBy}}</span>
+          </td>
+        </tr>
+        <tr id="trPaymentInfo">
+    <td>Payment ID: <a >{{printdata.PaymentId}}</a>
+          </td>
+    <td>Payment Info: <span >{{printdata.PaymentInfo}}</span>
+          </td>
+    </tr>
+    
+        <tr>
+          <td colspan="2">
+            Notes:
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <textarea ng-model="printdata.Notes" rows="5" cols="20" readonly="readonly"  style="border-width:0px;border-style:None;width:90%;"></textarea>
+          </td>
+        </tr>
+      </tbody></table>
+    
+    
+    </fieldset>
+    </div>
+    </div> 
+    </div>
+  </body>
+  </html>
+ 

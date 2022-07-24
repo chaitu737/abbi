@@ -1,0 +1,123 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">WorkOrder Prices</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="row"> <br />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <label>Pricing Year</label>
+      <select class="form-control" ng-model="PriceYear.Year" ng-init="PriceYear.Year = null;GetPyCat()">
+        <option value="null">--Select One--</option>
+        <option ng-repeat="Py in Priceyear" ng-value="{{Py.PricingYear}}">{{Py.PricingYear}}</option>
+      </select>
+      <br>
+      <label>Category</label>
+      <select class="form-control" ng-model="PriceYear.Cid" ng-init="PriceYear.Cid = null; GetPyCat()">
+        <option value="null">--Select One--</option>
+        <option ng-repeat="cat in Category" ng-value="{{cat.CategoryId}}">{{cat.Category}}</option>
+      </select>
+      <br>
+      <button class="btn btn-color" type="button" data-toggle="modal" data-target="#workop">Add Work Order Price</button>
+      <button class="btn btn-color" type="button" ng-click="ResetWOPrice(PriceYear)">Reset</button>
+    </div>
+  </div>
+  <div id="workop" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">New Work Order Price</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container" style="background-color: white;height:100%;width:90%;padding: 10px;">
+            <form>
+              <label>Category</label>
+              <select class="form-control" ng-model="addwop.cat">
+                <option ng-repeat="cat in Category" ng-value="{{cat.CategoryId}}">{{cat.Category}}</option>
+              </select>
+              <label>Pricing Year</label>
+              <input class="form-control" type="text" ng-model="addwop.year">
+              <label>Description</label>
+              <input class="form-control" type="text" ng-model="addwop.desc">
+              <label>Price ($)</label>
+              <input class="form-control" type="text" ng-model="addwop.price">
+              <label>Item Postage ($)</label>
+              <input class="form-control" type="text" ng-model="addwop.postage">
+              <label>Item Postage Type</label>
+              <select class="form-control" ng-model="addwop.type">
+                <option value="">--Select One--</option>
+                <option value="Calculated">Calculated</option>
+                <option value="Order">Order</option>
+              </select>
+              <label>New Breeder Only</label>
+              <input class="form-control" type="checkbox" ng-model="addwop.breeder">
+              <br>
+              <button class="btn btn-color" ng-click="NewWOPrice(addwop)">Save</button>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default" ng-init="ViewWop(PriceYear);">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Pricing Year</th>
+              <th>Description</th>
+              <th>Price ($)</th>
+              <th>Item Postage ($)</th>
+              <th>Item Postage Type</th>
+              <th>New Breeder Only</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="vwp in vwop">
+              <td>
+                <input ng-show="showwo" type="text" ng-model="vwp.Category" disabled="">
+                <span ng-hide="showwo" ng-bind="vwp.Category"></span>
+              </td>
+              <td>
+                <input ng-show="showwo" type="text" ng-model="vwp.PricingYear">
+                <span ng-hide="showwo" ng-bind="vwp.PricingYear"></span>
+              </td>
+              <td>
+                <input ng-show="showwo" type="text" ng-model="vwp.Description">
+                <span ng-hide="showwo" ng-bind="vwp.Description"></span>
+              </td>
+              <td>
+                <input ng-show="showwo" type="number" ng-model="vwp.Price">
+                <span ng-hide="showwo" ng-bind="vwp.Price | currency"></span>
+              </td>
+              <td>
+                <input ng-show="showwo" type="number" ng-model="vwp.ItemPostage">
+                <span ng-hide="showwo" ng-bind="vwp.ItemPostage | currency"></span>
+              </td>
+              <td>
+                <select ng-show="showwo" ng-model="vwp.ItemPostageType">
+                  <option value=""></option>
+                  <option value="Order">Order</option>
+                  <option value="Calculated">Calculated</option>
+                </select>
+                <span ng-hide="showwo" ng-bind="vwp.ItemPostageType"></span>
+              </td>
+              <td>
+                <input ng-show="showwo" type="text" ng-model="vwp.NewBreederOnly">
+                <span ng-hide="showwo" ng-bind="vwp.NewBreederOnly"></span>
+              </td>
+              <td>
+                <i ng-hide="showwo" title="Edit" class="btn btn-warning fa fa-edit" ng-click="showwo=true"></i>
+                <i ng-show="showwo" title="Update" class="btn btn-primary fa fa-check" ng-click="UpdateWOPrices(vwp);showwo=false"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>    
+</div>

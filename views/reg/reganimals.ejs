@@ -1,0 +1,301 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Add Animals</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="editanim">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">{{ands.bno}} {{ands.bname}} ({{ands.birthyear}})</h2>
+    <div class="col-md-12">
+      <div class="col-md-6">
+        Owner : {{ands.owner}}<br><br>
+        Handler : {{ands.handler}}<br><br>
+        Register : {{ands.regno}}<br><br>
+        EID Tag : {{ands.eartag}}
+      </div>
+      <div class="col-md-6">
+        Born : {{ands.birthyear}}<br><br>
+        2021 competition age : <br><br>
+        Delivery : {{ands.del}}<br><br>
+        Last Updated : {{ands.loadtime | date:'MM-dd-yyyy hh:mm a'}} 
+      </div>
+      <br>
+      <div class="col-md-12">
+        <div class="col-md-6">
+          <b><a ng-click="OutsStandings(ands)">Outs & Standings Data</a></b>
+        </div>
+      </div>
+      <br>
+      <div class="col-md-12">
+        <br>
+        <button class="btn btn-color" ng-click="EditAnimal(ands)">Edit Animal Record</button>
+        <button class="btn btn-color" ng-click="ExitEditAnimal()">Back</button>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="editanimal">
+    <div ng-if="alertd == true" class="alert alert-success alert-dismissible">
+      <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Updated Successfully!</strong>
+    </div>
+    <div ng-if="alertd == false" class="alert alert-danger alert-dismissible">
+      <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Error! Please try again later.</strong>
+    </div>
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">Edit Animal Record</h2>
+    <br>
+    <p>This tool has no effect on an animal's ABBI Registration record. It only changes the way they are represented in the BBC Entry System.</p>
+    <br>
+    <form class="form-group">
+      <label>ABBI #</label>
+      <input type="text" class="form-control" ng-model="eas.regno">
+      <label>EID/Ear Tag#</label>
+      <input type="text" class="form-control" ng-model="eas.eartag">
+      <label>PBS Id/Code</label>
+      <input type="text" class="form-control" ng-model="eas.pbid">
+      <label>Brand #</label>
+      <input type="text" class="form-control" ng-model="eas.bno">
+      <label>Animal Name</label>
+      <input type="text" class="form-control" ng-model="eas.bname">
+      <label>Owner</label>
+      <input type="text" class="form-control" ng-model="eas.owner">
+      <label>Handler</label>
+      <input type="text" class="form-control" ng-model="eas.handler">
+      <label>Delivery</label>
+      <input type="text" class="form-control" ng-model="eas.del">
+      <label>Birth year</label>
+      <input type="text" class="form-control" ng-model="eas.birthyear">
+      <br>
+      <button class="btn btn-color" ng-click="UpdateAnimal(eas)">Update Animal</button>
+      <button class="btn btn-color" ng-click="ExitEditAnimal()">Back</button>
+    </form>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="outstand">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">Season Standing data for bbcid {{outs[0].bbcid}}</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Regno</th>
+                <th>Bno</th>
+                <th>Bname</th>
+                <th>Owner</th>
+                <th>Bbcid</th>
+                <th>Outid</th>
+                <th>Score</th>
+                <th>Place</th>
+                <th>Evid</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Sanction</th>
+                <th>Evclass</th>
+                <th>Evtype</th>
+                <th>Divcode</th>
+                <th>Money</th>
+                <th>Amoney</th>
+                <th>Opoints</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="out in outs">
+                <td><span ng-bind="out.regno"></span></td>
+                <td><span ng-bind="out.bno"></span></td>
+                <td><span ng-bind="out.bname"></span></td>
+                <td><span ng-bind="out.owner"></span></td>
+                <td><span ng-bind="out.bbcid"></span></td>
+                <td><span ng-bind="out.outid"></span></td>
+                <td><span ng-bind="out.score"></span></td>
+                <td><span ng-bind="out.place"></span></td>
+                <td><span ng-bind="out.evid"></span></td>
+                <td><span ng-bind="out.city"></span></td>
+                <td><span ng-bind="out.state"></span></td>
+                <td><span ng-bind="out.sanction"></span></td>
+                <td><span ng-bind="out.evclass"></span></td>
+                <td><span ng-bind="out.evtype"></span></td>
+                <td><span ng-bind="out.divcode"></span></td>
+                <td><span ng-bind="out.money"></span></td>
+                <td><span ng-bind="out.amoney"></span></td>
+                <td><span ng-bind="out.opoints"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">System Outs for bbcid {{outs[0].bbcid}}</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Season</th>
+                <th>Outid</th>
+                <th>Pevid</th>
+                <th>Entid</th>
+                <th>Regno</th>
+                <th>Pbid</th>
+                <th>Bbcid</th>
+                <th>Bno</th>
+                <th>Bname</th>
+                <th>Owner</th>
+                <th>Del</th>
+                <th>J1</th>
+                <th>J2</th>
+                <th>J3</th>
+                <th>J4</th>
+                <th>J5</th>
+                <th>J6</th>
+                <th>bot</th>
+                <th>Raw Score</th>
+                <th>Dropped Judge</th>
+                <th>Droped Score</th>
+                <th>Spread</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="out1 in outs1">
+                <td><span ng-bind="out1.season"></span></td>
+                <td><span ng-bind="out1.outid"></span></td>
+                <td><span ng-bind="out1.pevid"></span></td>
+                <td><span ng-bind="out1.entid"></span></td>
+                <td><span ng-bind="out1.regno"></span></td>
+                <td><span ng-bind="out1.pbid"></span></td>
+                <td><span ng-bind="out1.bbcid"></span></td>
+                <td><span ng-bind="out1.bno"></span></td>
+                <td><span ng-bind="out1.bname"></span></td>
+                <td><span ng-bind="out1.owner"></span></td>
+                <td><span ng-bind="out1.del"></span></td>
+                <td><span ng-bind="out1.j1"></span></td>
+                <td><span ng-bind="out1.j2"></span></td>
+                <td><span ng-bind="out1.j3"></span></td>
+                <td><span ng-bind="out1.j4"></span></td>
+                <td><span ng-bind="out1.j5"></span></td>
+                <td><span ng-bind="out1.j6"></span></td>
+                <td><span ng-bind="out1.bot"></span></td>
+                <td><span ng-bind="out1.raw_score"></span></td>
+                <td><span ng-bind="out1.dropped_judge"></span></td>
+                <td><span ng-bind="out1.dropped_score"></span></td>
+                <td><span ng-bind="out1.spread"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px;">Compiled Standing data for bbcid {{outs[0].bbcid}}</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Rowid</th>
+                <th>Mpos</th>
+                <th>Ppos</th>
+                <th>Oppos</th>
+                <th>Bbcid</th>
+                <th>Season</th>
+                <th>Division</th>
+                <th>Money</th>
+                <th>Point Total</th>
+                <th>Point Average</th>
+                <th>Opoint Total</th>
+                <th>Outcount</th>
+                <th>Qoutcount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="out2 in outs2">
+                <td><span ng-bind="out2.rowid"></span></td>
+                <td><span ng-bind="out2.mpos"></span></td>
+                <td><span ng-bind="out2.ppos"></span></td>
+                <td><span ng-bind="out2.oppos"></span></td>
+                <td><span ng-bind="out2.bbcid"></span></td>
+                <td><span ng-bind="out2.division"></span></td>
+                <td><span ng-bind="out2.Money"></span></td>
+                <td><span ng-bind="out2.point_ttl"></span></td>
+                <td><span ng-bind="out2.point_avg"></span></td>
+                <td><span ng-bind="out2.opoint_ttl"></span></td>
+                <td><span ng-bind="out2."></span></td>
+                <td><span ng-bind="out2.outcount"></span></td>
+                <td><span ng-bind="out2.qoutcount"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="btn btn-color" ng-click="ExitEditAnimal()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-hide="searchanimal">
+    <form ng-init="AnimalCount()">
+      <label>Search Animal -- ({{ac.count}} animals in pool)</label>
+      <input type="search" class="form-control" ng-model="searchani.animal" placeholder="Search by Name, Brand or Owner">
+      <br>
+      <button class="btn btn-color" ng-click="SearchAnimals(searchani)">Search</button>
+      <input type="reset" class="btn btn-color" value="Clear">
+      <button class="btn btn-color" ng-click="AddnewAnimal()">Add New Animal</button>
+    </form>
+    <br>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Bbcid</th>
+                <th>Reg No</th>
+                <th>Animal</th>
+                <th>Owner</th>
+                <th>Handler</th>
+                <th>Del</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="sa in sas">
+                <td>{{sa.bbcid}}</td>
+                <td>{{sa.regno}}</td>
+                <td><a ng-click=
+                  "EditsAnimal(sa)">{{sa.bno}} {{sa.bname}} ({{sa.birthyear}})</a></td>
+                  <td>{{sa.owner}}</td>
+                  <td>{{sa.handler}}</td>
+                  <td>{{sa.del}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="addani">
+      <form>
+        <h3>Add New Animal</h3>
+        <p>This tool has no effect on an animal's ABBI registration record. It only changes the way they are represented in the BBC Entry System.</p>
+        <label>ABBI#</label>
+        <input type="text" class="form-control" ng-model="addanimal.abbi">
+        <label>EID / Ear Tag#</label>
+        <input type="text" class="form-control" ng-model="addanimal.eid">
+        <label>PBS ID or code #</label>
+        <input type="text" class="form-control" ng-model="addanimal.pbsid">
+        <label>Brand #</label>
+        <input type="text" class="form-control" ng-model="addanimal.brand">
+        <label>Animal Name</label>
+        <input type="text" class="form-control" ng-model="addanimal.name">
+        <label>Owner</label>
+        <input type="text" class="form-control" ng-model="addanimal.owner">
+        <label>Handler</label>
+        <input type="text" class="form-control" ng-model="addanimal.handler">
+        <label>Delivery</label>
+        <input type="text" class="form-control" ng-model="addanimal.del">
+        <label>Birth Year</label>
+        <input type="text" class="form-control" ng-model="addanimal.birth">
+        <br>
+        <button class="btn btn-color" ng-click="AddAnimal(addanimal)">Add Animal</button>
+        <button class="btn btn-color" ng-click="ExitAnimal()">Back</button>
+      </form>
+    </div>
+  </div>

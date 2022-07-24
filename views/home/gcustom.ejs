@@ -1,0 +1,51 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Group Custom Payments</h2>
+</div> 
+<div class="container" style="height:100%;width:90%;padding: 10px;">
+  <form enctype="multipart/form-data">
+    <div class="form-group">
+      <iframe src="{{url}}" width="1000" height="600"></iframe>
+    </div>
+    <div class="card-row">
+      <span class="visa"></span>
+      <span class="mastercard"></span>
+      <span class="amex"></span>
+      <span class="discover"></span>
+    </div>
+    <div class="form-group">
+      <label>Amount : </label>
+      <input class="form-control" ng-model="gcps1.amount" type="text" required="">
+      <span ng-bind="amount | currency"></span>
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea class="null card-image form-control" ng-model="gcps1.notes" required=""></textarea>
+    </div>
+    <div class="form-group">
+      <label>Name on Card</label>
+      <input class="null card-image form-control" ng-model="gcps1.name" type="text" required="">
+    </div>
+    <div class="form-group">
+      <label>Card number</label>
+      <input class="form-control" ng-model="gcps1.cc" type="number" required="">
+    </div>
+    <div class="expiry-date-group form-group">
+      <label>Expiry date</label>
+      <input class="form-control" type="text" placeholder="MM / YY" ng-model="gcps1.expire" maxlength="5" required="">
+    </div>
+    <div class="security-code-group form-group">
+      <label for="SecurityCode">Security code</label>
+      <div class="input-container" >
+        <input id="SecurityCode" class="form-control" type="text" ng-model="gcps1.cvv" required="">
+        <i id="cvc" class="fa fa-question-circle"></i>
+      </div>
+      <div class="cvc-preview-container two-card hide">
+        <div class="amex-cvc-preview"></div>
+        <div class="visa-mc-dis-cvc-preview"></div>
+      </div>
+    </div>
+    <button id="PayButton" class="btn btn-block btn-success submit-button" type="button" ng-click="GCustomPay(gcps1)">
+      <span class="submit-button-lock"></span>
+    </button>
+  </form>
+</div>

@@ -1,0 +1,60 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Event EID Import</h2>
+</div>
+<div class="container edge" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3 style="color:#2f2fdc;">View Import</h3>
+    </div>
+    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 form-group">
+      <label>Import:</label>
+      <select class="form-control" ng-model="eidimport.event" ng-click="EventEIDImportList()">
+        <option ng-repeat="eeil in eeils" value="{{eeil.EventEID_ID}}">{{eeil.ImportDesc}}</option>
+      </select>
+      <br>
+      <a class="abc" href="../uploads/EIDImport/sample.xlsx">Download Format</a>
+      <button class="btn btn-color" ng-click="ShowEIDEventImport(eidimport)">View EID</button>
+    </div>
+  </div>
+  <hr>
+  <div>
+    <form class="form-group" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 style="color:#2f2fdc;">Add Import</h3>
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 form-group">
+          <label>Description:</label>
+          <input type="text" ng-model="addimport.desc" class="form-control" ng-required="true">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 form-group">
+          <label>Event(s): </label>
+          <select class="form-control" ng-init="EIDImportEventList()" ng-model="addimport.events" required="" multiple="">
+            <option ng-repeat="eiel in eiels" value="{{eiel.eventid}}">{{eiel.event}}</option>
+          </select>
+        </div>
+        <p class="text-danger">*Hold contol key and click to select multiple events</p>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 form-group">
+          <label>Scan Date: </label>
+            <input class="form-control" type="date" ng-model-options="{timezone: 'UTC'}" ng-model="addimport.sdate"/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 form-group">
+          <label>Upload File: </label>
+          <input type="file" class="form-control" id="ngexcelfile">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <button class="btn btn-color" ng-click="readExcel(addimport);ParseExcelDataAndSave();AddEIDImport(addimport)">Upload</button> **Note: Must be in Excel 97-2003 format (*.xls)
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

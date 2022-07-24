@@ -1,0 +1,404 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Utilities</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="row"> <br />
+    <div class="col-lg-12">
+      <div class="modal fade" id="newUsers" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" type="button" data-dismiss="modal">×</button>
+              <h4 class="modal-title text-center">New User</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+                  <label>First Name</label>
+                  <input type="text" ng-model="au.FirstName" class="form-control" placeholder="First Name">
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+                  <label>Last Name</label>
+                  <input type="text" ng-model="au.LastName" class="form-control" placeholder="Last Name">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+                  <label>User Name</label>
+                  <input type="text" ng-model="au.UserName" class="form-control" placeholder="User Name">
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+                  <label>Password</label>
+                  <input type="password" ng-model="au.Password" class="form-control" placeholder="Password">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+                  <label>Security Level</label>
+                  <select class="form-control" ng-model="au.SecurityLevel">
+                    <option value="-1">-Select One-</option>
+                    <option value="0">Brazil</option>
+                    <option value="1">Level 1</option>
+                    <option value="2">Level 2</option>
+                    <option value="3">Administrator</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
+                 <button type="button" class="btn btn-color" ng-click="AddUtility(au)">Save</button>
+               </div>
+             </div>
+           </div>
+           <div class="modal-footer">
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+ <div class="row"> <br />
+  <div class="col-lg-12">
+    <div class="modal fade" id="newData12" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal">×</button>
+            <h4 class="modal-title text-center">New User</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="col-sm-12 form-group">
+                    <label>Category:  </label>
+                    <select ng-model="ade.Category" class="form-control">
+                      <option value="">--Choose Category--</option>
+                      <option value="DNA">DNA</option>
+                      <option value="Product">Product</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-12 form-group">
+                    <label>Target:  </label>
+                    <input ng-model="ade.Target" type="text" class="form-control">
+                  </div>
+                  <div class="col-sm-12 form-group">
+                    <label>Association Code:  </label>
+                    <input ng-model="ade.AssociationCode" type="text" class="form-control">
+                  </div>
+                  <div class="col-sm-12 form-group">
+                    <label>Base File Name:  </label>
+                    <input ng-model="ade.BaseFileName" type="password" class="form-control">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="col-sm-12 form-group">
+                    <label>Type:    </label>
+                    <select ng-model="ade.TransferType" class="form-control">
+                      <option value="Email">Email</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-12 form-group">
+                    <label>Copy Target:   </label>
+                    <input ng-model="ade.CopyTarget" type="text" class="form-control">
+                  </div>
+                  <div class="col-sm-12 form-group">
+                    <label>Additional Info:   </label>
+                    <input ng-model="ade.AdditionalInfo" type="checkbox" >
+                  </div>
+                  <div class="col-sm-12 form-group">
+                    <label>Default  </label>
+                    <input ng-model="ade.DefaultExport" type="checkbox" >
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <h3 class="text-center" style="color:#2f2fdc;">Contact Information</h3>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>Company:</label>
+                  <input ng-model="ade.CompanyName" type="text" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>Contact Names: </label>
+                  <input ng-model="ade.ContactNames" type="text" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>Address</label>
+                  <input ng-model="ade.Address" type="text" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>Phone 1</label>
+                  <input ng-model="ade.Phone" type="text" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>City</label>
+                  <input ng-model="ade.City" type="type" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>Alt Phone  </label>
+                  <input ng-model="ade.AltPhone" type="type" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>State  </label>
+                  <input ng-model="ade.State" type="type" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>Fax  </label>
+                  <input ng-model="ade.Fax" type="type" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>Zip Code</label>
+                  <input ng-model="ade.Zip" type="type" class="form-control" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label>Address</label>
+                  <textarea ng-model="ade.notes" class="form-control"></textarea>
+                </div>
+                <div class="col-sm-6 form-group">
+                </div>
+                <div class="col-sm-6 form-group">
+                  <button class="btn btn-color" type="button" ng-click="AddExports(ade)">Save</button>
+                </div>
+              </div style="white-space: nowrap;">
+            </form>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" data-target="#users1">Users</a></li>
+  <li><a data-toggle="tab" data-target="#exports1">Exports</a></li>
+</ul>
+<div class="tab-content" ng-init="ViewUtilities()">
+  <div id="users1" class="tab-pane fade in active">
+    <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+      <button class="btn btn-color" type="button" data-toggle="modal" data-target="#newUsers" ng-click="getdata()">New User</button>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered nowrap" datatable="ng"
+            dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>User Name </th>
+                <th>First Name  </th>
+                <th>Last Name </th>
+                <th>Edit/Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="vu in vus">
+                <td>{{vu.UserName}}</td>
+                <td>{{vu.FirstName}}</td>
+                <td>{{vu.LastName}}</td>
+                <td style="white-space: nowrap;">
+                  <i title="Edit" class="btn btn-warning fa fa-edit" ng-click="editUtilities(vu)"></i>
+                  <i title="Delete" class="btn btn-danger fa fa-trash" ng-click="deleteUtilities(vu)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;" ng-show="showutilities">
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+          <label>First Name</label>
+          <input type="text" ng-model="urp.FirstName" class="form-control" placeholder="First Name">
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+          <label>Last Name</label>
+          <input type="text" ng-model="urp.LastName" class="form-control" placeholder="Last Name">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+          <label>User Name</label>
+          <input type="text" ng-model="urp.UserName" class="form-control" placeholder="User Name">
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+          <label>Password</label>
+          <input type="password" ng-model="urp.Password" class="form-control" placeholder="Password">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12 ">
+          <label>Security Level</label>
+          <select class="form-control" ng-selected="urp.SecurityLevel" ng-model="urp.SecurityLevel">
+            <option value="-1">-Select One-</option>
+            <option value="0">Brazil</option>
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Administrator</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
+         <button type="button" class="btn btn-color" ng-click="UpdateUtilities(urp)">Update</button>
+         <button type="button" class="btn btn-color" ng-click="showutilities = false">Exit</button>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+<div id="exports1" class="tab-pane fade align">
+  <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;padding: 10px;">
+    <button class="btn btn-color" type="button" ng-click="ViewExports()">View Exports</button>
+    <button class="btn btn-color" type="button" data-toggle="modal" data-target="#newData12" ng-click="getdata()">Add New</button>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Adtl Info </th>
+                <th>Company</th>
+                <th>Target</th>
+                <th>Copy</th>
+                <th>Assn. Code</th>
+                <th>Contact</th>
+                <th>Edit/Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="ve in ves">
+                <td style="white-space: nowrap;"><span ng-bind="ve.Category"></span></td>
+                <td style="white-space: nowrap;"><span ng-bind="ve.TransferType"></span></td>
+                <td style="white-space: nowrap;"><span ng-bind="ve.DefaultExport"></span></td>
+                <td style="white-space: nowrap;"><span ng-bind="ve.AdditionalInfo"></span></td>
+                <td style="white-space: nowrap;"><span ng-bind="ve.CompanyName"></span></td>
+                <td style="white-space: nowrap;"><span ng-bind="ve.Target"></span></td>
+                <td style="white-space: nowrap;"><span ng-bind="ve.CopyTarget"></span></td>
+                <td style="white-space: nowrap;"><span ng-bind="ve.AssociationCode"></span></td>
+                <td style="white-space: nowrap;">
+                  {{ve.ContactNames}}<br>
+                  {{ve.Address}}<br>
+                  {{ve.City}}<br>
+                  {{ve.State}}<br>
+                  {{ve.Zip}}<br>
+                  {{ve.Phone}}<br>
+                </td>
+                <td style="white-space: nowrap;">
+                  <i title="Edit" ng-click="EditExports(ve)" class="btn btn-warning fa fa-edit"></i>
+                  <i title="Delete" ng-click="DeleteExports(ve)" class="btn btn-danger fa fa-trash"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;" ng-show="showexports">
+      <form>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="col-sm-12 form-group">
+              <label>Category:  </label>
+              <select ng-model="ede.Category" class="form-control">
+                <option value="">--Choose Category--</option>
+                <option value="DNA">DNA</option>
+                <option value="Product">Product</option>
+              </select>
+            </div>
+            <div class="col-sm-12 form-group">
+              <label>Target:  </label>
+              <input ng-model="ede.Target" type="text" class="form-control">
+            </div>
+            <div class="col-sm-12 form-group">
+              <label>Association Code:  </label>
+              <input ng-model="ede.AssociationCode" type="text" class="form-control">
+            </div>
+            <div class="col-sm-12 form-group">
+              <label>Base File Name:  </label>
+              <input ng-model="ede.BaseFileName" type="password" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="col-sm-12 form-group">
+              <label>Type:    </label>
+              <select ng-model="ede.TransferType" class="form-control">
+                <option value="Email">Email</option>
+              </select>
+            </div>
+            <div class="col-sm-12 form-group">
+              <label>Copy Target:   </label>
+              <input ng-model="ede.CopyTarget" type="text" class="form-control">
+            </div>
+            <div class="col-sm-12 form-group">
+              <label>Additional Info:   </label>
+              <input ng-model="ede.AdditionalInfo" type="checkbox" >
+            </div>
+            <div class="col-sm-12 form-group">
+              <label>Default  </label>
+              <input ng-model="ede.DefaultExport" type="checkbox" >
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="text-center" style="color:#2f2fdc;">Contact Information</h3>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Company:</label>
+            <input ng-model="ede.CompanyName" type="text" class="form-control" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Contact Names: </label>
+            <input ng-model="ede.ContactNames" type="text" class="form-control" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Address</label>
+            <input ng-model="ede.Address" type="text" class="form-control" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Phone 1</label>
+            <input ng-model="ede.Phone" type="text" class="form-control" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>City</label>
+            <input ng-model="ede.City" type="type" class="form-control" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Alt Phone  </label>
+            <input ng-model="ede.AltPhone" type="type" class="form-control" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>State  </label>
+            <input ng-model="ede.State" type="type" class="form-control" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Fax  </label>
+            <input ng-model="ede.Fax" type="type" class="form-control" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Zip Code</label>
+            <input ng-model="ede.Zip" type="type" class="form-control" required>
+          </div>
+          <div class="col-sm-6 form-group">
+            <label>Address</label>
+            <textarea ng-model="ede.notes" class="form-control"></textarea>
+          </div>
+          <div class="col-sm-6 form-group">
+          </div>
+          <div class="col-sm-6 form-group">
+            <button class="btn btn-color" type="button" ng-click="updateExports(ede)">Update</button>
+            <button class="btn btn-color" ng-click="showexports=false" type="button">Exit</button>
+          </div>
+        </div style="white-space: nowrap;">
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sandeep Siva">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta name="keywords" content="bull,futurity, classic, American,bucking,events,schedule,calendar,line-up,lineup" />
+  <meta name="description" content="American Bucking Bull, Inc. is the leading bucking cattle DNA registry in the world. ABBI holds and sanctions competitive events for Classic (3 and 4-year-old) and Futurity (2-year-old) bucking bulls, along with other competition formats.  ABBI paid out over $1.7 million dollars in 2010. Over $800,000 was paid out in prize money to ABBI bulls at the 2010 Las Vegas ABBI Finals alone." />
+  <link rel="shortcut icon" href="../images/about/icon.jpg">
+  <link rel="stylesheet" type="text/css" href="../stylesheets/adminlogin.css">
+  <!-- Bootstrap core CSS-->
+  <link rel="stylesheet" href="../angular/css/bootstrap.min.css">
+  <title>
+    American Bucking Bull, Inc. | Login
+  </title>
+  <style>
+  .btn-color{
+    background-color: #2C3E50;
+    color: white;
+  }
+  .btn-color:hover{
+    background-color: #2C3E50 !important;
+    color: white !important;
+  }
+  .btn-color:focus{
+    background-color: #2C3E50 !important;
+    color: white !important;
+  }
+  </style>
+</head>
+<body ng-app="AdminloginApp">
+  <div class="login-box" ng-controller="AdminloginController">
+    <h2>Admin Login</h2>
+    <form>
+      <div class="user-box">
+        <input type="text" ng-model="login.username">
+        <label>Username</label>
+      </div>
+      <div class="user-box">
+        <input type="password" ng-model="login.password">
+        <label>Password</label>
+      </div>
+      <button class="btn btn-color" ng-click="loginData(login)">Login</button>
+    </form>
+  </div>
+</body>
+<script src="../angular/js/angular.min.js"></script>
+<script type="text/javascript" src="../angular/admin.js"></script>
+</html>

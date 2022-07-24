@@ -1,0 +1,53 @@
+<style>
+  a:hover{
+    color: darkred!important;
+    text-decoration: none;
+  }
+  body {
+    font-size: 1.5em;
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: 'Work Sans', sans-serif;
+    color: #111111;
+    word-wrap: break-word;
+    margin: 0;
+    background-color: whitesmoke;
+}
+
+.menubar{
+  padding-left: 7px;
+    border-radius: 6px;
+    background-color: #dedede;
+}
+.menubar:hover {
+    background-color: #d0ffff!important;
+}
+</style>
+
+<div class="container" style="background-color: #dedede!important;box-sizing: border-box;border: 1px solid slategrey;padding: 10px;margin-bottom: 1rem;margin-top: 1rem;
+height:100%;width:90%;padding: 10px;height: 90px;" ng-init="getData()">
+  <p class="u-full-width-bbc medline menucolor" id="blankbar" >
+    <span class="fancyline biggerline" style="font-size: 150%;">ABBI Competition Admin</span><br>
+    <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/eventhome">home</a> |
+     <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/pastevent">past events</a> | 
+<a  style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px;"  href="http://localhost/admin/home#!/addevent">add event</a> |
+ <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/classlink">Link 2 Classes</a> |
+ <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/bullboss">animals</a> |
+ <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/handlerlist">handlers</a> |
+ <a style="color: darkblue; text-decoration: none; background-color: transparent!important; font-size: 17px; " href="http://localhost/admin/home#!/program">programs</a></p>
+</div>
+<div  class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 0;margin-top: 0;">
+<h5 class="fancyline headerbar" style="background-color: #325d81;color: whitesmoke;padding: 2px 5px 2px 8px;margin: 0;height: 24px;padding-top: 10px;padding-bottom: 10px;height: 46px;font-size: 2.4rem;">ABBI Upcoming Events</h5>
+</div>
+<!-- <div class="container" style="background-color: #d8ceb9!important;height:100%;width:90%;padding: 0;margin-top: 11px;">
+  <div class="blankbar margtop margbot medline default_light" style="background-color: #D9DEE2;border-radius: 6px;padding: 8px 5px 7px 5px;">
+    <a style=" background-color: none!important; background-color: transparent!important; color: balck; color: black; font-size: 14px; " href="/competition/boss/export_event_schedule.php">Upcoming Event Schedule Export Dump (for excel)</a>
+    </div>
+</div> -->
+<ul class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 0;margin-top: 10px;border-radius: 6px;" ng-repeat="obj in eventsData">
+  <a  style="color:#337ab7;" ng-click="openEvent(obj)">
+    <li class="menubar COSANC" style="background-color: mintcream;padding-left: 7px;padding: 5px;font-size: 16px;cursor:pointer"><strong>{{obj.city}}, {{obj.state}} {{obj.startday| date: 'MMM d, y'}} -&gt; {{obj.sanction}}</strong><br>
+    <span>{{obj.title}}</span>
+      <!-- <span>June 24-25: Yearling/Futurity/Junior/Women</span> -->
+</li></a>
+</ul>

@@ -1,0 +1,34 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Work Order</h2>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-init="ShowWO()">
+  <br>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>WO #</th>
+              <th>Date</th>
+              <th>Categories</th>
+              <th>Status</th>
+              <th>Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="wo in wos">
+              <td><span ng-bind = "wo.WorkOrderNumber"></span></td>
+              <td><span ng-bind = "wo.WorkOrderDate | date : 'MM/dd/yyyy'"></span></td>
+              <td><span ng-bind = "wo.categories"></span></td>
+              <td><span ng-bind = "wo.status"></span></td>
+              <td>
+                <button class="btn btn-info">Payment Due</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

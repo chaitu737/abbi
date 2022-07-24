@@ -1,0 +1,57 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Letter Of Failed Testing</h2>
+</div>
+<div>
+	<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-init="LabelFailedReport()">
+		<button class="btn btn-color" ng-click="PrintLabelFailReport(); hidelftable=true;" type="button">Print</button>
+		<div class="panel panel-default" ng-hide="hidelftable">
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered nowrap" datatable="ng"dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+						<thead>
+							<tr>
+								<th> Member Name </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="lf in lfs">
+								<td>{{lf.MemberName}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default" ng-show="hidelftable">
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered nowrap" datatable="ng"dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+						<thead>
+							<tr>
+								<th>First Name</th>
+								<th>Last Name </th>
+								<th>Address</th>
+								<th>City</th>
+								<th>State</th>
+								<th>Zip</th>
+								<th>Country</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="pflc in pflcs">
+								<td><span ng-bind="pflc.FirstName"></span></td>
+								<td><span ng-bind="pflc.LastName"></span></td>
+								<td><span ng-bind="pflc.Address"></span></td>
+								<td><span ng-bind="pflc.City"></span></td>
+								<td><span ng-bind="pflc.State"></span></td>
+								<td><span ng-bind="pflc.Zip"></span></td>
+								<td><span ng-bind="pflc.Country"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<button class="btn btn-color" ng-click="hidelftable=false">Exit</button>
+		</div>
+	</div>
+</div>

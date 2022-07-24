@@ -1,0 +1,171 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Link to Classes</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-hide="classdata">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Link to Classes <a class="abc" ng-click="LinkedList();LinkedTable()">(List Linked Classes)</a></h2>
+  </div>
+  <br>
+  <div style="width: 90%"; ng-if="alert == true" class="alert alert-success alert-dismissible container">
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Linked Successfully</strong>
+  </div>
+  <div style="width: 90%"; ng-if="alert == false" class="alert alert-danger alert-dismissible container">
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Error! Please try again later.</strong>
+  </div>
+  <br>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-hide="classdata">
+    <form>
+      <label>Class 1</label>
+      <select class="form-control" ng-click="Class1Data()" ng-model="link.class1">
+        <option value="">--Select One--</option>
+        <option ng-repeat="cd1 in cds1" value="{{cd1.evid}}">{{cd1.evid}} : {{cd1.city}}, {{cd1.state}} {{cd1.evclass}} {{cd1.evtype}}</option>
+      </select>
+      <label>Link Type</label>
+      <select class="form-control" ng-model="link.type">
+        <option value="">--Select One--</option>
+        <option value="round">Round</option>
+        <option value="perf">Perf</option>
+      </select>
+      <label>Class 2</label>
+      <select class="form-control" ng-click="Class2Data()" ng-model="link.class2">
+        <option value="">--Select One--</option>
+        <option ng-repeat="cd2 in cds2" value="{{cd2.evid}}">{{cd2.evid}} : {{cd2.city}}, {{cd2.state}} {{cd2.evclass}} {{cd2.evtype}}</option>
+      </select>
+      <br>
+      <button class="btn btn-color" ng-click="LinkThese(link)">Link These</button>
+    </form>
+  </div>
+  <br>
+  <div style="width: 90%"; ng-if="alert1 == true" class="alert alert-success alert-dismissible container">
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Deleted Successfully</strong>
+  </div>
+  <div style="width: 90%"; ng-if="alert1 == false" class="alert alert-danger alert-dismissible container">
+    <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Error! Please try again later.</strong>
+  </div>
+  <br>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="classdata1">
+    <table class="table table-bordered" ng-repeat="lt in lts">
+      <tr>
+        <th width="500px" style="background-color: #503219;color: #fff;"><span ng-bind="lt.LinkID"></span></th>
+        <th width="500px" style="background-color: #503219;color: #fff;"><span ng-bind="lt.Type1"></span></th>
+        <th width="500px" style="background-color: #503219;color: #fff;"><span ng-bind="lt.Type2"></span></th>
+      </tr>
+      <tr ng-repeat="lt1 in lts1" ng-if="lt.Id == lt1.Id">
+        <td width="500px"><a class="abc" ng-click="DeletePerf(lt1,lt)"><span ng-bind="lt1.LinkID"></span></a></td>
+        <td width="500px"><a class="abc" ng-click="PerfSwap(lt1)"><span ng-bind="lt1.Type1"></span></a></td>
+        <td width="500px"><a class="abc" ng-click="PerfSwap(lt1)"><span ng-bind="lt1.Type2"></span></a></td>
+      </tr>
+    </table>
+    <button class="btn btn-color" ng-click="ExitClassList()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="classtable">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:20%">Perf 1</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Entry</th>
+                <th>Animal</th>
+                <th>Handler</th>
+                <th>Del</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="ps1 in pss1">
+                <td ng-bind="ps1.entid"></td>
+                <td>{{ps1.bno}} {{bname.bname}}</td>
+                <td ng-bind="ps1.handler"></td>
+                <td ng-bind="ps1.del"></td>
+                <td>
+                  <button class="btn btn-info" ng-click="SwapPerf(ps1)">Swap</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:20%">Perf 2</h2>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Entry</th>
+                <th>Animal</th>
+                <th>Handler</th>
+                <th>Del</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="ps2 in pss2">
+                <td ng-bind="ps2.entid"></td>
+                <td>{{ps2.bno}} {{ps2.bname}}</td>
+                <td ng-bind="ps2.handler"></td>
+                <td ng-bind="ps2.del"></td>
+                <td>
+                  <button class="btn btn-info" ng-click="SwapPerf(ps2)">Swap</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" ng-click="ExitClassTable()">Back</button>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="swapperf">
+    <h3>Swap perfs for a single entry</h3>
+    <p>Confirming a perf swap will move this animal to the opposite perf in each applicable class as described below</p>
+    <label>Entry: {{sps[0].Entid}} {{sps[0].bno}} {{sps[0].bname}}</label>
+    <br>
+    <br>
+    <label>{{sps[0].Owner}}</label>
+    <br>
+    <br>
+    <label>{{spa[0].Evid}}</label>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Class Entered</th>
+                <th>Swaps</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="sp in sps">
+                <td>{{sp.class}}</td>
+                <td>{{sp.swaps}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <label>Swapping to evid : {{sps[0].to_evid}}</label>
+    <br>
+    <br>
+    <label>Entry : {{sps[0].Entid}} now entered in</label>
+    <br>
+    <br>
+    <label>{{sps[0].class2}}</label>
+    <br>
+    <br>
+    <button class="btn btn-color" ng-click="ExitClassPerf()">Back</button>
+  </div>
+</div>

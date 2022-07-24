@@ -1,0 +1,65 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Membership Reports</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+    <form>
+      <div class="row">
+        <div class="col-md-6">
+          <select class="form-control" ng-model="memreport.type">
+            <option value="">All</option>
+            <option value="ABHR (Bucking Horses)">ABHR (Bucking Horses)</option>
+            <option value="Veterinarian">Veterinarian</option>
+            <option value="Non Member">Non Member</option>
+            <option value="Standard Membership">Standard Membership</option>
+            <option value="Junior">Junior</option>
+            <option value="Lifetime">Lifetime</option>
+            <option value="Media">Media</option>
+            <option value="Premium">Premium</option>
+            <option value="Standard">Standard</option>
+            <option value="Inactive">Inactive</option>
+            <option value="USBBA Member">USBBA Member</option>
+          </select>
+        </div>
+        <div class="col-md-6" style="margin-top:10px;">
+          <button class="btn btn-color" type="button" ng-click="MembershipReport(memreport)">Search</button>
+        </div>
+      </div>
+    </form>
+    <br>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Member # </th>
+                <th>Name </th>
+                <th>Ranch</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Country</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="mer in mers">
+                <td><span ng-bind="mer.MemberNumber"></span></td>
+                <td><span ng-bind="mer.MemberName"></span></td>
+                <td><span ng-bind="mer.RanchName"></span></td>
+                <td><span ng-bind="mer.Address"></span></td>
+                <td><span ng-bind="mer.City"></span></td>
+                <td><span ng-bind="mer.State"></span></td>
+                <td><span ng-bind="mer.Zip"></span></td>
+                <td><span ng-bind="mer.Phone"></span></td>
+                <td><span ng-bind="mer.Type"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

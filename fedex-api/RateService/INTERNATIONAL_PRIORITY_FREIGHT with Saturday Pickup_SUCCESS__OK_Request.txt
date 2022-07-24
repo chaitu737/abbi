@@ -1,0 +1,153 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://fedex.com/ws/rate/v31">
+   <SOAP-ENV:Body>
+      <RateRequest>
+        <WebAuthenticationDetail>
+            <ParentCredential>
+               <Key>Input your Information</Key>
+               <Password>Input your Information</Password>
+            </ParentCredential>
+            <UserCredential>
+               <Key>Input your Information</Key>
+               <Password>Input your Information</Password>
+            </UserCredential>
+         </WebAuthenticationDetail>
+         <ClientDetail>
+            <AccountNumber>Input your Information</AccountNumber>
+            <MeterNumber>Input your Information</MeterNumber>
+         </ClientDetail>
+         <TransactionDetail>
+            <CustomerTransactionId>INTERNATIONAL_PRIORITY_FREIGHT with Your Packaging</CustomerTransactionId>
+         </TransactionDetail>
+         <Version>
+            <ServiceId>crs</ServiceId>
+            <Major>31</Major>
+            <Intermediate>0</Intermediate>
+            <Minor>0</Minor>
+         </Version>
+         <RequestedShipment>
+            <ShipTimestamp>2021-04-03T12:34:56-06:00</ShipTimestamp>
+            <DropoffType>REGULAR_PICKUP</DropoffType>
+            <ServiceType>INTERNATIONAL_PRIORITY_FREIGHT</ServiceType>
+            <PackagingType>YOUR_PACKAGING</PackagingType>
+            <PreferredCurrency>USD</PreferredCurrency>
+            <Shipper>
+               <Contact>
+                  <PersonName>Input your Information</PersonName>
+                  <CompanyName>Input your Information</CompanyName>
+                  <PhoneNumber>Input your Information</PhoneNumber>
+                  <EMailAddress>Input your Information</EMailAddress>
+               </Contact>
+               <Address>
+                  <StreetLines>Sender_Address_Line1</StreetLines>
+                  <StreetLines>Sender_Address_Line2</StreetLines>
+                  <City>MEMPHIS</City>
+                  <StateOrProvinceCode>TN</StateOrProvinceCode>
+                  <PostalCode>38101</PostalCode>
+                  <CountryCode>US</CountryCode>
+               </Address>
+            </Shipper>
+            <Recipient>
+               <Contact>
+                  <PersonName>Input your Information</PersonName>
+                  <CompanyName>Input your Information</CompanyName>
+                  <PhoneNumber>Input your Information</PhoneNumber>
+                  <EMailAddress>Input your Information</EMailAddress>
+               </Contact>
+               <Address>
+                  <StreetLines>Recipient_Address_Line1</StreetLines>
+                  <StreetLines>Recipient_Address_Line2</StreetLines>
+                  <City>RICHMOND</City>
+                  <StateOrProvinceCode>BC</StateOrProvinceCode>
+                  <PostalCode>V7C4v7</PostalCode>
+                  <CountryCode>CA</CountryCode>
+               </Address>
+            </Recipient>
+            <ShippingChargesPayment>
+               <PaymentType>SENDER</PaymentType>
+               <Payor>
+                  <ResponsibleParty>
+                     <AccountNumber>Input your Information</AccountNumber>
+                     <Tins>
+                        <TinType>BUSINESS_STATE</TinType>
+                        <Number>123456</Number>
+                     </Tins>
+                  </ResponsibleParty>
+               </Payor>
+            </ShippingChargesPayment>
+            <SpecialServicesRequested>
+               <SpecialServiceTypes>SATURDAY_PICKUP</SpecialServiceTypes>
+            </SpecialServicesRequested>
+            <ExpressFreightDetail>
+               <PackingListEnclosed>1</PackingListEnclosed>
+               <ShippersLoadAndCount>2</ShippersLoadAndCount>
+               <BookingConfirmationNumber>123asd789</BookingConfirmationNumber>
+            </ExpressFreightDetail>
+            <CustomsClearanceDetail>
+               <DutiesPayment>
+                  <PaymentType>SENDER</PaymentType>
+                  <Payor>
+                     <ResponsibleParty>
+                        <AccountNumber>Input your Information</AccountNumber>
+                        <Tins>
+                           <TinType>BUSINESS_STATE</TinType>
+                           <Number>123456</Number>
+                        </Tins>
+                     </ResponsibleParty>
+                  </Payor>
+               </DutiesPayment>
+               <DocumentContent>DOCUMENTS_ONLY</DocumentContent>
+               <CustomsValue>
+                  <Currency>USD</Currency>
+                  <Amount>100.00</Amount>
+               </CustomsValue>
+               <CommercialInvoice>
+                  <TermsOfSale>FOB_OR_FCA</TermsOfSale>
+               </CommercialInvoice>
+               <Commodities>
+                  <NumberOfPieces>1</NumberOfPieces>
+                  <Description>ABCD</Description>
+                  <CountryOfManufacture>US</CountryOfManufacture>
+                  <Weight>
+                     <Units>LB</Units>
+                     <Value>1.0</Value>
+                  </Weight>
+                  <Quantity>1</Quantity>
+                  <QuantityUnits>cm</QuantityUnits>
+                  <UnitPrice>
+                     <Currency>USD</Currency>
+                     <Amount>1.000000</Amount>
+                  </UnitPrice>
+                  <CustomsValue>
+                     <Currency>USD</Currency>
+                     <Amount>100.000000</Amount>
+                  </CustomsValue>
+               </Commodities>
+               <ExportDetail>
+                  <ExportComplianceStatement>30.37(f)</ExportComplianceStatement>
+               </ExportDetail>
+            </CustomsClearanceDetail>
+            <RateRequestTypes>LIST</RateRequestTypes>
+            <PackageCount>1</PackageCount>
+            <RequestedPackageLineItems>
+               <SequenceNumber>1</SequenceNumber>
+               <GroupNumber>1</GroupNumber>
+               <GroupPackageCount>1</GroupPackageCount>
+               <Weight>
+                  <Units>LB</Units>
+                  <Value>158.0</Value>
+               </Weight>
+               <Dimensions>
+                  <Length>12</Length>
+                  <Width>12</Width>
+                  <Height>12</Height>
+                  <Units>IN</Units>
+               </Dimensions>
+               <CustomerReferences>
+                  <CustomerReferenceType>CUSTOMER_REFERENCE</CustomerReferenceType>
+                  <Value>TC001_01_PT1_ST01_PK01_SNDUS_RCPCA_POS</Value>
+               </CustomerReferences>
+            </RequestedPackageLineItems>
+         </RequestedShipment>
+      </RateRequest>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

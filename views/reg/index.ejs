@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="RegApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Sandeep Siva">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta name="keywords" content="bull,futurity, classic, American,bucking,events,schedule,calendar,line-up,lineup" />
+  <meta name="description" content="American Bucking Bull, Inc. is the leading bucking cattle DNA registry in the world. ABBI holds and sanctions competitive events for Classic (3 and 4-year-old) and Futurity (2-year-old) bucking bulls, along with other competition formats.  ABBI paid out over $1.7 million dollars in 2010. Over $800,000 was paid out in prize money to ABBI bulls at the 2010 Las Vegas ABBI Finals alone." />
+  <title>
+    American Bucking Bull, Inc. | Home
+  </title>
+  <!-- Bootstrap core CSS-->
+  <link rel="stylesheet" href="angular/css/bootstrap.min.css">
+  <link rel="stylesheet" href="angular/css/datatables.bootstrap.css">
+  <!--Datatables-->
+  <link rel="stylesheet" type="text/css" href="angular/css/buttons.datatables.min.css">
+  <link rel="stylesheet" type="text/css" href="angular/css/font-awesome.min.css">
+  <!-- Custom styles for this template-->
+  <link href="angular/css/style.css" rel="stylesheet">
+  <link href="angular/css/style-responsive.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="angular/css/jquery-ui.css">
+  <!--front-end styles-->
+  <link href="angular/css/style.css" rel="stylesheet">
+  <link href="angular/css/style1.css" rel="stylesheet">
+  <link href="stylesheets/home.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="stylesheets/tree.css">
+  <link href="angular/css/angularprint.css" rel="stylesheet">
+  <style>
+  .btn-color{
+    background-color: #503219;
+    color: white;
+  }
+  .btn-color:hover{
+    background-color: #503219 !important;
+    color: white !important;
+  }
+  .btn-color:focus{
+    background-color: #503219 !important;
+    color: white !important;
+  }
+  .fa:hover{
+    color: white !important;
+  }
+  .nav-tabs{
+    background-color: #503219 !important;
+    border : 1px solid #503219;
+    padding :5px;
+  }
+  .nav-tabs>li>a, .nav-tabs>li>a:focus, .nav-tabs>li{
+    background-color: #503219 !important;
+    color: white;
+    font-weight: bold;
+  }
+  .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    !important;
+    color: black;
+    font-weight: bold;
+  }
+  .content {display:none;}
+  .preload { 
+    position: fixed;
+  }
+  table th {
+    white-space: nowrap;
+  }
+  .lisize{
+    width: 50%;
+  }
+</style>
+</head>
+<body>
+  <div class="preload">
+    <div>
+     <!-- <img src="https://www.animatedimages.org/data/media/637/animated-bull-image-0001.gif" alt="Loading" /> -->
+     <video src="video/loader.mp4" muted autoplay loop playsinline></video>
+   </div>
+ </div>
+ <section id="container" class="content">
+  <!-- header start-->
+  <header class="header black-bg">
+    <div class="sidebar-toggle-box">
+      <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+    </div>
+    <!-- logo start-->
+    <a class="logo" href="#"><b><img src="images/about/logo.webp" style="height:55px;width:100px;margin-top:-13px"></b></a>
+    <!-- logo end-->
+    <div class="top-menu">
+      <ul class="nav pull-right top-menu">
+        <li><a class="logout" href="/reglogout">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+  <!-- header end-->
+  <!-- sidebar start-->
+  <div class="nav-collapse" id="sidebar">
+    <!-- sidebar menu start-->
+    <ul class="sidebar-menu" id="nav-accordion">
+      <p class="centered"><a href="#"><img class="img img-circle" src="images/members/user.jpg" width="80"></a></p>
+      <h5 class="centered">ABBI REG</h5>
+      <li><a href="#!regevents"><i class="fa fa-calendar"></i><span>Events</span></a></li>
+      <li><a href="#!regpastevents"><i class="fa fa-calendar-times-o"></i><span>Past Events</span></a></li>
+      <li><a href="#!regeventresults"><i class="fa fa-list"></i><span>Event Results</span></a></li>
+      <li><a href="#!reglink2classes"><i class="fa fa-link"></i><span>Link 2 Classes</span></a></li>
+      <li><a href="#!reganimals"><i class="fa fa-horse"></i><span>Animals</span></a></li>
+      <li><a href="#!reghandlers"><i class="fa fa-users"></i><span>Handlers</span></a></li>
+      <li><a href="#!regprograms"><i class="fa fa-calendar"></i><span>Programs</span></a></li>
+      <li><a href="#!regaddevent"><i class="fa fa-plus"></i><span>Add Event</span></a></li>
+      <li><a href="#!regstandings"><i class="fa fa-bar-chart"></i><span>Standings</span></a></li>
+      <li><a href="#!regpayoutcal"><i class="fa fa-calculator"></i><span>Payout Calculator</span></a></li>
+      <li><a href="#!regimportjpad"><i class="fa fa-download"></i><span>Import Jpad</span></a></li>
+      <li><a href="#!regeventpay"><i class="fa fa-credit-card"></i><span>Event Payments</span></a></li>
+      <li><a href="#!regbulkcontact"><i class="fa fa-address-book"></i><span>Bulk Contacts</span></a></li>
+    </ul>
+  </div>
+  <!-- sidebar menu end-->
+  <!-- sidebar end-->
+  <!-- main content start-->
+  <section id="main-content">
+    <section class="wrapper site-min-height">
+      <div class="row mt">
+        <div class="row">
+          <div class="col-md-12">                   
+            <div ng-view></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+</section>
+</body>
+<!-- MAIN CONTENT-->
+<!-- main content end-->
+<!-- js placed at the end of the document so the pages load faster-->
+<script src="angular/js/jquery.js"></script>
+<script src="angular/js/jquery.min.js"></script>
+<script src="angular/js/bootstrap.min.js"></script>
+<script src="angular/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="angular/js/jquery.ui.touch-punch.min.js"></script>
+<script src="angular/js/jquery.dcjqaccordion.2.7.js"></script>
+<script src="angular/js/jquery.scrollTo.min.js"></script>
+<script src="angular/js/jquery.nicescroll.js"></script>
+<script type="text/javascript" src="angular/js/jquery-ui.js"></script>
+<!--datatables-->
+<script src="angular/js/angular.min.js"></script>
+<script src="angular/js/angular-ui.min.js"></script>
+<script src="angular/js/angular-datatables.buttons.min.js"></script>
+<script src="angular/js/angular-datatables.min.js"></script>
+<script src="angular/js/jquery.dataTables.min.js"></script>
+<script src="angular/js/dataTables.buttons.min.js"></script>
+<script src="angular/js/buttons.colVis.min.js"></script>
+<script src="angular/js/buttons.flash.min.js"></script>
+<script src="angular/js/buttons.print.min.js"></script>
+<script src="angular/js/buttons.html5.min.js"></script>
+<!-- common script and datatables for all pages-->
+<script src="angular/js/common-scripts.js"></script>
+<!--angular scripts-->
+<script src="reg/reg.js"></script>
+<script src="angular/js/angular-route.js"></script>
+<!-- <script src="angular/js/kit.js"></script> -->
+<script src="angular/js/angularprint.js"></script>
+<!-- Custom JS -->
+<script src="javascripts/login.js"></script>
+<!-- JSPDF -->
+<script type="text/javascript" src="../angular/js/jspdf.debug.js"></script>
+<script type="text/javascript" src="../angular/js/jspdf.min.js"></script>
+<script>
+  $(function() {
+    $(".preload").fadeOut(2000, function() {
+      $(".content").fadeIn(1000);        
+    });
+  });
+</script>
+</html>

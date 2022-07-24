@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ABBI-Payment</title>
+  <!-- Bootstrap core CSS-->
+  <link rel="stylesheet" href="../angular/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../angular/css/datatables.bootstrap.css">
+  <link rel="stylesheet" href="../angular/css/font-awesome.min.css">
+  <link href="../angular/css/style.css" rel="stylesheet">
+  <link href="../angular/css/style-responsive.css" rel="stylesheet">
+  <link href="../angular/css/style1.css" rel="stylesheet">
+</head>
+<body ng-app="CpayApp" ng-controller="CpayController">
+  <div style="padding: 10px;">
+    <div id="Checkout" class="inline">
+      <h1>Pay</h1>
+      <form enctype="multipart/form-data">
+        <div class="card-row">
+          <span class="visa"></span>
+          <span class="mastercard"></span>
+          <span class="amex"></span>
+          <span class="discover"></span>
+        </div>
+        <div class="form-group">
+          <label>File : </label>
+          <input class="form-control" file-model="pay.image" type="file" required="">
+          <span ng-bind="amount | currency"></span>
+        </div>
+        <div class="form-group">
+          <label>Amount : </label>
+          <input class="form-control" ng-model="pay.amount" type="text" required="">
+          <span ng-bind="amount | currency"></span>
+        </div>
+        <div class="form-group">
+          <label>Name</label>
+          <input class="null card-image form-control" ng-model="pay.name" type="text" required="">
+        </div>
+        <div class="form-group">
+          <label>Member Number</label>
+          <input class="null card-image form-control" ng-model="pay.number" type="text" required="">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="null card-image form-control" ng-model="pay.description" required=""></textarea>
+        </div>
+        <div class="form-group">
+          <label>Card number</label>
+          <input class="null card-image form-control" ng-model="pay.cc" type="text" required="">
+        </div>
+        <div class="expiry-date-group form-group">
+          <label>Expiry date</label>
+          <input class="form-control" type="text" placeholder="MM / YY" ng-model="pay.expire" maxlength="5" required="">
+        </div>
+        <div class="security-code-group form-group">
+          <label for="SecurityCode">Security code</label>
+          <div class="input-container" >
+            <input id="SecurityCode" class="form-control" type="text" ng-model="pay.cvv" required="">
+            <i id="cvc" class="fa fa-question-circle"></i>
+          </div>
+          <div class="cvc-preview-container two-card hide">
+            <div class="amex-cvc-preview"></div>
+            <div class="visa-mc-dis-cvc-preview"></div>
+          </div>
+        </div>
+        <button id="PayButton" class="btn btn-block btn-success submit-button" type="button" ng-click="CustomPay(pay)">
+          <span class="submit-button-lock"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+<script src="../angular/js/jquery.min.js"></script>
+<script src="../angular/js/angular.min.js"></script>
+<script src="../pay.js"></script>
+</html>

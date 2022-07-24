@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <title>Online Attendance</title>
+    <link type="image/png" href="images/adityalogo.png" rel="icon">
+    <!-- Bootstrap core CSS-->
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+    <script src="javascripts/jquery-1.11.1.min.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <!-- external css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Custom styles for this template-->
+    <link href="stylesheets/style.css" rel="stylesheet">
+    <link href="stylesheets/style-responsive.css" rel="stylesheet">
+    <link href='stylesheets/panel.css', rel='stylesheet'>
+    <!-- Data tables CSS-->
+    <link rel="stylesheet" type="text/css" href="stylesheets/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/jquery.dataTables.min.css">
+    <link href="stylesheets/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="stylesheets/jquery-ui.css" rel="stylesheet">
+    <script>
+        $('document').ready(function() {
+            $('#vfdate').datepicker();
+            $('#vfdate').datepicker('setDate', 'today');
+            $("#vfdate").datepicker("option", "dateFormat", "dd-mm-yy");
+
+            showAnim: "fold"
+
+        });
+    </script>
+    <script>
+        $('document').ready(function() {
+            $('#vtdate').datepicker();
+            $('#vtdate').datepicker('setDate', 'today');
+            $("#vtdate").datepicker("option", "dateFormat", "dd-mm-yy");
+            showAnim: "fold"
+
+        });
+    </script>
+    <style>
+        .header,
+        #sidebar {
+            background: #2C3E50;
+        }
+
+        span {
+            font-size: 14px;
+        }
+
+        .file-uploader {
+            background-color: #dbefe9;
+            border-radius: 3px;
+            color: #242424;
+        }
+
+        .file-uploader__message-area {
+            font-size: 18px;
+            padding: 1em;
+            text-align: center;
+            color: #377a65;
+        }
+
+        .file-list {
+            background-color: white;
+            font-size: 16px;
+        }
+
+        .file-list__name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-list li {
+            height: 50px;
+            line-height: 50px;
+            margin-left: .5em;
+            border: none;
+            overflow: hidden;
+        }
+
+        .removal-button {
+            width: 20%;
+            border: none;
+            background-color: #d65d38;
+            color: white;
+        }
+
+        .removal-button::before {
+            content: "X";
+        }
+
+        .removal-button:focus {
+            outline: 0;
+        }
+
+        .file-chooser {
+            padding: 1em;
+            transition: background-color 1s, height 1s;
+        }
+
+        .file-chooser p {
+            font-size: 18px;
+            padding-top: 1em;
+        }
+
+        .file-uploader {
+            max-width: 400px;
+            height: auto;
+            margin: 2em auto;
+        }
+
+        .file-uploader * {
+            display: block;
+        }
+
+        .file-uploader input[type=submit] {
+            margin-top: 2em;
+            float: right;
+        }
+
+        .file-list {
+            margin: 0 auto;
+            max-width: 90%;
+        }
+
+        .file-list__name {
+            max-width: 70%;
+            float: left;
+        }
+
+        .removal-button {
+            display: inline-block;
+            height: 100%;
+            float: right;
+        }
+
+        .file-chooser {
+            width: 90%;
+            margin: .5em auto;
+        }
+
+        .file-chooser__input {
+            margin: 0 auto;
+        }
+
+        .file-uploader__submit-button {
+            width: 100%;
+            border: none;
+            font-size: 1.5em;
+            padding: 1em;
+            background-color: #72bfa7;
+            color: white;
+        }
+
+        .file-uploader__submit-button:hover {
+            background-color: #a7d7c8;
+        }
+
+        .file-list li:after,
+        .file-uploader:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .hidden input {
+            display: none;
+        }
+
+        .error {
+            background-color: #d65d38;
+            color: white;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .personal_details {
+            background-color: white;
+            border-left: 4px solid #fd9f1b;
+        }
+
+        .personal_details h3 {
+            padding: 10px;
+        }
+
+        #name {
+            color: #B4886B;
+            font-weight: bold;
+            float: left;
+            margin-left: 20px;
+            font-size: 15px;
+        }
+
+        #wd {
+            margin-left: 10px;
+            font-weight: bold;
+            font-family: Arial;
+        }
+
+        .panel-box {
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+            height: 30px;
+            text-align: center;
+            border: medium none;
+        }
+
+        .bg-success {
+            background-color: #A3C86D !important;
+            color: #FFF !important;
+        }
+
+        .bg-warning {
+            background-color: orange !important;
+            color: #FFF !important;
+        }
+
+        .bg-light {
+            background-color: lightblue !important;
+            color: #FFF !important;
+        }
+
+        .bg-lightgreen {
+            background-color: lightgreen !important;
+            color: #FFF !important;
+        }
+
+        .bg-default {
+            background-color: grey !important;
+            color: #FFF !important;
+        }
+
+        .bg-pink {
+            background-color: pink !important;
+            color: #FFF !important;
+        }
+
+        .bg-tomato {
+            background-color: tomato !important;
+            color: #FFF !important;
+        }
+
+        .bg-dodgerblue {
+            background-color: dodgerblue !important;
+            color: #FFF !important;
+        }
+
+        .bg-violet {
+            background-color: violet !important;
+            color: #FFF !important;
+        }
+
+        .success-text {
+            color: #82b33a;
+        }
+
+        .bg-danger {
+            background-color: #FF7857 !important;
+            color: #FFF !important;
+        }
+
+        .danger-text {
+            color: #d15b3d;
+        }
+
+        .panel-box .panel-icon {
+            display: table-cell;
+            padding: px;
+            width: 1%;
+            vertical-align: top;
+            border-radius: 0px;
+            text-align: center;
+            /*border-bottom: 1px solid #fcfcfc;
+border-top: 1px solid #fcfcfc;
+border-right: 1px solid #fcfcfc;*/
+        }
+
+        .panel-box .size-h1 {
+            margin-top: 7px;
+        }
+
+        .panel-box .fa {
+            margin-top: 9px;
+        }
+
+        .bg-lovender {
+            background-color: #8075C4 !important;
+            color: #FFF !important;
+        }
+
+        .lovender-text {
+            color: #6a5fb1;
+        }
+
+        .capitalize {
+            text-transform: capitalize;
+        }
+
+        .uppercase {
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<style>
+    .data {
+        font-weight: bold;
+    }
+    .absent {
+        background-color: red;
+    }
+</style>
+
+<body ng-app="myapp">
+    <section id="container">
+        <!-- header start-->
+        <header class="header black-bg">
+            <div class="sidebar-toggle-box">
+                <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+            </div>
+            <!-- logo start--><a class="logo" href="#"><b><img src="images/newlogo2.jpeg" style="height:55px;width:120px;margin-top:-13px"></b></a>
+            <!-- logo end-->
+            <div class="top-menu">
+                <ul class="nav pull-right top-menu">
+                    <li><a class="logout" href="logout">Logout</a></li>
+                </ul>
+            </div>
+        </header>
+        <!-- header end-->
+        <!-- sidebar start-->
+        <aside>
+            <div class="nav-collapse" id="sidebar">
+                <!-- sidebar menu start-->
+                <ul class="sidebar-menu" id="nav-accordion">
+                    {{image}}
+                    <p class="centered"><a href="#"><img class="img-circle" src="images/members/{{image}}" width="80"></a></p>
+                    <h5 class="centered" ng-controller="UsernameController">
+                        <p>
+                            {{user.role}}
+                        </p>
+                    </h5>
+                    <li class="active"><a data-toggle="tab" href="#Dashboard"><i class="fa fa-address-card"></i><span>Dashboard</span></a></li>
+                    <li class="sub-menu"><a data-toggle="tab" href="#uploadstudents"><i class="fa fa-bars"></i><span>Upload Students</span></a></li>
+                    <li class="sub-menu"><a data-toggle="tab" href="#attendenceupload"><i class="fa fa-bars"></i><span>Attendance Students</span></a></li>
+                    <li class="sub-menu"><a data-toggle="tab" href="#getattendence"><i class="fa fa-bars"></i><span>Get Attendance</span></a></li>
+                    <li class="sub-menu"><a data-toggle="tab" href="#dayattendence"><i class="fa fa-bars"></i><span>Day Attendance</span></a></li>
+                </ul>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!-- sidebar end-->
+        <!-- main content start-->
+        <section id="main-content">
+            <section class="wrapper site-min-height">
+                <div class="row mt">
+                    <div class="col-lg-12">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="Dashboard" ng-controller="DashboardController" ng-init="dattas()">
+                                
+                                <div class="container" style='background-color: #eaeaea;width: 100%;height:100%;border-radius: 1px'>
+                                  <div class="row">
+                                    <br>
+                                    <div class="col-md-8 col-md-offset-2">
+                                      <div class="col-md-8 col-sm-12 col-xs-12 marg end">
+                                        <div class="hover pan">
+                                          <div class="front">
+                                            <a (href='')>
+                                              <div class="box1">
+                                                <p class="test col-md-5 col-sm-3 col-xs-12">{{user.length}}</p>
+                                                <p class="test col-md-7 col-sm-9 col-xs-12"> Total</p> 
+                                              </div> 
+                                            </a>    
+                                           </div>
+                                        </div>
+                                      </div>
+                                      <!-- <div class="col-md-4 col-sm-12 col-xs-12 marg end">
+                                        <div class="hover pan">
+                                          <div class="front">
+                                            <a (href='')>
+                                              <div class="box1">
+                                                <p class="test col-md-5 col-sm-5 col-xs-12">{{male.length}}</p>
+                                                <p class="test col-md-7 col-sm-7 col-xs-12"> Male</p> 
+                                              </div> 
+                                            </a>    
+                                           </div>
+                                        </div>
+                                      </div> -->  
+                                      <!-- <div class="col-md-4 col-sm-12 col-xs-12 marg end">
+                                        <div class="hover pan">
+                                          <div class="front">
+                                            <a (href='')>
+                                              <div class="box1">
+                                                <p class="test col-md-3 col-sm-3 col-xs-12">{{female.length}}</p>
+                                                <p class="test col-md-9 col-sm-9 col-xs-12"> Female</p> 
+                                              </div> 
+                                            </a>    
+                                           </div>
+                                        </div>
+                                      </div> -->
+                                     </div> 
+                                    </div>
+                                     <div class="col-lg-12" ng-show="admintable">
+                                            <div class="panel panel-default">
+                                                <h2 style="text-align: center;">Students Data</h2>
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>College Name</th>
+                                                                    <th>Count</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in College">
+                                                                    <td>{{$index + 1 | number}}</td>
+                                                                    <td>{{data._id.College}}</td>
+                                                                    <td>{{data.Count}}</td>
+                                                                    <td>
+                                                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click=getstudents(data)>View Details</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="modal fade" id="myModal" role="dialog">
+                                                            <div class="modal-dialog modal-lg">
+                                                              <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                  <h4 class="modal-title">Students Data </h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="container">
+                                                                    <div class="col-md-9 table-responsive">
+                                                                        <table class="table table-bordered" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                                                                      <thead>
+                                                                          <tr>
+                                                                              <th>S.No</th>
+                                                                              <th>Roll No</th>
+                                                                              <th>Name</th>
+                                                                              <th>College</th>
+                                                                              <th>Department</th>
+                                                                              <th>POY</th>
+                                                                              <th>Section</th>
+                                                                              <th>Mail ID</th>
+                                                                              <th>Mobile</th>
+                                                                              <th>Father Mobile</th>
+                                                                          </tr>
+                                                                      </thead>
+                                                                      <tbody>
+                                                                          <tr ng-repeat="sdata in students">
+                                                                              <td>{{$index + 1}}</td>
+                                                                              <td>{{sdata.RollNo}}</td>
+                                                                              <td>{{sdata.Name}}</td>
+                                                                              <td>{{sdata.College}}</td>
+                                                                              <td>{{sdata.Branch}}</td>
+                                                                              <td>{{sdata.POY}}</td>
+                                                                              <td>{{sdata.Section}}</td>
+                                                                              <td>{{sdata.MailId}}</td>
+                                                                              <td>{{sdata.Mobile}}</td>
+                                                                              <td>{{sdata.FatherMobile}}</td>
+                                                                          </tr>
+                                                                      </tbody>
+                                                                  </table>
+                                                                    </div>    
+                                                                  
+                                                                  </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        <!-- End visitor list-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12" ng-hide="admintable">
+                                            <div class="panel panel-default">
+                                                <h2 style="text-align: center;">Students Data</h2>
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-bordered table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Batch Name</th>
+                                                                    <th>Pass Out Year</th>
+                                                                    <th>Branch</th>
+                                                                    <th>Section</th>
+                                                                    <th>Count</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in POYdata">
+                                                                    <td>{{$index + 1 | number}}</td>
+                                                                    <td>{{data._id.Batchname}}</td>
+                                                                    <td>{{data._id.POY}}</td>
+                                                                    <td>{{data._id.Branch}}</td>
+                                                                    <td>{{data._id.Section}}</td>
+                                                                    <td>{{data.Count}}</td>
+                                                                    <td>
+                                                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal2" ng-click=getpoystudents(data)>View Details</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="modal fade" id="myModal2" role="dialog">
+                                                            <div class="modal-dialog modal-lg">
+                                                              <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                  <h4 class="modal-title">Students Data </h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="container">
+                                                                    <div class="col-md-9 table-responsive">
+                                                                        <table class="table table-bordered" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                                                                      <thead>
+                                                                          <tr>
+                                                                              <th>S.No</th>
+                                                                              <th>Roll No</th>
+                                                                              <th>Name</th>
+                                                                              <th>College</th>
+                                                                              <th>Department</th>
+                                                                              <th>POY</th>
+                                                                              <th>Section</th>
+                                                                              <th>Mail ID</th>
+                                                                              <th>Mobile</th>
+                                                                              <th>Father Mobile</th>
+                                                                          </tr>
+                                                                      </thead>
+                                                                      <tbody>
+                                                                          <tr ng-repeat="sdata in poystudents">
+                                                                              <td>{{$index + 1}}</td>
+                                                                              <td>{{sdata.RollNo}}</td>
+                                                                              <td>{{sdata.Name}}</td>
+                                                                              <td>{{sdata.College}}</td>
+                                                                              <td>{{sdata.Branch}}</td>
+                                                                              <td>{{sdata.POY}}</td>
+                                                                              <td>{{sdata.Section}}</td>
+                                                                              <td>{{sdata.MailId}}</td>
+                                                                              <td>{{sdata.Mobile}}</td>
+                                                                              <td>{{sdata.FatherMobile}}</td>
+                                                                          </tr>
+                                                                      </tbody>
+                                                                  </table>
+                                                                    </div>    
+                                                                  
+                                                                  </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        <!-- End visitor list-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="tab-pane fade align" id="uploadstudents" ng-controller="uploadstudController" ng-init="get()">
+                                <h2 style="text-align: center;">Upload Students</h2>
+                                <div class="col-lg-12">
+                                    <div class="col-md-7 col-md-offset-2">
+                                       <form>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Name:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" name="coursename" placeholder="Batch Name" ng-model="user.batch"  class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Section:</label>
+                                            <div class="col-md-8">
+                                                <select class="form-control" ng-model="user.section">
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Upload Students Data:</label>
+                                            <div class="col-md-8">
+                                                <input type="file" name="file" file-model="user.file" required="required" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <input class="btn btn-info btn-lg" type="button" ng-click="upload(user)" name="file" value="Upload Excel" />    
+                                            <a class="btn btn-info btn-lg" href="format/format.xlsx" style="margin-left:20px" download="download">Download Format Excel</a>
+                                        </div>
+                                        
+                                    </form>   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade align" id="attendenceupload" ng-controller="attendenceuploadcontroller" ng-init="getdata()">
+                                <h2 style="text-align: center;">Attendance Tab</h2>
+                                <div class="col-lg-12">
+                                    <div class="col-md-7 col-md-offset-2">
+                                       <form>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Students Data:</label>
+                                            <div class="col-md-8">
+                                                
+                                                <select ng-model="user.batch"  class="form-control"  >
+                                                    <option ng-repeat="name in batch" value="{{name._id.Batchname}}">{{name._id.Batchname}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Section:</label>
+                                            <div class="col-md-8">
+                                                <!-- <select class="form-control" ng-model="user.section">
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                    <option value="A_B">A & B</option>
+                                                    <option value="B_C">B & C</option>
+                                                    <option value="C_D">C & D</option>
+                                                    <option value="A_D">A & D</option>
+                                                </select> -->
+                                                <input type="checkbox" ng-model="SectionA"  name="" ng-change="check(SectionA,'A')" ng-true-value="'A'" ng-false-value="'null'" > <span style="font-size:20px;font-weight:bold">A</span>
+                                                <input type="checkbox"  style="margin-left: 25px" ng-model="SectionB"  name="" ng-change="check(SectionB,'B')" ng-true-value="'B'" ng-false-value="'null'" > <span style="font-size:20px;font-weight:bold">B</span>
+                                                <input type="checkbox"  style="margin-left: 25px" ng-model="SectionC"  name="" ng-change="check(SectionC,'C')" ng-true-value="'C'" ng-false-value="'null'" > <span style="font-size:20px;font-weight:bold">C</span>
+                                                <input type="checkbox"  style="margin-left: 25px" ng-model="SectionD"  name="" ng-change="check(SectionD,'D')" ng-true-value="'D'" ng-false-value="'null'" > <span style="font-size:20px;font-weight:bold">D</span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Department:</label>
+                                            <div class="col-md-8">
+                                                
+                                                <select ng-model="user.branch"  class="form-control"  >
+                                                    <option ng-repeat="name in branch" value="{{name._id.Branch}}">{{name._id.Branch}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Class Name:</label>
+                                            <div class="col-md-8" ng-show="subjectclass">
+                                                <input type="text" ng-model="user.class" class="form-control">
+                                            </div>
+                                            <div class="col-md-8" ng-hide="subjectclass">
+                                                <select ng-model="user.class"  class="form-control"  >
+                                                    <option ng-repeat="name in subject" value="{{name._id.Subject}}">{{name._id.Subject}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Topic Name:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" ng-model="user.topic" class="form-control">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Faculty Name:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" ng-model="user.pname" class="form-control">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Faculty Designation:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" ng-model="user.designation" class="form-control">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Date:</label>
+                                            <div class="col-md-8">
+                                                <input type="date" name="coursename" placeholder="Proctor Name" ng-model="user.date"  class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Start time:</label>
+                                            <div class="col-md-8">
+                                                <input type="time" ng-model="user.stime"  class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">End time:</label>
+                                            <div class="col-md-8">
+                                                <input type="time" ng-model="user.etime"  class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Upload Students Data:</label>
+                                            <div class="col-md-8">
+                                                <input type="file" name="file" file-model="user.file" required="required" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <input class="btn btn-info btn-lg" type="button" ng-click="uploadattd(user)" name="file" value="Upload Excel" />    
+                                            <a class="btn btn-info btn-lg" href="format/attendenceformat.xlsx" style="margin-left:20px" download="download">Download Excel Format</a>
+                                        </div>
+                                        
+                                    </form>   
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <div class="col-lg-12">
+                                            <div class="panel panel-default">
+                                                <h2 style="text-align: center;">Present Attendance Data</h2>
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>RollNo</th>
+                                                                <th>Name</th>
+                                                                <th>PassOutYear</th>
+                                                                <th>College Name</th>
+                                                                <th>Branch</th>
+                                                                <th>Section</th>
+                                                                <th>Batch</th>
+                                                                <th>Class</th>
+                                                                <th>Faculty Name</th>
+                                                                <th>Date</th>
+                                                                <th>Action</th>
+                                                                <!-- <th>Duration</th> -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in students">
+                                                                <td>{{$index + 1 | number}}</td>
+                                                                <td>{{data._id.RollNo}}</td>
+                                                                <td>{{data._id.Name}}</td>
+                                                                <td>{{data._id.PoY}}</td>
+                                                                <td>{{data._id.College}}</td>
+                                                                <td>{{data._id.Branch}}</td>
+                                                                <td>{{data._id.Section}}</td>
+                                                                <td>{{data._id.Batchname}}</td>
+                                                                <td>{{data._id.ClassName}}</td>
+                                                                <td>{{data._id.ProctorName}}</td>
+                                                                <td>{{data._id.Date}}</td>
+                                                                <td>{{data._id.Action}}</td>
+                                                                <!-- <td>{{data._id.Duration}}</td> -->
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>            
+                                </div>
+                            </div>
+                            <div class="tab-pane fade align" id="getattendence" ng-controller="getattendencecontroller" ng-init="getdata()">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-md-7 col-md-offset-2">
+                                       <form>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Students Data:</label>
+                                            <div class="col-md-8">
+                                                <select ng-model="user.batch" ng-change="getproctor(user.batch)"  class="form-control" >
+                                                    <option ng-repeat="name in batch"   value="{{name._id.Batchname}}">{{name._id.Batchname}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Section:</label>
+                                            <div class="col-md-8">
+                                                <input type="checkbox" ng-model="SectionA"  name="" ng-change="check(SectionA,'A')" ng-true-value="'A'" ng-false-value="'null'" > <span style="font-size:20px;font-weight:bold">A</span>
+                                                <input type="checkbox"  style="margin-left: 25px" ng-model="SectionB"  name="" ng-change="check(SectionB,'B')" ng-true-value="'B'" ng-false-value="'null'" > <span style="font-size:20px;font-weight:bold">B</span>
+                                                <input type="checkbox"  style="margin-left: 25px" ng-model="SectionC"  name="" ng-change="check(SectionC,'C')" ng-true-value="'C'" ng-false-value="'null'" > <span style="font-size:20px;font-weight:bold">C</span>
+                                                <input type="checkbox"  style="margin-left: 25px" ng-model="SectionD"  name="" ng-change="check(SectionD,'D')" ng-true-value="'D'" ng-false-value="'null'" > <span style="font-size:20px;font-weight:bold">D</span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Class Name:</label>
+                                            <div class="col-md-8">
+                                                <!-- <input type="text" name="coursename" placeholder="Proctor Name" ng-model="user.pname"  class="form-control" required> -->
+                                                <select ng-model="user.class"  class="form-control"  >
+                                                    <option ng-repeat="name in proct" value="{{name._id.ClassName}}">{{name._id.ClassName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Faculty Name:</label>
+                                            <div class="col-md-8">
+                                                <!-- <input type="text" name="coursename" placeholder="Proctor Name" ng-model="user.pname"  class="form-control" required> -->
+                                                <select ng-model="user.pname"  class="form-control"  >
+                                                    <option ng-repeat="name in proct" value="{{name._id.ProctorName}}">{{name._id.ProctorName}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Date:</label>
+                                            <div class="col-md-8">
+                                                <input type="date"  ng-model="user.date"  class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Time:</label>
+                                            <div class="col-md-8">
+                                                <input type="time" name="coursename"  ng-model="user.time"  class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <input class="btn btn-info btn-lg" type="button" ng-click="getattd(user)" name="file" value="Get Attendence" />    
+                                        </div>
+                                        
+                                        <!-- <a class="btn btn-info btn-lg" href="format/format.xls" style="margin-left:20px" download="download">Download Excel</a> -->
+                                    </form>   
+                                    </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                            <div class="panel panel-default">
+                                                <h2 style="text-align: center;">Attendance Data</h2>
+                                                <p>Present Percentage: {{percentage.toFixed(2)}}</p>
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <!-- <th>S.No</th> -->
+                                                                <th>RollNo</th>
+                                                                <th>Name</th>
+                                                                <th>Father Mobile</th>
+                                                                <th>College Name</th>
+                                                                <th>Branch</th>
+                                                                <th>Section</th>
+                                                                <th>POY</th>
+                                                                <th>Students Data</th>
+                                                                <th>Class Name</th>
+                                                                <th>Trainer</th>
+                                                                <th>Start Time</th>
+                                                                <th>End Time</th>
+                                                                <th>Date</th>
+                                                                <th>Action</th>
+                                                                <th>Duration</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in students">
+                                                                <!-- <td>{{$index + 1 | number}}</td> -->
+                                                                <td>{{data._id.RollNo}}</td>
+                                                                <td>{{data._id.Name}}</td>
+                                                                <td>{{data._id.FatherMobile}}</td>
+                                                                <td>{{data._id.College}}</td>
+                                                                <td>{{data._id.Branch}}</td>
+                                                                <td>{{data._id.Section}}</td>
+                                                                <td>{{data._id.PoY}}</td>
+                                                                <td>{{data._id.Batchname}}</td>
+                                                                <td>{{data._id.ClassName}}</td>
+                                                                <td>{{data._id.ProctorName}}</td>
+                                                                <td>{{data._id.Starttime}}</td>
+                                                                <td>{{data._id.Endtime}}</td>
+                                                                <td>{{data._id.Date}}</td>
+                                                                <td>
+                                                                    <button ng-class="{'btn-danger': data._id.Action == 'Absent','btn-success': data._id.Action == 'Present'}" style="border-radius: 5px">{{data._id.Action}}</button>
+                                                                </td>
+                                                                <td>{{data._id.Duration}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade align" id="dayattendence" ng-controller="dayattendencecontroller" ng-init="getdata()">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-md-7 col-md-offset-2">
+                                       <form>
+                                        <div class="form-group">
+                                            <label class="col-md-4" style="font-size: 20px">Date:</label>
+                                            <div class="col-md-8">
+                                                <input type="date"  ng-model="user.date"  class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br><br>                                    
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <input class="btn btn-info btn-lg" type="button" ng-click="getattd(user)" name="file" value="Get Attendence" />    
+                                        </div>
+                                        
+                                        <!-- <a class="btn btn-info btn-lg" href="format/format.xls" style="margin-left:20px" download="download">Download Excel</a> -->
+                                    </form>   
+                                    </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                            <div class="panel panel-default">
+                                                <h2 style="text-align: center;">Attendence Data</h2>
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered table-hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>College</th>
+                                                                <th>Department</th>
+                                                                <th>Faculty Name</th>
+                                                                <th>Faculty Designation</th>
+                                                                <th>Date</th>
+                                                                <th>Scheduled Time</th>
+                                                                <th>Online Session</th>
+                                                                <th>Pass Out Year</th>
+                                                                <th>Class Name</th>
+                                                                <th>Topic Name</th>
+                                                                <th>Duration</th>
+                                                                <th>Students Invited</th>
+                                                                <th>Students Attended</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in dayclass">
+                                                                <td>{{$index + 1 | number}}</td>
+                                                                <td>{{data._id.College}}</td>
+                                                                <td>{{data._id.Branch}}</td>
+                                                                <td>{{data._id.ProctorName}}</td>
+                                                                <td>{{data._id.Designation}}</td>
+                                                                <td>{{data._id.Date}}</td>
+                                                                <td>{{data._id.Starttime}} - {{data._id.Endtime}}</td>
+                                                                <td>{{data._id.OnlineSession}}</td>
+                                                                <td>{{data._id.PoY}}</td>
+                                                                <td>{{data._id.ClassName}}</td>
+                                                                <td>{{data._id.Topic}}</td>
+                                                                <td>{{data._id.ClassDuration}}</td>
+                                                                <td>{{data.Count}}</td>
+                                                                <td>{{data.present}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>    
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+    <!-- MAIN CONTENT-->
+    <!-- main content end-->
+    <!-- js placed at the end of the document so the pages load faster-->
+    <script src="javascripts/jquery.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src="javascripts/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="javascripts/jquery.ui.touch-punch.min.js"></script>
+    <script src="javascripts/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="javascripts/jquery.scrollTo.min.js"></script>
+    <script src="javascripts/jquery.nicescroll.js"></script>
+    <!--pdf-->
+    <script src="javascripts/jspdf.debug.js">
+    </script>
+    <script src="javascripts/jspdf.min.js"></script>
+    <script src="javascripts/pass.js"></script>
+    <!-- common script for all pages-->
+    <script src="javascripts/common-scripts.js"></script>
+    <script src="javascripts/jquery.dataTables.min.js"></script>
+    <script src="javascripts/dataTables.buttons.min.js"></script>
+    <script src="javascripts/buttons.flash.min.js"></script>
+    <script src="javascripts/jszip.min.js"></script>
+    <script src="javascripts/pdfmake.min.js"></script>
+    <script src="javascripts/vfs_fonts.js"></script>
+    <script src="javascripts/buttons.html5.min.js"></script>
+    <script src="javascripts/buttons.print.min.js"></script>
+    <!--time-->
+    <script src="javascripts/time.js"></script>
+    <!-- random numbers-->
+    <script src="javascripts/randomnumbers.js"></script>
+    <script src="javascripts/currenttime.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="angular/home.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
+    <script src="javascripts/angular-datatables.buttons.min.js"></script>
+    <script src="javascripts/angular-datatables.min.js"></script>
+    <!--timeout-->
+    <script>
+        $('.out').click(function() {
+            var id = $(this).val();
+            //alert(id);
+            $.post('/time', {
+                id: id
+            }, function(data, jqXHR) {
+                alert('Out time set Successfully');
+                location.reload('/home');
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#dataTables-example').dataTable({
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'copy',
+                        title: 'VisitorPass Report'
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: 'VisitorPass Report'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        title: 'VisitorPass Report'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'VisitorPass Report'
+                    },
+                    {
+                        extend: 'print',
+                        title: 'VisitorPass Report'
+                    }
+                ]
+            });
+        });
+    </script>
+</body>
+
+</html>

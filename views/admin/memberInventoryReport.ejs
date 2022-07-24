@@ -1,0 +1,125 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Member Inventory Report</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-hide="viewinventory" print-remove ng-init="MemberInventoryReport()">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Member Name </th>
+                <th>Ranch Name </th>
+                <th>Address </th>
+                <th>City </th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Print</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="mir in mirs">
+                <td><span ng-bind="mir.MemberName"></span></td>
+                <td><span ng-bind="mir.RanchName"></span></td>
+                <td><span ng-bind="mir.Address"></span></td>
+                <td><span ng-bind="mir.City"></span></td>
+                <td><span ng-bind="mir.State"></span></td>
+                <td><span ng-bind="mir.Zip"></span></td>
+                <td>
+                  <i title="Print" class="fa fa-print btn btn-primary" ng-click="PrintInventory(mir)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="viewinventory" print-section print-avoid-break>
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Inventory Of {{pis[0].Membername}}</h2>
+    <div class="col-md-12">
+      <div class="col-md-6">
+        <label>Member Name : {{pis[0].Membername}}</label>
+        <br>
+        <br>
+        <label>Ranch Name : {{pis[0].RanchName}}</label>
+        <br>
+        <br>
+        <label>Address : {{pis[0].Address}}</label>
+        <br>
+        <br>
+        <label>City : {{pis[0].City}}</label>
+        <br>
+        <br>
+        <label>State : {{pis[0].State}}</label>
+        <br>
+        <br>
+        <label>Zip : {{pis[0].Zip}}</label>
+        <br>
+        <br>
+        <label>Region : {{pis[0].Region}}</label>
+        <br>
+        <br>
+        <label>Phone : {{pis[0].Phone}}</label>
+        <br>
+        <br>
+        <label>Phone2 : {{pis[0].AltPhone}}</label>
+        <br>
+        <br>
+      </div>
+      <div class="col-md-6">
+        <label>Due Date : {{pis[0].DueDate | date:'mm/dd/yyyy'}}</label>
+        <br>
+        <br>
+        <label>Paid Date : {{pis[0].PaidDate | date:'mm/dd/yyyy'}}</label>
+        <br>
+        <br>
+        <label>Email : {{pis[0].Email}}</label>
+        <br>
+        <br>
+        <label>Type : {{pis[0].Type}}</label>
+        <br>
+        <br>
+        <label>Updated : {{pis[0].updated | date : 'mm/dd/yyyy'}}</label>
+        <br>
+        <br>
+        <label>Updated By : {{pis[0].Updatedby}}</label>
+        <br>
+        <br>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" width="100%">
+            <thead>
+              <tr>
+                <th>RegNo</th>
+                <th>Animal</th>
+                <th>Type Service</th>
+                <th>Birthdate</th>
+                <th>Sire</th>
+                <th>Dam</th>
+                <th>Private Herd</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="pi in pis">
+                <td>{{pi.RegNo}}</td>
+                <td>{{pi.Animal}}</td>
+                <td>{{pi.TypeService}}</td>
+                <td>{{pi.Birthdate | date : 'mm/dd/yyyy'}}</td>
+                <td>{{pi.Sire}}</td>
+                <td>{{pi.Dam}}</td>
+                <td>{{pi.PrivateHerd}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-color" print-remove print-btn>Print</button>
+    <button class="btn btn-color" print-remove ng-click="ExitInventory()">Back</button>
+  </div>
+</div>

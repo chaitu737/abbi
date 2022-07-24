@@ -1,0 +1,59 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Animal Registration Reports</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+    <div class="row"> <br />
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <form>
+          <div class="row">
+            <div class="col-md-6">     
+              <label>Start Date :</label>
+              <input class="form-control" type="date" ng-model-options="{timezone: 'UTC'}" ng-model="arrdate.asdate">
+            </div>
+            <div class="col-md-6">
+              <label>End Date :</label>
+              <input class="form-control" type="date" ng-model-options="{timezone: 'UTC'}" ng-model="arrdate.aedate">
+            </div>
+          </div>
+          <div class="row text-center" style="margin-top:10px;">
+            <button class="btn btn-color" type="button" ng-click="AnimalRegReport(arrdate)">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng"dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>RegNo </th>
+                <th>Animal </th>
+                <th>Date Register</th>
+                <th>Private Herd</th>
+                <th>Type Service</th>
+                <th>Description</th>
+                <th>DNAd</th>
+                <th>Member</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="arr in arrs">
+                <td><span ng-bind="arr.RegNo"></span></td>
+                <td><span ng-bind="arr.Animal"></span></td>
+                <td><span ng-bind="arr.Dateregestered | date:'MM/dd/yyyy'"></span></td>
+                <td><span ng-bind="arr.PrivateHerd"></span></td>
+                <td><span ng-bind="arr.TypeService"></span></td>
+                <td><span ng-bind="arr.Description"></span></td>
+                <td><span ng-bind="arr.DNAd"></span></td>
+                <td><span ng-bind="arr.MemberNo"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

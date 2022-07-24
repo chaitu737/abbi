@@ -1,0 +1,65 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">My Entries</h2>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-hide="entrypayments">
+  <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%" ng-init="Entries()">
+    <thead>
+      <tr>
+        <th>Entry</th>
+        <th>Reg  #</th>
+        <th>Animal Name</th>
+        <th>Event</th>
+        <th>Start Day</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="me in mes">
+        <td><span ng-bind="me.entid"></span></td>
+        <td><span ng-bind="me.regno"></span></td>
+        <td>{{me.bno}} - {{me.bname}}</td>
+        <td>{{me.evid}}, {{me.title}}</td>
+        <td><span ng-bind="me.startday | date : 'MM/dd/yyyy'"></span></td>
+        <td>
+         <button class="btn btn-color" ng-click="PayforEntry()">Pay</button>
+       </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-show="entrypayments">
+  <br>
+  <div class="col-md-12 form-group">
+    <div class="col-md-6">
+      <label>Payment Type (select complete or partial)</label>
+      <select class="form-control">
+        <option value="EF_PAY">Entry Payment Complete</option>
+        <option value="EF_PAY_PART">Entry Partial Payment</option>
+      </select>
+      <label>Payment Amount</label>
+      <input class="form-control" type="" ng-model="">
+    </div>
+  </div>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-show="entrypayments1">
+  <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%" ng-init="Entries()">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Ext.</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="">
+        <td><span ng-bind=""></span></td>
+        <td><span ng-bind=""></span></td>
+        <td><span ng-bind=""></span></td>
+        <td><span ng-bind=""></span></td>
+        <td class="btn btn-color" ng-click="RemoveEntryCart()">Remove</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

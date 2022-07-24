@@ -1,0 +1,196 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Results</h2>
+</div>
+<div class="container" style="height:100%;width:90%;padding: 10px;">
+  <div ng-hide="showres" ng-init="ShowResults()">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Start Date</th>
+                <th>View More</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="res in results">
+                <td><span ng-bind = "res.title"></span></td>
+                <td><span ng-bind = "res.city"></span></td>
+                <td><span ng-bind = "res.state"></span></td>
+                <td><span ng-bind = "res.startday | date : 'MM/dd/yyyy'"></span></td>
+                <td class="text-center">
+                  <i class="fa fa-info btn btn-primary" ng-click="MoreResults(res)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="showres1">
+   <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Event ID {{data1.pevid}}</h4>
+    <label>Title :</label>
+    <span style="color: black;" ng-bind="data1.title"></span>
+    <br>
+    <label>Sanction :</label>
+    <span style="color: black;" ng-bind="data1.sanction"></span>
+    <br>
+    <label>City :</label>
+    <span style="color: black;" ng-bind="data1.city"></span>
+    <br>
+    <label>State :</label>
+    <span style="color: black;" ng-bind="data1.state"></span>
+    <br>
+    <label>Entries Open : </label>{{data1.eoo | date : 'MM/dd/yyyy'}} to {{data1.ec | date : 'MM/dd/yyyy'}}
+  </div>
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Judges</h4>
+    <ul>
+      <li style="color: black;font-weight: bold" ng-repeat="dat in data2">{{dat.jid}} : {{dat.jname}}</li>
+    </ul>
+  </div>
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Competition classes</h4>
+    <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>Date</th>
+          <th>Entries</th>
+          <th>Results PDF</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tjd in data3">
+          <td><a href="#" ng-click="ClassResData(tjd)"><span ng-bind="tjd.Class"></span></a></td>
+          <td><span ng-bind="tjd.startdate | date : 'MM/dd/yyyy'"></span></td>
+          <td><span ng-bind="tjd.entries_results"></span></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-color" ng-click="ExitResult()">Exit</button>
+</div>
+<div class="container" style="height:100%;width:90%;padding: 10px;" ng-show="reshide">
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Class ID {{cinfo.classid}}</h4>
+    <label>Class :</label>
+    <span style="color: black;" ng-bind="cinfo.class"></span>
+    <br>
+    <label>City :</label>
+    <span style="color: black;" ng-bind="cinfo.city"></span>
+    <br>
+    <label>State :</label>
+    <span style="color: black;" ng-bind="cinfo.state"></span>
+    <br>
+    <label>Start Date : </label>{{cinfo.startdate | date : 'MM/dd/yyyy'}}
+  </div>
+  <br>
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Results</h4>
+    <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+      <thead>
+        <tr>
+          <th>Score</th>
+          <th>Animal</th>
+          <th>Price</th>
+          <th>Owner</th>
+          <th>Reg No</th>
+          <th>Delivery</th>
+          <th>Marks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="re in resu">
+          <td>{{re.sc}}</td>
+          <td><span class="abc" ng-click="AnimalProfileTab(re)">{{re.bno}} {{re.bname}}</span></td>
+          <td>{{re.money | currency}}</td>
+          <td>{{re.owner}}</td>
+          <td><a data-toggle="tab" href="#animalprofile" ng-click="SearchAnimalProfile(re);SearchPedigree(re)"><span ng-bind="re.regno"></span></a></td>
+          <td>{{re.del}}</td>
+          <td>{{re.j1}},{{re.j2}},{{re.j3}},{{re.j4}},{{re.j5}},{{re.j6}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-color" ng-click="ExitResClass()">Back</button>
+</div>
+<div class="container" style="height:100%;width:90%;padding: 10px;" ng-show="reshide1">
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Animal Profile</h4>
+    <label>Animal :</label>
+    <span style="color: black;" ng-bind="apts.bname"></span>
+    <br>
+    <label>Owner :</label>
+    <span style="color: black;" ng-bind="apts.owner"></span>
+    <br>
+    <label>ABBI Reg # :</label>
+    <span style="color: black;" ng-bind="apts.regno"></span>
+    <br>
+    <label>Born : </label>
+    <span style="color: black;" ng-bind="apts.birthyear"></span>
+    <br>
+    <label>Delivery : </label>
+    <span style="color: black;" ng-bind="apts.del"></span>
+    <br>
+    <label>2021 Money : </label>
+    <span style="color: black;" ng-bind="apts.money2021 | currency"></span>
+    <br>
+    <label>Carrier Money : </label>
+    <span style="color: black;" ng-bind="apts.Careermoney | currency"></span>
+    <br>
+  </div>
+  <br>
+  <div class="col-md-12">
+    <h4 class="well well-sm" style="background-color: #503219; color: white;">Standings Summary</h4>
+    <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+      <thead>
+        <tr>
+          <th>Divison</th>
+          <th>Money</th>
+          <th>Points</th>
+          <th>Money Position</th>
+          <th>Points Position</th>
+          <th>Outs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="apt1 in apts1">
+          <td>{{apt1.division}}</td>
+          <td>{{apt1.money | currency}}</td>
+          <td>{{apt1.point_avg}}</td>
+          <td>{{apt1.mpos}}</td>
+          <td>{{apt1.ppos}}</td>
+          <td>{{apt1.outcount}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr ng-repeat="apt1 in apts1">
+          <td colspan="6">Season Total Winings : {{apt1.seasontotwin}}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div>
+    <div class="col-md-12" ng-repeat="apt3 in apts3">
+      <h4 class="well well-sm" style="background-color: #503219; color: white;"  ng-if="apt2.pevid==apt3.pevid"ABBI Futurity ($ds) ng-repeat="apt2 in apts2">{{apt2.title}}</h4>
+      <table class="table table-bordered table-striped">
+        <tr>
+          <td>{{apt3.sc}}</td>
+          <td>{{apt3.place}}</td>
+          <td>{{apt3.seasontotwin}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <button class="btn btn-color" ng-click="ExitSumClass()">Back</button>
+</div>
+</div>

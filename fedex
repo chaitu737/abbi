@@ -1,0 +1,14 @@
+db_user = sa
+db_password = 1234
+db_server = Sandeep-Siva\SQL2019
+db_port = 1433
+db_database = ABBI
+port = 80
+loginId = 3LK24bU5r6
+# 498KLyV7kU
+transactionKey = 7A4c2ee6BM2c6ajH
+# 29kEPHw896uc5vLB
+fedex_key = 4nSnu8R6HmCTF6DB
+fedex_pass = TLlGPTQtEW9LOLQRvxAnm3kNs
+fedex_acno = 653495790
+fedex_meter = 254376546

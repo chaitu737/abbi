@@ -1,0 +1,197 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Payout Calculator</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+    <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Payout Calculator</h2>
+    <div class="col-md-12">
+      <div class="col-md-4">
+        <form class="form-group">
+          <label>Number of competing entries</label>
+          <input type="text" class="form-control" ng-model="cal.enum">
+          <label>Entry Fees</label>
+          <input type="text" class="form-control" ng-model="cal.fees">
+          <label>Added $</label>
+          <input type="text" class="form-control" ng-init="cal.added=0" ng-model="cal.added">
+          <label>Pay 1 place for every ____ entries (placebreak)</label>
+          <input type="text" class="form-control" ng-init="cal.plcb=4" ng-model="cal.plcb">
+          <label>Flat drag from fees</label>
+          <input type="text" class="form-control" ng-init="cal.flatdrag=0" ng-model="cal.flatdrag">
+          <label>% drag from pot (e.g. .25)</label>
+          <input type="text" class="form-control" ng-init="cal.percdrag=0" ng-model="cal.percdrag">
+          <label>Flat drag from pot</label>
+          <input type="text" class="form-control" ng-init="cal.potdrag=0" ng-model="cal.potdrag">
+          <label>Event Class :</label>
+          <select class="form-control" ng-init="cal.evc='Open'" ng-model="cal.evc">
+            <option value="Open">Open</option>
+            <option value="Cowgirl">Cowgirl</option>
+            <option value="Junior">Junior</option>
+            <option value="Limited">Limited</option>
+            <option value="Heritage">Heritage</option>
+            <option value="Lifetime">Lifetime</option>
+            <option value="3D">3D</option>
+            <option value="4D">4D</option>
+            <option value="Heifer">Heifer</option>
+            <option value="Side Pot">Side Pot</option>
+            <option value="Wild Card">Wild Card</option>
+            <option value="Exhibition">Exhibition</option>
+            <option value="ABBI Points">ABBI Points</option>
+            <option value="BFTS">BFTS</option>
+            <option value="PBR Premier Series">PBR Premier Series</option>
+            <option value="Canada">Canada</option>
+            <option value="Second Chance">Second Chance</option>
+            <option value="World Finals">World Finals</option>
+            <option value="2018 Series">2018 Series</option>
+            <option value="Revolution">Revolution</option>
+          </select>
+          <label>Event Type :</label>
+          <select class="form-control" ng-init="cal.evt='Futurity'" ng-model="cal.evt">
+            <option value="Futurity">Futurity</option>
+            <option value="Yearling">Yearling</option>
+            <option value="Derby">Derby</option>
+            <option value="Classic">Classic</option>
+            <option value="Maturity">Maturity</option>
+            <option value="Fee Only">Fee Only</option>
+          </select>
+          <br>
+          <button class="btn btn-color" ng-click="Calculate(cal);Calculate1(cal);Calculate2(cal);Calculate3(cal);Calculate4(cal);Calculate5(cal);Calculate6(cal);Calculate7(cal)">Calculate Payout</button>
+        </form>
+      </div>
+      <div class="col-md-8" ng-if=result>
+        <h3>Your Parameters</h3>
+        <label>Entries : {{result.Entries}}</label>
+        <br>
+        <br>
+        <label>Place Break : {{result.placebreak}}</label>
+        <br>
+        <br>
+        <label>Fees : {{result.Fees}}</label>
+        <br>
+        <br>
+        <label>Added : {{result.Added}}</label>
+        <br>
+        <br>
+        <label>Flat Drag From Fees : {{result.Flatdragfromfees}}</label>
+        <br>
+        <br>
+        <label>% drag from pot : {{result.percdragfrompot}}</label>
+        <br>
+        <br>
+        <label>Flat drag from pot : {{result.Flatdragfrompot}}</label>
+        <br>
+        <br>
+        <label>Class type : {{result.Classtype}}</label>
+        <br>
+        <h3>Pot Breakdown</h3>
+        <label>Total Pot : {{result.Totalpot | currency}}</label>
+        <br>
+        <br>
+        <label>Total Payout : {{result.totpayout | currency}}</label>
+        <br>
+        <br>
+        <label>Total Drag : {{result.totdrag | currency}}</label>
+        <br>
+        <br>
+        <label>Places : {{result.places}}</label>
+        <h3>Payout w/ drag</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Place</th>
+              <th>Money</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="res1 in result1">
+              <td>{{res1.pos}} </td>
+              <td>{{res1.money | currency}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <h3>Payout w/ drag (25 places)</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Place</th>
+              <th>Money</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <tr ng-repeat="res2 in result2">
+                <td>{{res2.pos}} </td>
+                <td>{{res2.money | currency}}</td>
+              </tr>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <h3>Payout @ 100% payback</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Place</th>
+              <th>Money</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <tr ng-repeat="res3 in result3">
+                <td>{{res3.pos}} </td>
+                <td>{{res3.money | currency}}</td>
+              </tr>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <h3>Payout w/ drag in 3D Format (4 places per D)</h3>
+        <table ng-repeat="res6 in result6 | unique:'Dimension'">
+          <thead>
+            <tr>
+              <th colspan="2">{{res6.Dimension}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="res4 in result4 | unique:'pos'">
+              <td>{{res4.pos}} </td>
+              <td>{{res4.money | currency}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <h3>Payout w/ drag in 4D Format (4 places per D)</h3>
+        <table ng-repeat="res7 in result7 | unique:'Dimension'">
+          <thead>
+            <tr>
+              <th colspan="2">{{res7.Dimension}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="res5 in result5 | unique : 'pos'">
+              <td>{{res5.pos}} </td>
+              <td>{{res5.money | currency}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-8" ng-if=!result>
+        <h3>Enter event parameters using the form</h3>
+        <b><ul>
+          <li>3D and 4D Payout models use the number you supply in the placebreak field as number of places per D</li>
+          <li>Percentage drag should be entered as a decimal between 0 and 1. Examples: 10% = .10, 42% = .42, etc.</li>
+          <li>Event type and class really don't matter. Drag parameters must be set via the form each time.</li>
+          <li>Form always returns 4 models:
+            <ul>
+              <ol>100% payout (no drag, normal format)</ol>
+              <ol>Normal payout using your drag parameters</ol>
+              <ol>3D payout using your drag parameters</ol>
+              <ol>4D payout using your drag parameters</ol>
+            </ul>
+          </li>
+        </ul>
+      </b>
+    </div>
+  </div>
+</div>
+</div>

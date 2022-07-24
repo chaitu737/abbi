@@ -1,0 +1,33 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Email Outbox</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-init="ViewEmailOutbox()">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Approve</th>
+              <th>Member Name</th>
+              <th>RegNo</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="veo in veos">
+              <td>
+                <input type="checkbox" ng-model="veo.Approved" ng-true-value="{{ 1 | json }}" ng-false-value="{{ 0 | json }}" ng-click="SendEmailOutbox(veo)">
+              </td>
+              <td><span ng-bind="veo.MemberName"></span></td>
+              <td><span ng-bind="veo.AnimalID"></span></td>
+              <td>
+                <i title="Delete" ng-click="DeleteEmailOutbox(veo)" class="btn btn-danger fa fa-trash"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

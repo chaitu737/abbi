@@ -1,0 +1,60 @@
+
+
+.login{
+    margin-top: 163px;
+    width: 100% !important;
+    padding: 88px;
+    border: 1px solid;
+
+
+}
+
+ .headerabbilogin{
+text-align: center;
+background-color: #503219;
+color: white;
+}
+   
+
+div button.submitloginbutton{
+    width: 46%; border-radius: 23px;
+    background-color:#503219;
+    color: white;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+
+@media  screen and (min-width: 1679px) {
+
+    .login{
+        margin-top: 163px;
+        width: 800px !important;
+        padding: 88px;
+        border: 1px solid;
+    
+    }
+      
+    }
+     button:hover{
+        color: #007bff;
+    }
+
+    
+@media (min-width: 280px) and (max-width: 812px) {
+    div button.submitloginbutton{
+        width: 100%; 
+
+    }
+    .headerabbilogin{
+       font-size: 29px
+        }
+        .login{
+            margin-top: 163px;
+            width: 100% !important;
+            padding: 20px;
+            border: 1px solid;
+        
+        
+        }
+  }

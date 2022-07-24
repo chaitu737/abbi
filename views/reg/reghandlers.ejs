@@ -1,0 +1,59 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Handlers</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-hide="addnew">
+    <button class="btn btn-color" ng-click="NewHandler()">Add New Handler</button>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%" ng-init="handlerdata()">
+            <thead>
+              <tr>
+                <th>rowid</th>
+                <th>handler</th>
+                <th>memno</th>
+                <th>phone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="hd in hds">
+                <td><span ng-bind="hd.rowid"></span></td>
+                <td><a ng-click="EditHandler(hd)"><span ng-bind="hd.handler"></span></a></td>
+                <td><span ng-bind="hd.memno"></span></td>
+                <td><span ng-bind="hd.phone"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="addnew1">
+    <form>
+      <label>Handler</label>
+      <input type="text" class="form-control" ng-model="hand.handler">
+      <label>Memno</label>
+      <input type="text" class="form-control" ng-model="hand.memno">
+      <label>Phone</label>
+      <input type="text" class="form-control" ng-model="hand.phone">
+      <br>
+      <button class="btn btn-color" ng-click="AddNewHandler(hand)">Add New Handler</button>
+      <button class="btn btn-color" ng-click="BacktoHandler()">Back</button>
+    </form>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="addnew2">
+    <form>
+      <label>Handler</label>
+      <input type="text" class="form-control" ng-model="eh.handler">
+      <label>Memno</label>
+      <input type="text" class="form-control" ng-model="eh.memno">
+      <label>Phone</label>
+      <input type="text" class="form-control" ng-model="eh.phone">
+      <br>
+      <button class="btn btn-color" ng-click="UpdateHandler(eh)">Update Handler</button>
+      <button class="btn btn-color" ng-click="DeleteHandler(eh)">Delete Handler</button>
+      <button class="btn btn-color" ng-click="BacktoHandler()">Back</button>
+    </form>
+  </div>
+</div>

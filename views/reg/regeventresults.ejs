@@ -1,0 +1,35 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Event Results</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-init="EventResultsData()">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Parent Event</th>
+              <th>Date</th>
+              <th>Result Outs</th>
+              <th>Payout</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="er in erm">
+              <td>{{er.pevid}} - {{er.city}}, {{er.state}} {{er.sanction}}</td>
+              <td><span ng-bind="er.startday | date:'MM-dd-yyyy'"></span></td>
+              <td><span ng-bind="er.rslts_outs"></span></td>
+              <td><span ng-bind="er.Payout"></span></td>
+              <td>
+                <i class="btn btn-danger fa fa-trash" ng-click="WipeResults(er)" title="Wipe Results"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

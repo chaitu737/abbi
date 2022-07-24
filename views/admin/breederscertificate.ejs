@@ -1,0 +1,417 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">Breeders Certificate</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+  <div class="row"> <br />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-init="ViewCertificates()">
+      <button  class="btn btn-color" type="button" data-toggle="modal" data-target="#myModal5" ng-if="security1=='3'"
+      >Add Animal</button>
+      <button class="btn btn-color" type="button" ng-click="offspringVoucher()" ng-if="security1=='3'">Offspring Vouchers </button>
+      <div class="modal fade" id="myModal5" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" type="button" data-dismiss="modal">×</button>
+              <h4 class="modal-title text-center">Breeder's Certificate Animal</h4>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+                  <div class="row">
+                    <form class="form-group">
+                      <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 form-group">
+                        <label>Regno:</label>
+                        <input type="text" class="form-control" ng-model="vanimal.regno" required="">
+                      </div>
+                      <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 form-group" style="top: 25px">
+                        <button type="submit" ng-click="GetAnimalInfo(vanimal)" class="btn btn-color" >Get Animal Info</button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <label>Animal:</label>
+                      </div>
+                      <br>
+                      <br>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <label>Herd Number:</label>
+                      </div>
+                      <br>
+                      <br>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <label>Breeder Display: </label>
+                      </div>
+                      <br>
+                      <br>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <label>Certification #: </label>
+                      </div>
+                      <br>
+                      <br>
+                      <br>
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <label>Program Entry Date:</label>
+                      </div>
+                    </div>
+                    <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
+                      <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                       <span ng-bind="gavs.Animal"></span>
+                     </div>
+                     <br>
+                     <br>
+                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <span ng-bind="gavs.PrivateHerd"></span>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <input type="text" ng-model="gavs.ranchname">
+                    </div>
+                    <br>
+                    <br>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <input type="text" ng-model="gavs.CertificateNumber"><span>**Leave blank to generate certification number</span>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                      <input type="text" ng-model-options="{timezone: 'UTC'}" ng-model="gavs.CertificateDate">
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <br>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button type="button" data-dismiss="modal" class="btn btn-color" ng-click="AddBCAnimalInv(gavs,vanimal)">Save</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-color close">Exit</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="editAnimal1" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" type="button" data-dismiss="modal">×</button>
+            <h4 class="modal-title text-center">Breeder's Certificate Animal</h4>
+          </div>
+          <div class="modal-body">
+            <div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+              <div class="row">
+                <form class="form-group">
+                  <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 form-group">
+                    <label>Regno:</label>
+                    <input type="text" class="form-control" ng-model="ecs.SireRegno">
+                  </div>
+                </form>
+              </div>
+              <div class="row">
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+                </div>
+                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <label>Animal:</label>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <label>Herd Number:</label>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <label>Breeder Display: </label>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <label>Certification #: </label>
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <label>Program Entry Date:</label>
+                  </div>
+                </div>
+                <div class="col-md-7 col-lg-7 col-sm-7 col-xs-7">
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <span ng-bind="ecs.Animal"></span>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <span ng-bind="ecs.PrivateHerd"></span>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                   <input ng-model="ecs.BreederDisplay" type="text">
+                 </div>
+                 <br>
+                 <br>
+                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                  <input ng-model="ecs.CertificateNumber" type="text"><span>**Leave blank to generate certification number</span>
+                </div>
+                <br>
+                <br>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                  <input ng-model="ecs.CertificateDate" type="text" ng-model-options="{timezone: 'UTC'}">
+                  <span ng-bind="ecs.CertificateDate"></span>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <h2 style="text-align: center;color: #2c3e50;font-variant: all-petite-caps;">Breeder's Trust</h2>
+            <div class="row">
+              <div class="col-md-12">
+                <input type="checkbox" ng-model="ecs.chkbt">
+                <label>Enter Into Breeder's Trust Program</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                <label>Trust Type</label>
+                <select ng-model="ecs.TrustType" class="form-control">
+                  <option value="">Select One</option>
+                  <option value="Annual">Annual</option>
+                  <option value="Lifetime">Lifetime</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                <label>Program Year:</label>
+                <input type="text" ng-model="ecs.ProgramYear" class="form-control">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                  <label>Current Breeder's Trust Enties:</label>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                  <span></span>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button"class="btn btn-color" ng-click="GenerateVoucher(ecs);GenerateVoucher1(ecs);printToCart('printSectionId')">Generate Vouchers</button>
+                <button type="button" class="btn btn-color" style="float: right;" ng-click="ViewCertificate(ecs)">View certificate</button>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" id="printSectionId" ng-if="gvs1">
+          <div class="row col-md-12">
+            <div class="col-md-4" ng-repeat="gvs in gvs1">
+              <label>Sire Name : </label> <label>{{gvs.SireName}}</label>
+              <br>
+              <label>Sire RegNo :</label> <label>{{gvs.SireRegNo}}</label> 
+              <br>
+              <label>Certificate No :</label> <label>{{gvs.CertificateNo}}</label>
+              <br>
+              <label>Voucher No :</label> <label>{{gvs.VoucherNo}}</label>
+              <br>
+              <br>
+            </div>
+          </div>
+          <!-- <button class="btn btn-color" id="printPageButton" ng-click="printToCart('printSectionId')">Print</button> -->
+        </div>
+        <br>
+        <br>
+            <div class="row">
+              <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-if="uba">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered nowrap" datatable="ng"dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+                        <thead>
+                          <tr>
+                            <th>Year</th>
+                            <th>Type</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="ub in uba">
+                            <td>{{ub.TrustType}}</td>
+                            <td>{{ub.ProgramYear}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div> 
+              </div>
+            </div>
+            <br>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered nowrap" datatable="ng"dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+                    <thead>
+                      <tr>
+                        <th>Voucher Number</th>
+                        <th>Offspring Reg No</th>
+                        <th>Date Created</th>
+                        <th>Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="gv in gvs">
+                        <td>{{gv.VoucherNo}}</td>
+                        <td>{{gv.OffspringRegNo}}</td>
+                        <td>{{gv.DtCreated | date : 'MM/dd/yyyy'}}</td>
+                        <td>{{gv.Notes}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-12">
+                <button type="button" ng-click="UpdateBCAnimalInv(ecs)" class="btn btn-color">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="panel panel-default" ng-show="certifactehide">
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+        <thead>
+          <tr>
+            <th>Regno</th>
+            <th>Animal</th>
+            <th>Breeder</th>
+            <th>Certificate Date</th>
+            <th>Open Vouchers</th>
+            <th ng-if="security1=='3'">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="cer in certis">
+            <td><span ng-bind="cer.SireRegNo"></span></td>
+            <td><span ng-bind="cer.animal"></span></td>
+            <td><span ng-bind="cer.BreederDisplay"></span></td>
+            <td><span ng-bind="cer.CertificateDate | date:'MM/dd/yyyy'"></span></td>
+            <td><span ng-bind="cer.OpenVoucherCount"></span></td>
+            <td ng-if="security1=='3'">
+              <i title="Edit" class="btn btn-warning fa fa-edit" ng-click="EditCertificateInc(cer)" data-toggle="modal" data-target="#editAnimal1"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;" ng-show="offspvoch">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered nowrap" datatable="ng"dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+          <thead>
+            <tr>
+              <th>Sir Reg #</th>
+              <th>Voucher # </th>
+              <th>Offspring Reg # </th>
+              <th>Created</th>
+              <th>Used</th>
+              <th>Notes </th>
+              <th>Edit/Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="offvou in offvous">
+              <td>
+                <span ng-hide="hidetab" ng-bind="offvou.SireRegNo"></span>
+                <input type="text" ng-model="offvou.SireRegNo" ng-show="hidetab">
+              </td>
+              <td>
+                <span ng-hide="hidetab" ng-bind="offvou.VoucherNo"></span>
+                <input type="text" ng-model="offvou.VoucherNo" ng-show="hidetab">
+              </td>
+              <td>
+                <span ng-hide="hidetab" ng-bind="offvou.OffspringRegNo"></span>
+                <input type="text" ng-model="offvou.OffspringRegNo" ng-show="hidetab">
+              </td>
+              <td>
+                <span ng-hide="hidetab" ng-bind="offvou.DtCreated | date:'MM/dd/yyyy'"></span>
+                <input type="text" ng-model="offvou.DtCreated" ng-show="hidetab">
+              </td>
+              <td>
+                <span ng-hide="hidetab" ng-bind="offvou.DtUsed | date:'MM/dd/yyyy'"></span>
+                <input type="text" ng-model="offvou.DtUsed" ng-show="hidetab">
+              </td>
+              <td>
+                <span ng-hide="hidetab" ng-bind="offvou.Notes"></span>
+                <input type="text" ng-model="offvou.Notes" ng-show="hidetab">
+              </td>
+              <td style="white-space: nowrap;">
+                <i ng-hide="hidetab" title="Edit" class="btn btn-warning fa fa-edit" ng-click="hidetab = true;"></i>
+                <i ng-show="hidetab" title="Edit" class="btn btn-success fa fa-check" ng-click="OffSpringUpdateCert(offvou); hidetab = false;"></i>
+                <i title="Delete" class="btn btn-danger fa fa-trash" ng-click="OffSpringDeleteCert(offvou); hidetab = false"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="container edge" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;">
+    <h2 style="text-align: center;color: #2c3e50;font-variant: all-petite-caps;">Add New Record</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+            <label>Sire Reg No: </label>
+            <input type="text" class="form-control" ng-model="addoffspringvouch.SireRegNo">
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+            <label>Voucher No:</label>
+            <input type="text" class="form-control" ng-model="addoffspringvouch.VoucherNo">
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 form-group">
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+            <label>Offspring Reg No:</label>
+            <input type="text" class="form-control" ng-model="addoffspringvouch.OffspringRegNo">
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+            <label>Used Date: </label>
+            <input type="date" ng-model-options="{timezone: 'UTC'}" class="form-control" ng-model="addoffspringvouch.DtUsed">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 form-group">
+          <label>Notes:</label>
+          <textarea name="" class="form-control" ng-model="addoffspringvouch.Notes"></textarea>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group" style="white-space: nowrap;">
+          <button class="btn btn-color" type="button"  ng-click="AddOffspringVouch(addoffspringvouch)" >Add</button>
+          <button class="btn btn-color" type="button"  ng-click="certifactehide=true;offspvoch=false;" >Exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

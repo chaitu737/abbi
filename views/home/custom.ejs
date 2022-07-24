@@ -1,0 +1,114 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Custom Payments</h2>
+</div> 
+<div class="container" style="height:100%;width:90%;padding: 10px;" ng-init="customPayment()">
+  <form enctype="multipart/form-data">
+    <div class="form-group">
+      <label>File : </label>
+      <input class="form-control" file-model="PaymentType.image" type="file">
+      <span ng-bind="amount | currency"></span>
+    </div>
+    <div class="form-group">
+      <label>Amount : </label>
+      <input class="form-control" ng-model="PaymentType.amount" type="text">
+      <span ng-bind="amount | currency"></span>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea class="null card-image form-control" ng-model="customdata.Description"></textarea>
+    </div>
+    <div class="container" style="height:100%;width:100%;padding: 5px;">
+      <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+        <label>Payment Type</label>
+        <select name="type" ng-model="PaymentType.Payment" class="form-control" ng-change="calculateAmount(Paymn)">
+          <option ng-option selected="selected" value="">-Select One-</option>
+          <option ng-option value="VI">Visa</option>
+          <option ng-option value="MC">Master Card</option>
+          <option ng-option value="AMEX">American Express</option>
+          <option ng-option value="Discover">Discover</option>
+          <!-- <option ng-option value="Auth.Net">Authorize.Net</option> -->
+          <!-- <option ng-option value="Check">Check</option> -->
+          <option ng-option value="eCheck">e-Check</option>
+          <!-- <option ng-option value="Money Order">Money Order</option> -->
+          <!-- <option ng-option value="Cashier Check">Cashier Check</option> -->
+        </select>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2"></div>
+      <div ng-if="PaymentType.Payment == 'undefined' ||PaymentType.Payment == '-1' || PaymentType.Payment == 'VI' || PaymentType.Payment == 'MC' || PaymentType.Payment == 'AMEX' || PaymentType.Payment == 'Discover' || PaymentType.Payment == 'Check' ||  PaymentType.Payment == 'Money Order' || PaymentType.Payment == 'Cashier Check'">
+        <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+          <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+            <label>Credit Card No</label>
+            <input type="number" ng-model="PaymentType.cc" required placeholder="Credit Card No." class="form-control">
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+            <label>Exp. (MM/YY)</label>
+            <input type="text" ng-model="PaymentType.expire" required placeholder="Exp. (MM/YY)" class="form-control">
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+            <label>Sec Code</label>
+            <input type="number" ng-model="PaymentType.cvv" required placeholder="Sec Code" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div ng-if="PaymentType.Payment == 'Auth.Net'">
+        <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+          <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+            <label>Credit Card No</label>
+            <input type="number" ng-model="PaymentType.cc" required placeholder="Credit Card No." class="form-control">
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+            <label>Exp. (MM/YY)</label>
+            <input type="text" ng-model="PaymentType.expire" required placeholder="Exp. (MM/YY)" class="form-control">
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+            <label>Sec Code</label>
+            <input type="number" ng-model="PaymentType.cvv" required placeholder="Sec Code" class="form-control">
+          </div>
+          <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+            <label>Auth No.</label>
+            <input type="number" ng-model="PaymentType.auth" required placeholder="Auth No." class="form-control">
+          </div>
+        </div>
+      </div>
+      <div ng-if="PaymentType.Payment == 'eCheck'">
+        <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10">
+
+          <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+            <label> Account No</label>
+            <input type="number" ng-model="PaymentType.acno" required placeholder="Account No." class="form-control">
+          </div>
+          <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+            <label>Account Holder's Name</label>
+            <input type="text" ng-model="PaymentType.acname" required placeholder="Account Holder's Name.." class="form-control">
+          </div>
+          <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+            <label>Account Type</label>
+            <select ng-model="PaymentType.actype" required class="form-control">
+              <option value="checking"> Checking</option>
+              <option value="savings"> Savings</option>
+            </select>
+          </div>
+        </div>
+        <br>
+        <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10" style="float: right;">
+          <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+            <label>ABA Routing No.</label>
+            <input type="number" ng-model="PaymentType.aba" required placeholder="ABA Routing No." class="form-control">
+          </div>
+          <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+            <label>Bank Name</label>
+            <input type="text" ng-model="PaymentType.bank" required placeholder="Bank Name.." class="form-control">
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="col-md-12">
+      <button class="btn btn-color" ng-click="CustomPay(PaymentType)">Pay</button>
+    </div>
+  </form>
+</div>

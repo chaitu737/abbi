@@ -1,0 +1,390 @@
+<div ng-init="TruncateSF();SelectAdhoc()">
+  <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;">
+    <div class="col-md-12 well">
+      <div class="col-md-6">
+        <form class="form-group">
+          <label>Save Query</label>
+          <input class="form-control" type="text" ng-model="query.name">
+          <br>
+          <button class="btn btn-color" ng-if="!stmt" disabled="">Save</button>
+          <button class="btn btn-color" ng-if="stmt" ng-click="SaveAdhoc(stmt,query)">Save</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <form class="form-group">
+          <label>Load/Delete Query</label>
+          <select class="form-control" ng-model="Qname.ID" multiple="false">
+            <option value="">--Select One--</option>
+            <option ng-repeat="sela in seladhocs" value="{{sela.ID}}">{{sela.Qname}}</option>
+          </select>
+          <br>
+          <button class="btn btn-color" ng-click="LoadAdhoc(Qname)">Load</button>
+          <button class="btn btn-color" ng-click="DeleteAdhoc(Qname)">Delete</button>
+          <button class="btn btn-color" ng-click="ResetAdhoc()">Reset Report</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-hide="showadhoc">
+    <div class="col-md-12 well">
+      <form class="form-group">
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="checkvalue.members">Members
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="checkvalue.registration">Registration
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="checkvalue.payments">Payments
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="checkvalue.eventsmember">Events_Member
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="checkvalue.eventsanimal">Events_Animal
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" ng-model="checkvalue.events">Events
+        </label>
+        <br>
+        <br>
+        <button class="btn btn-color" ng-click="ContinueScreen(checkvalue)">Continue</button>
+      </form>
+    </div>
+  </div>
+  <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;width:100%;padding: 10px;" ng-show="adhocnext">
+    <div class="col-md-2" ng-if="members1">
+      <h4>Member</h4>
+      <ul ng-repeat="mem in members1">
+        <li>
+          <label class="inline-checkbox">
+            <input id="{{mem.Column_Name}}" type="checkbox" value="{{mem.Column_Name}}" ng-checked="selection.indexOf(mem.Column_Name) > -1" ng-click="toggleSelection(mem.Column_Name,'members')" />{{mem.Column_Name}}
+          </label><br>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-2" ng-if="registration1">
+      <h4>Registration</h4>
+      <ul ng-repeat="reg in registration1">
+        <li>
+          <label class="inline-checkbox">
+            <input id="{{reg.Column_Name}}" type="checkbox" value="{{reg.Column_Name}}" ng-checked="selection.indexOf(reg.Column_Name) > -1" ng-click="toggleSelection(reg.Column_Name,'registration')" />{{reg.Column_Name}}
+          </label><br>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-2" ng-if="payments1">
+      <h4>Payments</h4>
+      <ul ng-repeat="pay in payments1">
+        <li>
+          <label class="inline-checkbox">
+            <input id="{{pay.Column_Name}}" type="checkbox" value="{{pay.Column_Name}}" ng-checked="selection.indexOf(pay.Column_Name) > -1" ng-click="toggleSelection(pay.Column_Name,'payments')" />{{pay.Column_Name}}
+          </label><br>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-2" ng-if="eventsmember1">
+      <h4>Events Member</h4>
+      <ul ng-repeat="evem in eventsmember1">
+        <li>
+          <label class="inline-checkbox">
+            <input id="{{evem.Column_Name}}" type="checkbox" value="{{evem.Column_Name}}" ng-checked="selection.indexOf(evem.Column_Name) > -1" ng-click="toggleSelection(evem.Column_Name,'events_member')" />{{evem.Column_Name}}
+          </label><br>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-2" ng-if="eventsanimal1">
+      <h4>Events Animal</h4>
+      <ul ng-repeat="evea in eventsanimal1">
+        <li>
+          <label class="inline-checkbox">
+            <input id="{{evea.Column_Name}}" type="checkbox" value="{{evea.Column_Name}}" ng-checked="selection.indexOf(evea.Column_Name) > -1" ng-click="toggleSelection(evea.Column_Name,'events_animal')" />{{evea.Column_Name}}
+          </label><br>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-2" ng-if="events1">
+      <h4>Events</h4>
+      <ul ng-repeat="eve in events1">
+        <li>
+          <label class="inline-checkbox">
+            <input id="{{eve.Column_Name}}" type="checkbox" value="{{eve.Column_Name}}" ng-checked="selection.indexOf(eve.Column_Name) > -1" ng-click="toggleSelection(eve.Column_Name,'events')" />{{eve.Column_Name}}
+          </label><br>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-12">
+      <button class="btn btn-color" ng-click="ExitAdhoc()">Back</button>
+      <button class="btn btn-color" ng-click="AdhocNext(nextarray,tables);">Next</button>
+    </div>
+  </div>
+  <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="adhocnext1">
+    <div style="height:100%;width:90%;padding: 10px;">
+      <button class="btn btn-color" ng-click="AddSort(col);AddFilter(tables)">Load Data</button>
+      <div>
+        <h4>Sort By</h4>
+      </div>
+      <br>
+      <div>
+        <form class="form-group col-md-12">
+          <div class="col-md-5">
+            <select class="form-control" ng-model="sorts.col">
+              <option value="">--Select One--</option>
+              <option ng-repeat="sort in sortdata" value="{{sort.value}}">{{sort.value}}</option>
+            </select>
+          </div>
+          <div class="col-md-5">
+            <select class="form-control" ng-model="sorts.asc">
+              <option value="">--Select One--</option>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <i class="btn btn-success fa fa-check" ng-click="SaveSort(sorts)"></i>
+          </div>
+        </form>
+        <div ng-repeat = "ss in sss">
+          <div class="col-md-5">
+            <input type="text" ng-model="ss.col">
+          </div>
+          <div class="col-md-5">
+            <input type="text" ng-model="ss.asc">
+          </div>
+          <div class="col-md-2">
+            <i class="btn btn-danger fa fa-trash" ng-click="DeleteSort(ss)"></i>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+    </div>
+    <div style="height:100%;width:90%;padding: 10px;">
+      <div>
+        <h4>Filters</h4>
+      </div>
+      <br>
+      <div>
+        <form class="form-group col-md-12">
+          <div class="col-md-4">
+            <select class="form-control" ng-model="filters.col">
+              <option value="">--Select One--</option>
+              <option ng-repeat="filter in filterdata" value="{{filter.col}}">{{filter.col}}</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-control" ng-model="filters.equal">
+              <option value="">--Select One--</option>
+              <option value="=">Equal ( = )</option>
+              <option value=">">Greater Than ( &gt;)</option>
+              <option value="<">Less Than ( &lt; )</option>
+                <option value=">=">Greater Than or Equal To ( &gt;=)</option>
+                <option value="<=">Less Than or Equal To ( &lt;= )</option>
+                  <option value="<>">Not Equal ( &lt;&gt; )</option>
+                  <option value="Is Null">Is Null</option>
+                  <option value="Is Not Null">Is Not Null</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <input type="text" class="form-control" ng-model="filters.value">
+              </div>
+              <div class="col-md-2">
+                <i class="btn btn-success fa fa-check" ng-click="SaveFilter(filters)"></i>
+              </div>
+            </form>
+            <div ng-repeat = "sf in sfs">
+              <div class="col-md-4">
+                <input type="text" ng-model="sf.col">
+              </div>
+              <div class="col-md-3">
+                <input type="text" ng-model="sf.equal">
+              </div>
+              <div class="col-md-3">
+                <input type="text" ng-model="sf.value">
+              </div>
+              <div class="col-md-2">
+                <i class="btn btn-danger fa fa-trash" ng-click="DeleteFilter(sf)"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div style="height:100%;width:90%;padding: 10px;">
+          <div>
+            <h4>Run Report</h4>
+            <button class="btn btn-color" ng-click="GetRecords(stmt)">Get Records !</button>
+            <button class="btn btn-color" ng-click="GetCount(stmt)">Get Count !</button>
+          </div>
+        </div>
+        <br>
+        <div ng-if="gcs">
+          <table>
+            <thead>
+              <tr>
+                <th>No.of Rows</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{gcs.count}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br>
+        <div class="panel panel-default" ng-if="grs">
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+                <thead>
+                  <tr>
+                    <th ng-repeat="sel in selection">{{sel}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="gr in grs">
+                    <td ng-repeat="sel in selection">{{gr[sel]}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <br>
+        <button class="btn btn-color" ng-click="ExitAdhoc1()">Back</button>
+      </div>
+      <div class="container col-md-12" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="adhocnext2">
+        <div style="height:100%;width:90%;padding: 10px;">
+          <div>
+            <h4>Sort By</h4>
+          </div>
+          <br>
+          <div>
+            <form class="form-group col-md-12">
+              <div class="col-md-5">
+                <select class="form-control" ng-model="sorts2.col">
+                  <option value="">--Select One--</option>
+                  <option ng-repeat="sortss in sorts1" value="{{sortss.value}}">{{sortss.value}}</option>
+                </select>
+              </div>
+              <div class="col-md-5">
+                <select class="form-control" ng-model="sorts2.asc">
+                  <option value="">--Select One--</option>
+                  <option value="asc">Ascending</option>
+                  <option value="desc">Descending</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <i class="btn btn-success fa fa-check" ng-click="SaveSort(sorts2)"></i>
+              </div>
+            </form>
+            <div ng-repeat = "ss in sss">
+              <div class="col-md-5">
+                <input type="text" ng-model="ss.col">
+              </div>
+              <div class="col-md-5">
+                <input type="text" ng-model="ss.asc">
+              </div>
+              <div class="col-md-2">
+                <i class="btn btn-danger fa fa-trash" ng-click="DeleteSort(ss)"></i>
+              </div>
+            </div>
+          </div>
+          <br>
+          <br>
+        </div>
+        <div style="height:100%;width:90%;padding: 10px;">
+          <div>
+            <h4>Filters</h4>
+          </div>
+          <br>
+          <div>
+            <form class="form-group col-md-12">
+              <div class="col-md-4">
+                <select class="form-control" ng-model="filters2.col">
+                  <option value="">--Select One--</option>
+                  <option ng-repeat="filterss in filters1" value="{{filterss.value}}">{{filterss.value}}</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <select class="form-control" ng-model="filters2.equal">
+                  <option value="">--Select One--</option>
+                  <option value="=">Equal ( = )</option>
+                  <option value=">">Greater Than ( &gt;)</option>
+                  <option value="<">Less Than ( &lt; )</option>
+                    <option value=">=">Greater Than or Equal To ( &gt;=)</option>
+                    <option value="<=">Less Than or Equal To ( &lt;= )</option>
+                      <option value="<>">Not Equal ( &lt;&gt; )</option>
+                      <option value="Is Null">Is Null</option>
+                      <option value="Is Not Null">Is Not Null</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" ng-model="filters2.value">
+                  </div>
+                  <div class="col-md-2">
+                    <i class="btn btn-success fa fa-check" ng-click="SaveFilter(filters2)"></i>
+                  </div>
+                </form>
+                <div ng-repeat = "sf in sfs">
+                  <div class="col-md-4">
+                    <input type="text" ng-model="sf.col">
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" ng-model="sf.equal">
+                  </div>
+                  <div class="col-md-3">
+                    <input type="text" ng-model="sf.value">
+                  </div>
+                  <div class="col-md-2">
+                    <i class="btn btn-danger fa fa-trash" ng-click="DeleteFilter(sf)"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div style="height:100%;width:90%;padding: 10px;">
+              <div>
+                <h4>Run Report</h4>
+                <button class="btn btn-color" ng-click="GetRecords1(Qname)">Get Records !</button>
+                <button class="btn btn-color" ng-click="GetCount1(Qname)">Get Count !</button>
+              </div>
+            </div>
+            <br>
+            <div ng-if="gcs1">
+              <table>
+                <thead>
+                  <tr>
+                    <th>No.of Rows</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{gcs1.count}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br>
+            <div class="panel panel-default" ng-if="grs1">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+                    <thead>
+                      <tr>
+                        <th ng-repeat="hea in head">{{hea.head}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="gr1 in grs1">
+                        <td ng-repeat="hea in head">{{gr1[hea.head]}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <br>
+            <button class="btn btn-color" ng-click="ExitAdhoc()">Back</button>
+          </div>
+        </div>

@@ -1,0 +1,117 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Enter Events</h2>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-hide="hideentry">
+  <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%" ng-init="EventEntryList()">
+    <thead>
+      <tr>
+        <th>Age</th>
+        <th>Reg  #</th>
+        <th>Animal Name</th>
+        <th>Delivery</th>
+        <th>Handler</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="eel in eels">
+        <td><span ng-bind="eel.Age"></span></td>
+        <td><span ng-bind="eel.RegNo"></span></td>
+        <td><span ng-bind="eel.Animal"></span></td>
+        <td><span ng-bind="eel.Del"></span></td>
+        <td><span ng-bind="eel.Handler"></span></td>
+        <td>
+          <button class="btn btn-color" ng-click="EnterEventData(eel)">Enter</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-show="hideentry1">
+  <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+    <thead>
+      <tr>
+        <th>Sanction</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Event Type</th>
+        <th>Start Date</th>
+        <th>Fees($)</th>
+        <th>Entries Open</th>
+        <th>Entries Closed</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="ees in eesd">
+        <td><span ng-bind="ees.sanction"></span></td>
+        <td><span ng-bind="ees.city"></span></td>
+        <td><span ng-bind="ees.state"></span></td>
+        <td><span ng-bind="ees.evclass+' '+ees.evtype+' '+ees.evlabel"></span></td>
+        <td><span ng-bind="ees.startdate | date:'MM/dd/yyyy'"></span></td>
+        <td><span ng-bind="ees.fees | number: 2"></span></td>
+        <td><span ng-bind="ees.eoo | date:'MM/dd/yyyy HH:mm:ss'"></span></td>
+        <td><span ng-bind="ees.ec | date:'MM/dd/yyyy HH:mm:ss'"></span></td>
+        <td class="text-center">
+          <button class="btn btn-color" ng-if="ees.showbtn==1" ng-click="EnterEventScreen(ees)">Enter</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- <div class="container border" style="height:100%;width:90%;padding: 10px;" ng-show="hideentry1">
+  <table class="table table-striped table-bordered nowrap"  datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance"  width="100%">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Sanction</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Start Day</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span></span></td>
+        <td><span></span></td>
+        <td><span></span></td>
+        <td><span></span></td>
+        <td><span></span></td>
+        <td class="text-center">
+          <button class="btn btn-color" ng-click="EnterEventScreen()">Enter Event</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> -->
+<div class="container border" style="height:100%;width:90%;padding: 10px;" ng-show="hideentry2">
+  <b><span>Make sure the animal's details look correct below. Change any field as needed. You MUST provide a delivery and a handler / transporter name.</span></b>
+  <br>
+  <div class="col-md-12 form-group">
+    <div class="col-md-6">
+      <label>Animal Brand #</label>
+      <input class="form-control" type="text" ng-model="eesi[0].bno">
+      <label>Animal Name</label>
+      <input class="form-control" type="text" ng-model="eesi[0].Animal">
+      <label>ABBI :</label>
+      <span  ng-bind="eesi[0].RegNo"></span>
+      <label>Fees($) :</label>
+      <span  ng-bind="eesi[0].fees | number:2"></span>
+    </div>
+    <div class="col-md-6">
+      <label>Delivery</label>
+      <select class="form-control" ng-model="eesi[0].Del">
+        <option value="L">Left</option>
+        <option value="R">Right</option>
+      </select>
+      <label>Owners / Partners</label>
+      <input class="form-control" type="text" ng-model="eesi[0].owner">
+      <label>Handler</label>
+      <input class="form-control" type="text" ng-model="eesi[0].Handler">
+    </div>
+    <div class="col-md-12">
+      <button class="btn btn-color"ng-click="MyEntry(eesi)">Enter Animal</button>
+    </div>
+  </div>
+</div>

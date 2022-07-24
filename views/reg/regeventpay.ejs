@@ -1,0 +1,167 @@
+<div>
+  <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; min-width:100px;">Event Payment</h2>
+</div>
+<div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-init="EventPay()" ng-hide="main">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>Pay ID</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="pay in pays">
+                <td><a ng-click="PaymentSubTab(pay)"><span ng-bind="pay.paymentid"></span></a></td>
+                <td><span ng-bind="pay.cust_string"></span></td>
+                <td><span ng-bind="pay.amount"></span></td>
+                <td><span ng-bind="pay.status"></span></td>
+                <td><span ng-bind="pay.paydate | date : 'MM-dd-yyyy'"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" ng-show="subtab">
+    <h2 class="text-center col-md-12" style="background-color:#503219; color:#fff; padding:5px; width:100%">Event Payment : {{pst.paymentid}}</h2>
+    <div class="col-md-12">
+      <label>Payment ID : {{pst.paymentid}}</label>
+      <br>
+      <br>
+      <label>Amount : {{pst.payamt}}</label>
+      <br>
+      <br>
+      <label>Date : {{pst.paydate | date : 'MM/dd/yyyy hh:mm:ss a'}}</label>
+      <br>
+      <br>
+      <label>Member : {{pst.cust_string}}</label>
+      <br>
+      <br>
+      <hr>
+      <h3>Line Items</h3>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Description</th>
+                  <th>Price</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="ps1 in pst1">
+                  <td><span ng-bind="ps1.qty"></span></td>
+                  <td><span ng-bind="ps1.sku_name"></span></td>
+                  <td><span ng-bind="ps1.ttl_price"></span></td>
+                  <td><span ng-bind="ps1.ttl_price"></span></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td class="text-right" colspan="4">Handling Fee : {{pst.handling}}</td>
+                </tr>
+                <tr>
+                  <td class="text-right" colspan="4">Subtotal : {{pst.subtotal}}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="col-md-12">
+      <h3>Payment Details</h3>
+      <div class="col-md-3" style="background-color:#D8CEB9; color:#000; padding:5px; height:350px">
+        <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Billing Info </h2>
+        {{pst.cust_string}}
+        <br>
+        <br>
+        {{pst.bill_addr}}
+        <br>
+        <br>
+        {{pst.bill_city}}
+        <br>
+        <br>
+        {{pst.bill_country}}
+      </div>
+      <div class="col-md-3" style="background-color:#D8CEB9; color:#000; padding:5px; height:350px">
+        <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Anet Details </h2>
+        Req : {{pst.reqid}}
+        <br>
+        <br>
+        Trans Type Bank : {{pst.trans_type}}
+        <br>
+        <br>
+        Trans Result : {{pst.trans_rslt}}
+        <br>
+        <br>
+        Trans Id : {{pst.trans_id}}
+        <br>
+        <br>
+        Trans Authcode : {{pst.trans_authcode}}
+        <br>
+        <br>
+        ccnum : {{pst.ccnum}}
+        <br>
+        <br>
+        echkacct : {{pst.echkacct}}
+      </div>
+      <div class="col-md-3" style="background-color:#D8CEB9; color:#000; padding:5px; height:350px;">
+        <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:100%">Description </h2>
+        <span>{{pst.description}}</span>
+      </div>
+      <div class="col-md-3" style="background-color:#D8CEB9; color:#000; padding:5px; height:350px;">
+        <h2 class="text-center" style="background-color:#503219; color:#fff; padding:5px; width:90%">Notes </h2>
+        <textarea ng-model="pst.notes" class="form-control"></textarea>
+        <br>
+        <button class="btn btn-color" ng-click="SaveNote(pst)">Save Note</button>
+      </div>
+    </div>
+    <div class="container" style="background-color: #d8ceb9;height:100%;width:90%;padding: 10px;" print-section>
+      <h3>Receipt Copy</h3>
+      <label>PAYMENT ID {{pst.paymentid}}</label>
+      <br>
+      <br>
+      <label>----------------------------------</label>
+      <br>
+      <br>
+      <label>Payment {{pst.paymentid}} : {{pst.cust_string}}</label>
+      <br>
+      <br>
+      <label>Customer email: {{pst.cust_email}}</label>
+      <br>
+      <br>
+      <label>Payment Type: card - {{pst.payamt}}</label>
+      <br>
+      <br>
+      <label>----------------------------------</label>
+      <br>
+      <br>
+      <label>LINE ITEM: 
+      1 ({{pst2.lineid}}) {{pst2.ttl_price | currency}} - Qty: {{pst2.qty}} EF_PAY: {{pst2.sku_name}} - {{pst2.sku_descrip}}</label>
+      <br>
+      <br>
+      <label>ANIMAL: {{pst2.regno}} {{pst2.bno}} {{pst2.bname}} ({{pst2.owner}})</label>
+      <br>
+      <br>
+      <label>EVENT: {{pst2.pevid}} {{pst2.city}}, {{pst2.state}} - {{pst2.title}}</label>
+      <br>
+      <br>
+      <label>CLASSES ENTERED: {{pst2.evclass}} {{pst2.evtype}} ({{pst2.ttl_price | currency}})</label>
+    </div>
+    <!-- <button class="btn btn-color" print-remove print-btn>Download Reciept</button> -->
+    <button class="btn btn-color" ng-click="ExitPay()">Back</button>
+  </div>
+</div>

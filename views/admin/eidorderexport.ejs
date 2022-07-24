@@ -1,0 +1,141 @@
+<div class="text-center">
+  <h2 style="background-color:#503219; color:#fff; padding:10px; max-width:100%">EID Order Export</h2>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%; width:90%;padding: 10px;" ng-init="ExportEidCount()" ng-hide="exportSec">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <select ng-init="FileEID()" class="form-control">
+      <option ng-repeat="fe in fes" value="{{fe.BatchId}}">{{fe.batchfilename}}</option>
+    </select>
+    <br>
+    <button class="btn btn-color" type="button" ng-click="ViewBatch(fes)">View Batch</button>
+    <button class="btn btn-color" type="button">Resend Batch</button>
+  </div>
+  <br>
+</div>
+<br>
+<ul class="nav nav-tabs container" style="width:90%;padding: 10px;" ng-hide="exportSec">
+  <li class="active"><a data-toggle="tab" data-target="#OrderExport">Order Export: {{eec.cost | currency}}</a></li>
+  <li><a data-toggle="tab" data-target="#reorderExport">Reorder Export</a></li>
+</ul>
+<div class="tab-content" ng-hide="exportSec">
+  <div id="OrderExport" class="tab-pane fade in active container" style="width:90%;padding: 10px;" ng-init="ViewEIDExport();ViewReorderExport();GetOrderDetails()">
+    <button class="btn btn-color" type="button" style="margin-bottom: 10px;"  ng-click="exportSec = true;">Send Order Export</button>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>PO_Number</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>BreederNo</th>
+                <th>RegNo</th>
+                <th>HerdNo</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Premise Id</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="ve in vee">
+                <td>{{ve.PO_Number}}</td>
+                <td>{{ve.Product}}</td>
+                <td>{{ve.Quantity}}</td>
+                <td>{{ve.BreederNo}}</td>
+                <td>{{ve.RegNo}}</td>
+                <td>{{ve.HerdNo}}</td>
+                <td>{{ve.FirstName}}</td>
+                <td>{{ve.LastName}}</td>
+                <td>{{ve.Address}}</td>
+                <td>{{ve.City}}</td>
+                <td>{{ve.State}}</td>
+                <td>{{ve.Zip}}</td>
+                <td>{{ve.PremiseID}}</td>
+                <td>
+                  <i class="btn btn-danger fa fa-trash" ng-click="DeleteVeOrder(ve)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="reorderExport" class="tab-pane fade container" style="width:90%;padding: 10px;">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered nowrap" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance" width="100%">
+            <thead>
+              <tr>
+                <th>PO_Number</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>BreederNo</th>
+                <th>RegNo</th>
+                <th>HerdNo</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="vr in vre">
+                <td>{{vr.PO_Number}}</td>
+                <td>{{vr.Product}}</td>
+                <td>{{vr.Quantity}}</td>
+                <td>{{vr.BreederNo}}</td>
+                <td>{{vr.RegNo}}</td>
+                <td>{{vr.HerdNo}}</td>
+                <td>
+                  <i class="btn btn-danger fa fa-trash"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" style="background-color: #d8ceb9;height:100%; width:90%;padding: 10px;" ng-show="exportSec">
+  
+  <div class="row">
+    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+      <div class="row">
+        <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1">
+          <label>To</label>
+        </div>
+        <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11">
+          <input type="text" class="form-control" ng-model="exportObj.to" readonly="true"/> 
+        </div>
+      </div><br/>
+      <div class="row">
+      <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1">
+        <label>CC</label>
+      </div>
+      <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11">
+<input type="text" class="form-control" ng-model="exportObj.cc"/> 
+      </div>
+      </div><br/>
+      <div class="row">
+        <div class="col-md-1 col-lg-1 col-sm-1 col-xs-1">
+<label>Notes</label>
+        </div>
+        <div class="col-md-11 col-lg-11 col-sm-11 col-xs-11">
+          <textarea ng-model="exportObj.notes" class="form-control"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+      <button  class="btn btn-color" type="button" style="margin-bottom: 10px;" ng-click="CreateOrder(god)">Export</button>
+    </div>
+  </div>
+</div>
